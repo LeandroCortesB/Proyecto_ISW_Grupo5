@@ -23,7 +23,7 @@ passport.use(
       if (user) {
         return done(null, user);
       } else {
-        return done(null, false);
+        return done(null, false, { message: "Usuario no encontrado." });
       }
     } catch (error) {
       return done(error, false);
