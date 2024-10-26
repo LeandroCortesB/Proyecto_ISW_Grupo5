@@ -99,7 +99,7 @@ export async function deleteHojaService(query) {
 
     const hojaDeleted = await hojaRepository.remove(hojaFound);
 
-    const {...dataHoja } = hojaDeleted;
+    const { ...dataHoja } = hojaDeleted;
 
     return [dataHoja, null];
   } catch (error) {
