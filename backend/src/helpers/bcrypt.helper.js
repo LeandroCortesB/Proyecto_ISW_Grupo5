@@ -9,7 +9,3 @@ export async function encryptPassword(password) {
 export async function comparePassword(password, receivedPassword) {
   return await bcrypt.compare(password, receivedPassword);
 }
-
-export async function compareRut(rut, receivedRut) {
-  return await bcrypt.compare(rut,receivedRut);
-}
