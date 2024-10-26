@@ -1,7 +1,6 @@
 "use strict";
 import Hoja from "../entity/hoja.entity.js";
 import { AppDataSource } from "../config/configDb.js";
-import { CompareRut , CompareId } from "../helpers/bcrypt.helper.js";
 
 export async function getHojaService(query) {
   try {
