@@ -1,5 +1,6 @@
 "use strict";
 import User from "../entity/user.entity.js";
+import Hoja from "../entity/hoja.entity.js";
 import jwt from "jsonwebtoken";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
@@ -52,6 +53,8 @@ export async function registerService(user) {
   try {
     const userRepository = AppDataSource.getRepository(User);
 
+    const hojaRepository = AppDataSource.getRepository(Hoja);
+
     const { nombreCompleto, rut, email } = user;
 
     const createErrorMessage = (dataInfo, message) => ({
@@ -84,6 +87,8 @@ export async function registerService(user) {
     });
 
     await userRepository.save(newUser);
+
+    await hojaRepository.save(hojaRepository.create({ rut, nombreCompleto, buena:true }));
 
     const { password, ...dataUser } = newUser;
 
