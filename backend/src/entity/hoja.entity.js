@@ -23,12 +23,12 @@ const HojaSchema = new EntitySchema({
     },
     buena: {
       type: "boolean",
-      nullable: false,
+      nullable: true,
     },
     anotacion: {
       type: "varchar",
       length: 500,
-      nullable: false,
+      nullable: true,
     },
     createdAt: {
       type: "timestamp with time zone",
