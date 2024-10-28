@@ -60,7 +60,7 @@ export async function updateHojaService(query, body) {
       return [null, "Ya existe una hoja con el mismo rut"];
     }
 
-    const dataUserUpdate = {
+    const dataHojaUpdate = {
       buena: body.buena,
       anotacion: body.anotacion,
       updatedAt: new Date(),
@@ -107,3 +107,5 @@ export async function deleteHojaService(query) {
     return [null, "Error interno del servidor"];
   }
 }
+
+export default deleteHojaService;
