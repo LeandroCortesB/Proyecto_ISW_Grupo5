@@ -1,7 +1,9 @@
 "use strict";
 import User from "../entity/user.entity.js";
+import deleteHojaService from "../services/hoja.service.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
+import { hojaQueryValidation } from "../validations/hoja.validation.js";
 
 export async function getUserService(query) {
   try {
@@ -111,12 +113,17 @@ export async function deleteUserService(query) {
       where: [{ id: id }, { rut: rut }, { email: email }],
     });
 
+    const hojaFound = await hojaRepository.findOne({
+      where: [{ id: id }, { rut: rut }],
+    });
+
     if (!userFound) return [null, "Usuario no encontrado"];
 
     if (userFound.rol === "administrador") {
       return [null, "No se puede eliminar un usuario con rol de administrador"];
     }
 
+    deleteHojaService(hojaFound);
     const userDeleted = await userRepository.remove(userFound);
 
     const { password, ...dataUser } = userDeleted;

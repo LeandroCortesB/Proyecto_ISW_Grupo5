@@ -107,3 +107,5 @@ export async function deleteHojaService(query) {
     return [null, "Error interno del servidor"];
   }
 }
+
+export default deleteHojaService;
