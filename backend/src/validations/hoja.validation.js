@@ -64,7 +64,7 @@ export const hojaBodyValidation = Joi.object({
     }),
   buena: Joi.boolean()
     .messages({
-      "boolean.base": "El campo buena debe ser de tipo booleano (true o false) para identificar la connotacion de la anotacion."
+      "boolean.base": "El campo buena debe ser de tipo booleano (true o false) para identificar la anotacion."
     }),
 })
   .or(
