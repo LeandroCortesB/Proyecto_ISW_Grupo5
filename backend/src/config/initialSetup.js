@@ -27,7 +27,7 @@ async function createUsers() {
         hojaRepository.create({
           nombreCompleto: "Diego Alexis Salazar Jara",
           rut: "21.308.770-3",
-          bueno:true,
+          buena:true,
         }),
       ),
       userRepository.save(
@@ -43,7 +43,7 @@ async function createUsers() {
         hojaRepository.create({
           nombreCompleto: "Diego Sebastián Ampuero Belmar",
           rut: "21.151.897-9",
-          bueno:true,
+          buena:true,
         }),
       ),
         userRepository.save(
@@ -59,7 +59,7 @@ async function createUsers() {
         hojaRepository.create({
           nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
           rut: "20.630.735-8",
-          bueno:true,
+          buena:true,
         }),
       ),
       userRepository.save(
@@ -75,7 +75,7 @@ async function createUsers() {
         hojaRepository.create({
           nombreCompleto: "Pablo Andrés Castillo Fernández",
           rut: "20.738.450-K",
-          bueno:true,
+          buena:true,
         }),
       ),
       userRepository.save(
@@ -91,7 +91,7 @@ async function createUsers() {
         hojaRepository.create({
           nombreCompleto: "Felipe Andrés Henríquez Zapata",
           rut: "20.976.635-3",
-          bueno:true,
+          buena:true,
         }),
       ),
       userRepository.save(
@@ -107,7 +107,7 @@ async function createUsers() {
         hojaRepository.create({
           nombreCompleto: "Diego Alexis Meza Ortega",
           rut: "21.172.447-1",
-          bueno:true,
+          buena:true,
         }),
       ),
       userRepository.save(
@@ -123,7 +123,7 @@ async function createUsers() {
         hojaRepository.create({
           nombreCompleto: "Juan Pablo Rosas Martin",
           rut: "20.738.415-1",
-          bueno:true,
+          buena:true,
         }),
       ),
     ]);
