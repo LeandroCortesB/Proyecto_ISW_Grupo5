@@ -1,7 +1,5 @@
 "use strict";
 import { Router } from "express";
-import { isAdmin } from "../middlewares/authorization.middleware.js";
-import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
   createCurso,
   deleteCurso,
@@ -11,10 +9,6 @@ import {
 } from "../controllers/curso.controller.js";
 
 const router = Router();
-
-router
-  .use(authenticateJwt)  // Aplica autenticación a todas las rutas de curso
-  .use(isAdmin);          // Asegura que solo administradores puedan acceder
 
 router
   .get("/", getCursos)         // Ruta para obtener todos los cursos
