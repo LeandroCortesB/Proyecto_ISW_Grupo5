@@ -42,26 +42,26 @@ export const asignaturaBodyValidation = Joi.object({
       "string.pattern.base": "El nombre de la asignatura solo puede contener letras y espacios.",
     }),
   descripcion: Joi.string()
-    .max(255)
+    .max(500)
     .optional()
     .messages({
       "string.base": "La descripción debe ser de tipo string.",
       "string.max": "La descripción debe tener como máximo 255 caracteres.",
     }),
-  cursoId: Joi.number()
+  idCurso: Joi.number()
     .integer()
     .positive()
     .required()
     .messages({
-      "number.base": "El cursoId debe ser un número.",
-      "number.integer": "El cursoId debe ser un número entero.",
-      "number.positive": "El cursoId debe ser un número positivo.",
-      "any.required": "El cursoId es obligatorio y debe estar asociado a un curso válido.",
+      "number.base": "El idCurso debe ser un número.",
+      "number.integer": "El idCurso debe ser un número entero.",
+      "number.positive": "El idCurso debe ser un número positivo.",
+      "any.required": "El idCurso es obligatorio y debe estar asociado a un curso válido.",
     }),
 })
-  .or("nombreAsignatura", "descripcion", "cursoId")
+  .or("nombreAsignatura", "descripcion", "idCurso")
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
-    "object.missing": "Debes proporcionar al menos un campo: nombreAsignatura, descripcion o cursoId.",
+    "object.missing": "Debes proporcionar al menos un campo: nombreAsignatura, descripcion o idCurso.",
   });
