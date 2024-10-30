@@ -1,7 +1,10 @@
 "use strict";
 import User from "../entity/user.entity.js";
+import Hoja from "../entity/hoja.entity.js";
+import deleteHojaService from "../services/hoja.service.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
+import { hojaQueryValidation } from "../validations/hoja.validation.js";
 
 export async function getUserService(query) {
   try {
@@ -93,6 +96,21 @@ export async function updateUserService(query, body) {
     }
 
     const { password, ...userUpdated } = userData;
+    
+    //aca se crea una hoja asociada al usuario en caso de que este sea un alumno
+
+    
+
+    if(rol="alumno"){
+      hojaRepository.save(
+        hojaRepository.create({
+          nombreCompleto: body.nombreCompleto,
+          rut: body.rut,
+          buena:true,
+          updatedAt: new Date(),
+        })
+      )
+    }
 
     return [userUpdated, null];
   } catch (error) {
@@ -117,6 +135,13 @@ export async function deleteUserService(query) {
       return [null, "No se puede eliminar un usuario con rol de administrador"];
     }
 
+    const hojaRepository = AppDataSource.getRepository(Hoja);
+
+    const hojaFound = await hojaRepository.findOne({
+      where: [{ id: id }, { rut: rut }],
+    });
+
+    deleteHojaService(hojaFound);
     const userDeleted = await userRepository.remove(userFound);
 
     const { password, ...dataUser } = userDeleted;

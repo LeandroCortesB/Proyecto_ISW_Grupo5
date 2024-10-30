@@ -1,0 +1,13 @@
+  .home-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.username-display {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 20px; /* Adjust the size as needed */
+    color: #070707; /* Customize the color */
+    font-weight: bold;
+}

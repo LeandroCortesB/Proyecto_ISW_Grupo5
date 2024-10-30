@@ -10,9 +10,13 @@ const options = {
   secretOrKey: ACCESS_TOKEN_SECRET,
 };
 
+// Estrategia para el usuario
 passport.use(
   new JwtStrategy(options, async (jwt_payload, done) => {
     try {
+      if (!jwt_payload.email) {
+        return done(null, false, { message: "Email no presente en el token." });
+      }
       const userRepository = AppDataSource.getRepository(User);
       const user = await userRepository.findOne({
         where: {
@@ -28,9 +32,10 @@ passport.use(
     } catch (error) {
       return done(error, false);
     }
-  }),
+  })
 );
 
 export function passportJwtSetup() {
   passport.initialize();
 }
+
