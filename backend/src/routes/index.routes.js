@@ -5,7 +5,6 @@ import authRoutes from "./auth.routes.js";
 import notaRoutes from "./nota.routes.js";
 import asignaturaRoutes from "./asignatura.routes.js";
 import cursoRoutes from "./curso.routes.js";
-import hojaRoutes from "./hoja.routes.js"
 
 const router = Router();
 
@@ -14,7 +13,6 @@ router
     .use("/nota", notaRoutes)
     .use("/asignatura", asignaturaRoutes)
     .use("/curso", cursoRoutes)
-    .use("/hoja", hojaRoutes)
     .use("/user", userRoutes);
 
 export default router;
