@@ -9,7 +9,7 @@ export async function getNotaService(query) {
 
     const notaFound = await notaRepository.findOne({
       where: { idNota },
-      relations: ["estudiante", "profesor", "asignatura"],
+      relations: ["estudiante", "asignatura"],
     });
 
     if (!notaFound) return [null, "Nota no encontrada"];
@@ -24,7 +24,7 @@ export async function getNotasService() {
   try {
     const notaRepository = AppDataSource.getRepository(Nota);
     const notas = await notaRepository.find({
-      relations: ["estudiante", "profesor", "asignatura"],
+      relations: ["estudiante", "asignatura"],
     });
 
     if (!notas || notas.length === 0) return [null, "No hay notas registradas"];
@@ -57,7 +57,7 @@ export async function updateNotaService(idNota, data) {
 
     const notaUpdated = await notaRepository.findOne({
       where: { idNota },
-      relations: ["estudiante", "profesor", "asignatura"],
+      relations: ["estudiante", "asignatura"],
     });
     return [notaUpdated, null];
   } catch (error) {
