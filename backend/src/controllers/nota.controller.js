@@ -11,10 +11,11 @@ import {
   handleErrorServer,
   handleSuccess,
 } from "../handlers/responseHandlers.js";
+import { notaBodyValidation, notaQueryValidation } from "../validations/nota.validation.js";
 
 export async function getNota(req, res) {
   try {
-    const { idNota } = req.query;
+    const { idNota } = req.params;
     const [nota, error] = await getNotaService({ idNota });
 
     if (error) return handleErrorClient(res, 404, error);
@@ -37,8 +38,18 @@ export async function getNotas(req, res) {
 
 export async function createNota(req, res) {
   try {
-    const [nuevaNota, error] = await createNotaService(req.body);
-    if (error) return handleErrorClient(res, 400, error);
+    const { error: bodyError } = notaBodyValidation.validate(req.body);
+    
+    if (bodyError)
+      return handleErrorClient(
+        res,
+        400,
+        "Error de validación en los datos enviados",
+        bodyError.message,
+      );
+
+      const [nuevaNota, error] = await createNotaService(req.body);
+      if (error) return handleErrorClient(res, 400, error);
 
     handleSuccess(res, 201, "Nota creada exitosamente", nuevaNota);
   } catch (error) {
@@ -48,7 +59,7 @@ export async function createNota(req, res) {
 
 export async function updateNota(req, res) {
   try {
-    const { idNota } = req.query;
+    const { idNota } = req.params;
     const [nota, error] = await updateNotaService(idNota, req.body);
 
     if (error) return handleErrorClient(res, 404, error);
@@ -60,7 +71,8 @@ export async function updateNota(req, res) {
 
 export async function deleteNota(req, res) {
   try {
-    const { idNota } = req.query;
+    const { idNota } = req.params;
+    console.log(`Trying to delete note with id: ${idNota}`);
     const [notaDeleted, error] = await deleteNotaService(idNota);
 
     if (error) return handleErrorClient(res, 404, error);
