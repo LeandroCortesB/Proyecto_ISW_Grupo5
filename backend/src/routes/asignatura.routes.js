@@ -12,7 +12,7 @@ const router = Router();
 
 router
     .get("/", getAsignaturas)
-    .get("/detail", getAsignatura)
+    .get("/:idAsignatura", getAsignatura)
     .post("/", createAsignatura)
     .patch("/detail", updateAsignatura)
     .delete("/detail", deleteAsignatura);
