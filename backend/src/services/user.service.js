@@ -96,6 +96,21 @@ export async function updateUserService(query, body) {
     }
 
     const { password, ...userUpdated } = userData;
+    
+    //aca se crea una hoja asociada al usuario en caso de que este sea un alumno
+
+    
+
+    if(rol="alumno"){
+      hojaRepository.save(
+        hojaRepository.create({
+          nombreCompleto: body.nombreCompleto,
+          rut: body.rut,
+          buena:true,
+          updatedAt: new Date(),
+        })
+      )
+    }
 
     return [userUpdated, null];
   } catch (error) {
