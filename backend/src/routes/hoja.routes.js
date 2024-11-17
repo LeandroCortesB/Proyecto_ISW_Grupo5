@@ -12,7 +12,7 @@ router
     .use(isProfesor);
 
 router
-    .get("/detail/",getHoja)
-    .patch("/detail/",updateHoja);
+    .get("/data",getHoja)
+    .patch("/update",updateHoja);
 
 export default router;

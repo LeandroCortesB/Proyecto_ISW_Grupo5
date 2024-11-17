@@ -1,5 +1,6 @@
 "use strict";
 import { Router } from "express";
+import { isProfesor } from "../middlewares/authorization.middleware.js";
 import {
     createAsignatura,
     deleteAsignatura,
@@ -8,16 +9,19 @@ import {
     updateAsignatura,
 } from "../controllers/asignatura.controller.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
-import { isProfesor } from "../middlewares/authorization.middleware.js";
+
 const router = Router();
+
 router
     .use(authenticateJwt)
     .use(isProfesor);
+
+
 router
-    .get("/", getAsignaturas)
-    .get("/:idAsignatura", getAsignatura)
-    .post("/", createAsignatura)
-    .patch("/:idAsignatura", updateAsignatura)
-    .delete("/:idAsignatura", deleteAsignatura);
+    .get("/all", getAsignaturas)
+    .get("/data", getAsignatura)
+    .post("/create", createAsignatura)
+    .patch("/update", updateAsignatura)
+    .delete("/delete", deleteAsignatura);
 
 export default router;
