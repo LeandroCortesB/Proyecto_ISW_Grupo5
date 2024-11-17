@@ -14,9 +14,9 @@ router
     .use(isProfesor);
 
 router
-    .get("/detail/",getPagina)
-    .post("/", createPagina)
-    .patch("/detail/",updatePagina)
-    .delete("/detail", deletePagina);
+    .get("/data",getPagina)
+    .post("/create", createPagina)
+    .patch("/update",updatePagina)
+    .delete("/del", deletePagina);
 
 export default router;

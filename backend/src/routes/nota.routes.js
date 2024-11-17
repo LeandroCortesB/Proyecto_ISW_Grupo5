@@ -10,10 +10,10 @@ import {
 
 const router = Router();
 router
-  .get("/", getNotas)          // Ruta para obtener todas las notas
-  .get("/detail", getNota)      // Ruta para obtener una nota específica
-  .post("/", createNota)        // Ruta para crear una nueva nota
-  .patch("/detail", updateNota) // Ruta para actualizar una nota específica
-  .delete("/detail", deleteNota); // Ruta para eliminar una nota específica
+  .get("/all", getNotas)         
+  .get("/data", getNota)      
+  .post("/create", createNota)       
+  .patch("/update", updateNota) 
+  .delete("/delete", deleteNota); 
 
 export default router;

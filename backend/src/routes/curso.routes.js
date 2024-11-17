@@ -11,10 +11,10 @@ import {
 const router = Router();
 
 router
-  .get("/", getCursos)         // Ruta para obtener todos los cursos
-  .get("/detail", getCurso)     // Ruta para obtener un curso específico
-  .post("/", createCurso) // Ruta para crear un curso
-  .patch("/detail", updateCurso) // Ruta para actualizar un curso específico
-  .delete("/detail", deleteCurso); // Ruta para eliminar un curso específico
+  .get("/all", getCursos)         // Ruta para obtener todos los cursos
+  .get("/data", getCurso)     // Ruta para obtener un curso específico
+  .post("/create", createCurso) // Ruta para crear un curso
+  .patch("/update", updateCurso) // Ruta para actualizar un curso específico
+  .delete("/del", deleteCurso); // Ruta para eliminar un curso específico
 
 export default router;
