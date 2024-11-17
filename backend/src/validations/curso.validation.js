@@ -12,32 +12,36 @@ export const cursoQueryValidation = Joi.object({
       "number.positive": "El idCurso debe ser un número positivo.",
     }),
   nombreCurso: Joi.string()
-    .min(2)
-    .max(3)
+    .trim()
+    .pattern(/^\d+-[A-Z]$/) // Validar formato exacto
     .messages({
       "string.empty": "El nombre del curso no puede estar vacío.",
       "string.base": "El nombre del curso debe ser de tipo string.",
-      "string.min": "El nombre del curso debe tener como mínimo 2 caracteres.",
-      "string.max": "El nombre del curso debe tener como máximo 3 caracteres.",
+      "string.pattern.base": "El nombre del curso debe tener el formato 'número-guion-letra mayúscula' (ej: 1-A).",
     }),
 })
-  .or("idCurso", "nombreCurso")
+  .or("idCurso", "nombreCurso") // Permitir que al menos uno sea proporcionado
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
-    "object.missing": "Debes proporcionar al menos un parámetro: idCurso o nombreCurso.",
+    "object.missing": "Debes proporcionar al menos idCurso o nombreCurso.",
   });
 
 // Validación del cuerpo (body) para crear o actualizar un curso
 export const cursoBodyValidation = Joi.object({
   nombreCurso: Joi.string()
-    .min(2)
-    .max(3)
+    .trim()
+    .pattern(/^\d+-[A-Z]$/) // Validar formato exacto
+    .required() // Requerir siempre el nombre del curso
     .messages({
       "string.empty": "El nombre del curso no puede estar vacío.",
       "string.base": "El nombre del curso debe ser de tipo string.",
-      "string.min": "El nombre del curso debe tener como mínimo 2 caracteres.",
-      "string.max": "El nombre del curso debe tener como máximo 3 caracteres.",
-      "string.pattern.base": "El nombre del curso solo puede contener letras y espacios.",
+      "string.pattern.base": "El nombre del curso debe tener el formato 'número-guion-letra mayúscula' (ej: 1-A).",
+      "any.required": "El nombre del curso es obligatorio.",
     }),
-  });
+  descripcion: Joi.string()
+    .max(255) // Longitud máxima de la descripción
+    .messages({
+      "string.max": "La descripción no puede exceder los 255 caracteres.",
+    }),
+});

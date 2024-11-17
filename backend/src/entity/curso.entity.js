@@ -12,7 +12,7 @@ const CursoSchema = new EntitySchema({
         },
         nombreCurso: {
             type: "varchar",
-            length: 255,
+            length: 5,
             nullable: false,
         },
         createdAt: {

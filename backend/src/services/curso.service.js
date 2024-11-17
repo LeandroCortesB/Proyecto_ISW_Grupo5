@@ -5,12 +5,12 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getCursoService(query) {
   try {
-    const { idCurso, nombreCurso } = query;
+    const { idCurso } = query;
 
     const cursoRepository = AppDataSource.getRepository(Curso);
 
     const cursoFound = await cursoRepository.findOne({
-      where: [{ idCurso: idCurso }, { nombreCurso: nombreCurso }],
+      where: [{ idCurso: idCurso }],
     });
 
     if (!cursoFound) return [null, "Curso no encontrado"];

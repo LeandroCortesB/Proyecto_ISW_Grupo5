@@ -36,8 +36,8 @@ const AsignaturaSchema = new EntitySchema({
         curso: {
             type: "many-to-one",
             target: "Curso",
-            joinColumn: true,
-            nullable: false,
+            joinColumn: { name: "idCurso" },
+            nullable: true,
             onDelete: "CASCADE", // Opcional: borra la asignatura si el curso es eliminado
         },
     },

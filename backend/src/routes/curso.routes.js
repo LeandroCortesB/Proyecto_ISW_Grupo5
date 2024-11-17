@@ -12,9 +12,11 @@ const router = Router();
 
 router
   .get("/", getCursos)         // Ruta para obtener todos los cursos
-  .get("/detail", getCurso)     // Ruta para obtener un curso específico
+  .get("/:idCurso", getCurso)     // Ruta para obtener un curso específico
   .post("/", createCurso) // Ruta para crear un curso
-  .patch("/detail", updateCurso) // Ruta para actualizar un curso específico
-  .delete("/detail", deleteCurso); // Ruta para eliminar un curso específico
+  .patch("/:idCurso", updateCurso) // Ruta para actualizar un curso específico
+  .delete("/:idCurso", deleteCurso); // Ruta para eliminar un curso específico
 
 export default router;
+//Primero por id
+// controller en vez de query params
