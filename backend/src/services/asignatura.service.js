@@ -4,12 +4,12 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getAsignaturaService(query) {
     try {
-        const { idAsignatura, nombreAsignatura } = query;
+        const { idAsignatura } = query;
 
         const asignaturaRepository = AppDataSource.getRepository(Asignatura);
 
         const asignaturaFound = await asignaturaRepository.findOne({
-            where: [{ idAsignatura }, { nombreAsignatura }],
+            where: [{ idAsignatura } ],
         });
 
         if (!asignaturaFound) return [null, "Asignatura no encontrada"];
@@ -52,12 +52,12 @@ export async function createAsignaturaService(body) {
 
 export async function updateAsignaturaService(query, body) {
     try {
-        const { idAsignatura, nombreAsignatura } = query;
+        const { idAsignatura } = query;
 
         const asignaturaRepository = AppDataSource.getRepository(Asignatura);
 
         const asignaturaFound = await asignaturaRepository.findOne({
-            where: [{ idAsignatura }, { nombreAsignatura }],
+            where: [{ idAsignatura } ],
         });
 
         if (!asignaturaFound) return [null, "Asignatura no encontrada"];
@@ -75,12 +75,12 @@ export async function updateAsignaturaService(query, body) {
 
 export async function deleteAsignaturaService(query) {
     try {
-        const { idAsignatura, nombreAsignatura } = query;
+        const { idAsignatura } = query;
 
         const asignaturaRepository = AppDataSource.getRepository(Asignatura);
 
         const asignaturaFound = await asignaturaRepository.findOne({
-            where: [{ idAsignatura }, { nombreAsignatura }],
+            where: [{ idAsignatura } ],
         });
 
         if (!asignaturaFound) return [null, "Asignatura no encontrada"];

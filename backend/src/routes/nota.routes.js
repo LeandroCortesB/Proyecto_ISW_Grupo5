@@ -9,6 +9,7 @@ import {
 } from "../controllers/nota.controller.js";
 
 const router = Router();
+
 router
   .get("/all", getNotas)         
   .get("/data", getNota)      
@@ -17,3 +18,4 @@ router
   .delete("/delete", deleteNota); 
 
 export default router;
+

@@ -18,13 +18,13 @@ import {
 
 export async function getAsignatura(req, res) {
     try {
-        const { idAsignatura, nombreAsignatura } = req.query;
+        const { idAsignatura } = req.params;
 
-        const { error } = asignaturaQueryValidation.validate({ idAsignatura, nombreAsignatura });
+        const { error } = asignaturaQueryValidation.validate({ idAsignatura });
 
         if (error) return handleErrorClient(res, 400, error.message);
 
-        const [asignatura, errorAsignatura] = await getAsignaturaService({ idAsignatura, nombreAsignatura });
+        const [asignatura, errorAsignatura] = await getAsignaturaService({ idAsignatura });
 
         if (errorAsignatura) return handleErrorClient(res, 404, errorAsignatura);
 
@@ -64,14 +64,14 @@ export async function createAsignatura(req, res) {
 
 export async function updateAsignatura(req, res) {
     try {
-        const { idAsignatura, nombreAsignatura } = req.query;
+        const { idAsignatura } = req.params;
         const { body } = req;
 
-        const { error } = asignaturaQueryValidation.validate({ idAsignatura, nombreAsignatura });
+        const { error } = asignaturaQueryValidation.validate({ idAsignatura } );
 
         if (error) return handleErrorClient(res, 400, error.message);
 
-        const [asignatura, errorAsignatura] = await updateAsignaturaService({ idAsignatura, nombreAsignatura }, body);
+        const [asignatura, errorAsignatura] = await updateAsignaturaService({ idAsignatura }, body);
 
         if (errorAsignatura) return handleErrorClient(res, 400, errorAsignatura);
 
@@ -83,13 +83,13 @@ export async function updateAsignatura(req, res) {
 
 export async function deleteAsignatura(req, res) {
     try {
-        const { idAsignatura, nombreAsignatura } = req.query;
+        const { idAsignatura } = req.params;
 
-        const { error } = asignaturaQueryValidation.validate({ idAsignatura, nombreAsignatura });
+        const { error } = asignaturaQueryValidation.validate({ idAsignatura });
 
         if (error) return handleErrorClient(res, 400, error.message);
 
-        const [asignatura, errorAsignatura] = await deleteAsignaturaService({ idAsignatura, nombreAsignatura });
+        const [asignatura, errorAsignatura] = await deleteAsignaturaService({ idAsignatura });
 
         if (errorAsignatura) return handleErrorClient(res, 404, errorAsignatura);
 
