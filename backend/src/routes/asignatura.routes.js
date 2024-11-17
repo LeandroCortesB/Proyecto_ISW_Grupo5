@@ -7,14 +7,17 @@ import {
     getAsignaturas,
     updateAsignatura,
 } from "../controllers/asignatura.controller.js";
-
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
+import { isProfesor } from "../middlewares/authorization.middleware.js";
 const router = Router();
-
+router
+    .use(authenticateJwt)
+    .use(isProfesor);
 router
     .get("/", getAsignaturas)
     .get("/:idAsignatura", getAsignatura)
     .post("/", createAsignatura)
-    .patch("/detail", updateAsignatura)
-    .delete("/detail", deleteAsignatura);
+    .patch("/:idAsignatura", updateAsignatura)
+    .delete("/:idAsignatura", deleteAsignatura);
 
 export default router;
