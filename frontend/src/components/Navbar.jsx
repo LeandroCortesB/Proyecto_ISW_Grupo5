@@ -1,14 +1,19 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from '@services/auth.service.js';
+import { useState, useEffect } from "react";
+import { useAuth } from '../context/AuthContext';
 import '@styles/navbar.css';
-import { useState } from "react";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
+    const { user } = useAuth();  // Obtén el usuario desde el contexto.
     const userRole = user?.rol;
     const [menuOpen, setMenuOpen] = useState(false);
+
+    useEffect(() => {
+        // Aquí podrías realizar acciones adicionales si necesitas cuando el usuario cambie.
+    }, [user]);
 
     const logoutSubmit = () => {
         try {
@@ -91,6 +96,11 @@ const Navbar = () => {
                 <span className="bar"></span>
                 <span className="bar"></span>
             </div>
+            {user && (
+                <div className="username-display">
+                    Hola {user.nombreCompleto || 'Usuario'}! 😊
+                </div>
+            )}
         </nav>
     );
 };

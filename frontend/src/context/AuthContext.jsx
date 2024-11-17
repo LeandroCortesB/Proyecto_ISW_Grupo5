@@ -1,25 +1,25 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
+    const [user, setUser] = useState(() => JSON.parse(sessionStorage.getItem('usuario')) || null);
     const navigate = useNavigate();
-    const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
-    const isAuthenticated = user ? true : false;
 
-useEffect(() => {
-    if (!isAuthenticated) {
-        navigate('/auth');
-    }
-}, [isAuthenticated, navigate]);
+    const isAuthenticated = !!user; // Devuelve `true` si hay un usuario, `false` en caso contrario.
 
-return (
-    <AuthContext.Provider value={{ isAuthenticated, user }}>
-        {children}
-    </AuthContext.Provider>
-);
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/auth'); // Redirige al login si no hay usuario autenticado.
+        }
+    }, [isAuthenticated, navigate]);
+
+    return (
+        <AuthContext.Provider value={{ isAuthenticated, user, setUser }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }

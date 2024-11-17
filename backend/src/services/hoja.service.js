@@ -76,7 +76,7 @@ export async function updateHojaService(query, body) {
       return [null, "Hoja de vida no encontrada después de actualizar"];
     }
 
-    const { ...hojaUpdated } = userData;
+    const { ...hojaUpdated } = hojaData;
 
     return [hojaUpdated, null];
   } catch (error) {

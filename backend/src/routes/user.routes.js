@@ -16,9 +16,9 @@ router
   .use(isAdmin);
 
 router
-  .get("/", getUsers)
-  .get("/detail/", getUser)
-  .patch("/detail/", updateUser)
-  .delete("/detail/", deleteUser);
+  .get("/all", getUsers)
+  .get("/data", getUser)
+  .patch("/update", updateUser)
+  .delete("/del", deleteUser);
 
 export default router;
