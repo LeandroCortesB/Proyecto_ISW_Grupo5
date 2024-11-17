@@ -1,6 +1,8 @@
 "use strict";
 import { DataSource } from "typeorm";
 import { DATABASE, DB_USERNAME, HOST, PASSWORD } from "./configEnv.js";
+import PaginaSubscriber from "../subscribers/pagina.subscriber.mjs";
+
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -10,6 +12,7 @@ export const AppDataSource = new DataSource({
   password: `${PASSWORD}`,
   database: `${DATABASE}`,
   entities: ["src/entity/**/*.js"],
+  subscribers: [PaginaSubscriber],
   synchronize: true,
   logging: false,
 });
@@ -23,3 +26,4 @@ export async function connectDB() {
     process.exit(1);
   }
 }
+

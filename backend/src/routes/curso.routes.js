@@ -1,5 +1,6 @@
 "use strict";
 import { Router } from "express";
+import { isProfesor } from "../middlewares/authorization.middleware.js";
 import {
   createCurso,
   deleteCurso,
@@ -11,10 +12,13 @@ import {
 const router = Router();
 
 router
-  .get("/", getCursos)         // Ruta para obtener todos los cursos
-  .get("/detail", getCurso)     // Ruta para obtener un curso específico
-  .post("/", createCurso) // Ruta para crear un curso
-  .patch("/detail", updateCurso) // Ruta para actualizar un curso específico
-  .delete("/detail", deleteCurso); // Ruta para eliminar un curso específico
+    .use(isProfesor);
+
+router
+  .get("/all", getCursos)        
+  .get("/data", getCurso)    
+  .post("/create", createCurso) 
+  .patch("/update", updateCurso) 
+  .delete("/del", deleteCurso);
 
 export default router;
