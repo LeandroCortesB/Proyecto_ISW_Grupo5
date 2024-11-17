@@ -12,6 +12,14 @@ export function formatUserData(user) {
     };
 }
 
+export function formatCursoData(curso) {
+    return {
+        ...curso,
+        nombreCurso: startCase(curso.nombreCurso),
+        createdAt: formatTempo(curso.createdAt, "DD-MM-YYYY")
+    };
+}
+
 export function convertirMinusculas(obj) {
     for (let key in obj) {
         if (typeof obj[key] === 'string') {
