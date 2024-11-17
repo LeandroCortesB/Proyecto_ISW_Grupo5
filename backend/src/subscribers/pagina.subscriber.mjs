@@ -1,7 +1,8 @@
 "use strict";
 
-const { InsertEvent } = require("typeorm");
-const Pagina = require("../entity/pagina.entity.js");
+import pkg from "typeorm/subscriber/event/InsertEvent.js";
+const { InsertEvent } = pkg;
+import Pagina from "../entity/pagina.entity.js";
 
 class PaginaSubscriber {
   listenTo() {
@@ -14,4 +15,4 @@ class PaginaSubscriber {
   }
 }
 
-module.exports = PaginaSubscriber;
+export default PaginaSubscriber;

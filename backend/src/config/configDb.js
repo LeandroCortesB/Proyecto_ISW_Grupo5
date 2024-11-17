@@ -1,7 +1,7 @@
 "use strict";
 import { DataSource } from "typeorm";
 import { DATABASE, DB_USERNAME, HOST, PASSWORD } from "./configEnv.js";
-import PaginaSubscriber from "../subscribers/pagina.subscriber.js";
+import PaginaSubscriber from "../subscribers/pagina.subscriber.mjs";
 
 
 export const AppDataSource = new DataSource({

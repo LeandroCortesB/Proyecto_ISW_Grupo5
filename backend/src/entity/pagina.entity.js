@@ -1,6 +1,6 @@
 "use strict";
 import { EntitySchema } from "typeorm";
-import HojaSchema from "./entity/hoja.entity.js";
+import HojaSchema from "./hoja.entity.js";
 
 const PaginaSchema = new EntitySchema({
   name: "Pagina",

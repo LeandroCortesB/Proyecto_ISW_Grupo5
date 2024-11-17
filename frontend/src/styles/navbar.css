@@ -60,6 +60,15 @@
 	}
 }
 
+.username-display {
+    position: absolute;
+    top: 28px;
+    left: 15px;
+    font-size: 17px; /* Adjust the size as needed */
+    color: #fffefe; /* Customize the color */
+    font-weight: bold;
+}
+
 .hamburger {
 	display: none;
 	flex-direction: column;
