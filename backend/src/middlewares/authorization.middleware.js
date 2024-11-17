@@ -71,4 +71,5 @@ export async function isProfesor(req, res, next) {
         error.message,
         );
     }
+    
     }

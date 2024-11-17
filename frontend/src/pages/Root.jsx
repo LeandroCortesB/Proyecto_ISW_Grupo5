@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '@components/Navbar';
-import '@styles/home.css';
 import { AuthProvider } from '@context/AuthContext';
 
 function Root()  {
