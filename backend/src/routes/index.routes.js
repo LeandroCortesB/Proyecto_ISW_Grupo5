@@ -5,7 +5,7 @@ import authRoutes from "./auth.routes.js";
 import notaRoutes from "./nota.routes.js";
 import asignaturaRoutes from "./asignatura.routes.js";
 import cursoRoutes from "./curso.routes.js";
-import hojaRoutes from "./hoja.routes.js"
+import hojaRoutes from "./hoja.routes.js";
 
 const router = Router();
 

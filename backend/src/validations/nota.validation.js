@@ -28,6 +28,7 @@ export const notaQueryValidation = Joi.object({
       "number.positive": "El estudianteId debe ser un número positivo.",
     }),
 })
+
   .or("idNota", "asignaturaId", "estudianteId")
   .unknown(false)
   .messages({
@@ -37,3 +38,52 @@ export const notaQueryValidation = Joi.object({
   });
 
 // Validación del cuerpo (body) para crear o actua
+
+export const notaBodyValidation = Joi.object({
+  calificacion: Joi.number()
+    .positive()
+    .min(1)
+    .max(7)
+    .messages({
+      "number.base": "La calificacion debe ser un número.",
+      "number.min": "La calificacion debe ser un número mayor o igual a 1.",
+      "number.max": "La calificacion debe ser un número menor o igual a 7.",
+    }), 
+
+  periodo: Joi.string()
+    .length(6)
+    .messages({
+      "string.base": "El periodo debe ser un string.",
+      "string.length": "El periodo debe tener 6 caracteres.",
+    }),
+
+  estudianteId: Joi.number()
+    .integer()
+    .positive()
+    .required()
+    .messages({
+      "number.base": "El estudianteId debe ser un número.",
+      "number.integer": "El estudianteId debe ser un número entero.",
+      "number.positive": "El estudianteId debe ser un número positivo.",
+      "any.required": "El estudianteId es obligatorio y debe estar asociado a un estudiante válido.",
+    }),
+
+  asignaturaId: Joi.number()
+    .integer()
+    .positive()
+    .required()
+    .messages({
+      "number.base": "El asignaturaId debe ser un número.",
+      "number.integer": "El asignaturaId debe ser un número entero.",
+      "number.positive": "El asignaturaId debe ser un número positivo.",
+      "any.required": "El asignaturaId es obligatorio y debe estar asociado a una asignatura válida.",
+    })
+})
+
+  .or("calificacion", "periodo", "estudianteId", "asignaturaId")
+  .unknown(false)
+  .messages({
+    "object.unknown": "No se permiten propiedades adicionales.",
+    "object.missing":
+      "Debes proporcionar al menos un parámetro: calificacion, periodo, estudianteId o asignaturaId.",
+  });

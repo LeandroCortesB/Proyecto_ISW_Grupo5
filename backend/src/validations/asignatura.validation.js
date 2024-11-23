@@ -21,11 +21,11 @@ export const asignaturaQueryValidation = Joi.object({
       "string.max": "El nombre de la asignatura debe tener como máximo 100 caracteres.",
     }),
 })
-  .or("idAsignatura", "nombreAsignatura")
+  .or("idAsignatura")
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
-    "object.missing": "Debes proporcionar al menos un parámetro: idAsignatura o nombreAsignatura.",
+    "object.missing": "Debes proporcionar al menos un parámetro: idAsignatura.",
   });
 
 // Validación del cuerpo (body) para crear o actualizar una asignatura

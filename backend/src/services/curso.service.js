@@ -36,11 +36,11 @@ export async function getCursosService() {
     return [null, "Error interno del servidor"];
   }
 }
+
 export async function createCursoService(body) {
     try {
       const cursoRepository = AppDataSource.getRepository(Curso);
   
-      // Verificar si ya existe un curso con el mismo nombre
       const existingCurso = await cursoRepository.findOne({
         where: { nombreCurso: body.nombreCurso },
       });
@@ -49,7 +49,6 @@ export async function createCursoService(body) {
   
       const nuevoCurso = cursoRepository.create({
         nombreCurso: body.nombreCurso,
-        descripcion: body.descripcion,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -77,7 +76,6 @@ export async function updateCursoService(query, body) {
 
     const dataCursoUpdate = {
       nombreCurso: body.nombreCurso,
-      descripcion: body.descripcion,
       updatedAt: new Date(),
     };
 

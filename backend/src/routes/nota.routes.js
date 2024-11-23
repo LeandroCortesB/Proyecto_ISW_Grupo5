@@ -1,5 +1,7 @@
 "use strict";
 import { Router } from "express";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
+import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import {
   createNota,
   deleteNota,
@@ -9,11 +11,15 @@ import {
 } from "../controllers/nota.controller.js";
 
 const router = Router();
+
+router.use(authenticateJwt);
+
 router
-  .get("/", getNotas)          // Ruta para obtener todas las notas
-  .get("/detail", getNota)      // Ruta para obtener una nota específica
-  .post("/", createNota)        // Ruta para crear una nueva nota
-  .patch("/detail", updateNota) // Ruta para actualizar una nota específica
-  .delete("/detail", deleteNota); // Ruta para eliminar una nota específica
+  .get("/all", authorizeRoles(["administrador", "profesor"]),getNotas)         
+  .get("/data", authorizeRoles(["administrador", "profesor"]),getNota)      
+  .post("/create",authorizeRoles(["administrador", "profesor"]), createNota)       
+  .patch("/update",authorizeRoles(["administrador", "profesor"]), updateNota) 
+  .delete("/delete",authorizeRoles(["administrador", "profesor"]), deleteNota); 
 
 export default router;
+

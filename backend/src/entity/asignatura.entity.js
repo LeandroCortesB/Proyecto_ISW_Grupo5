@@ -25,6 +25,10 @@ const AsignaturaSchema = new EntitySchema({
             default: () => "CURRENT_TIMESTAMP",
             nullable: false,
         },
+        idCurso: {
+            type: "int",
+            nullable: false,
+        },
         updatedAt: {
             type: "timestamp with time zone",
             default: () => "CURRENT_TIMESTAMP",
@@ -37,7 +41,7 @@ const AsignaturaSchema = new EntitySchema({
             type: "many-to-one",
             target: "Curso",
             joinColumn: { name: "idCurso" },
-            nullable: true,
+            nullable: false,
             onDelete: "CASCADE", // Opcional: borra la asignatura si el curso es eliminado
         },
     },

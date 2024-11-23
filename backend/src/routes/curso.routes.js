@@ -1,5 +1,7 @@
 "use strict";
 import { Router } from "express";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
+import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import {
   createCurso,
   deleteCurso,
@@ -10,12 +12,14 @@ import {
 
 const router = Router();
 
+router.use(authenticateJwt);
+
 router
-  .get("/", getCursos)         // Ruta para obtener todos los cursos
-  .get("/:idCurso", getCurso)     // Ruta para obtener un curso específico
-  .post("/", createCurso) // Ruta para crear un curso
-  .patch("/:idCurso", updateCurso) // Ruta para actualizar un curso específico
-  .delete("/:idCurso", deleteCurso); // Ruta para eliminar un curso específico
+  .get("/all", authorizeRoles(["administrador", "profesor"]), getCursos) 
+  .get("/data", authorizeRoles(["administrador", "profesor"]), getCurso) 
+  .post("/create", authorizeRoles(["administrador"]), createCurso) 
+  .patch("/update", authorizeRoles(["administrador"]), updateCurso) 
+  .delete("/del", authorizeRoles(["administrador"]), deleteCurso);
 
 export default router;
 //Primero por id

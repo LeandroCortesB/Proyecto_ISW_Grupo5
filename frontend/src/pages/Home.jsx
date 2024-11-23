@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react';
-import { useAuth } from '../context/AuthContext'; // Adjust this path if needed
+import { useAuth } from '../context/AuthContext';
 import '@styles/home.css';
 
 const Home = () => {
-    const { user } = useAuth();
+  const { user } = useAuth(); 
 
-    useEffect(() => {
-        console.log('User data:', user); // Check the content of user object
-    }, [user]);
-
-    return (
-        <div className="home-container">
-            <div className="username-display">
-                Welcome, {user?.name || 'User'}!
-            </div>
-            {/* Rest of your Home content */}
-        </div>
-    );
+  return (
+    <div className="home-container">
+      <div className="welcome-card">
+        <img
+          src="https://as2.ftcdn.net/v2/jpg/03/03/62/45/1000_F_303624505_u0bFT1Rnoj8CMUSs8wMCwoKlnWlh5Jiq.jpg"
+          alt="Bienvenido"
+          className="welcome-image"
+        />
+        <h1>¡Bienvenido/a, {user.nombreCompleto}!</h1>
+        <p><strong>Rol:</strong> {user.rol}</p>
+        <p><strong>Correo:</strong> {user.email}</p>
+        <p>¡Esperamos que tengas un día fantástico! 🐈</p>
+      </div>
+    </div>
+  );
 };
 
 export default Home;

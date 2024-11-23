@@ -6,6 +6,7 @@ import Users from '@pages/Users';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
+import Cursos from '@pages/Cursos';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 
@@ -22,11 +23,19 @@ const router = createBrowserRouter([
       {
         path: '/users',
         element: (
-        <ProtectedRoute allowedRoles={['administrador']}>
+        <ProtectedRoute allowedRoles={['administrador','profesor']}>
           <Users />
         </ProtectedRoute>
         ),
-    }
+      },
+      {
+        path: '/cursos',
+        element: (
+        <ProtectedRoute allowedRoles={['administrador','profesor']}>
+          <Cursos />
+        </ProtectedRoute>
+        ),
+      }
     ]
   },
   {

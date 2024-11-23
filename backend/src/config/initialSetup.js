@@ -1,6 +1,7 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import Hoja from "../entity/hoja.entity.js";
+import Curso from "../entity/curso.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -10,7 +11,10 @@ async function createUsers() {
 
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
+    const cursoRepository = AppDataSource.getRepository(Curso);
+
     const count = await userRepository.count();
+
     if (count > 0) return;
 
     await Promise.all([
@@ -124,6 +128,31 @@ async function createUsers() {
           nombreCompleto: "Juan Pablo Rosas Martin",
           rut: "20.738.415-1",
           buena:true,
+        }),
+      ),
+      cursoRepository.save(
+        cursoRepository.create({
+          nombreCurso: "1C",
+        }),
+      ),
+      cursoRepository.save(
+        cursoRepository.create({
+          nombreCurso: "3C",
+        }),
+      ),
+      cursoRepository.save(
+        cursoRepository.create({
+          nombreCurso: "2B",
+        }),
+      ),
+      cursoRepository.save(
+        cursoRepository.create({
+          nombreCurso: "2C",
+        }),
+      ),
+      cursoRepository.save(
+        cursoRepository.create({
+          nombreCurso: "1B",
         }),
       ),
     ]);

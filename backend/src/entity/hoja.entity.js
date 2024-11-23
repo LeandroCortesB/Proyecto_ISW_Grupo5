@@ -27,7 +27,7 @@ const HojaSchema = new EntitySchema({
     },
     anotacion: {
       type: "varchar",
-      length: 500,
+      length: 100,
       nullable: true,
     },
     createdAt: {
@@ -40,6 +40,14 @@ const HojaSchema = new EntitySchema({
       default: () => "CURRENT_TIMESTAMP",
       onUpdate: "CURRENT_TIMESTAMP",
       nullable: false,
+    },
+  },
+  relations: {
+    paginas: {
+      type: "one-to-many",
+      target: "Pagina",
+      inverseSide: "hoja",
+      cascade: true,
     },
   },
   indices: [
