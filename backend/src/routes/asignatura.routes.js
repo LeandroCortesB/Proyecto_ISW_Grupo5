@@ -1,6 +1,6 @@
 "use strict";
 import { Router } from "express";
-import { isProfesor } from "../middlewares/authorization.middleware.js";
+import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import {
     createAsignatura,
     deleteAsignatura,
@@ -12,16 +12,14 @@ import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 
 const router = Router();
 
-router
-    .use(authenticateJwt)
-    .use(isProfesor);
+router.use(authenticateJwt)
 
 
 router
-    .get("/all", getAsignaturas)
-    .get("/data", getAsignatura)
-    .post("/create", createAsignatura)
-    .patch("/update", updateAsignatura)
-    .delete("/delete", deleteAsignatura);
+    .get("/all",  authorizeRoles(["administrador", "profesor"]),getAsignaturas)
+    .get("/data",  authorizeRoles(["administrador", "profesor"]),getAsignatura)
+    .post("/create", authorizeRoles(["administrador", "profesor"]), createAsignatura)
+    .patch("/update", authorizeRoles(["administrador", "profesor"]), updateAsignatura)
+    .delete("/delete",  authorizeRoles(["administrador", "profesor"]),deleteAsignatura);
 
 export default router;
