@@ -49,7 +49,6 @@ export async function createCursoService(body) {
   
       const nuevoCurso = cursoRepository.create({
         nombreCurso: body.nombreCurso,
-        descripcion: body.descripcion,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -77,7 +76,6 @@ export async function updateCursoService(query, body) {
 
     const dataCursoUpdate = {
       nombreCurso: body.nombreCurso,
-      descripcion: body.descripcion,
       updatedAt: new Date(),
     };
 

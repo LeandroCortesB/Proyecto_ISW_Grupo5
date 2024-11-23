@@ -1,6 +1,7 @@
 "use strict";
 import { Router } from "express";
-import { isProfesor } from "../middlewares/authorization.middleware.js";
+import {  isAdmin, isProfesor } from "../middlewares/authorization.middleware.js";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
   createCurso,
   deleteCurso,
@@ -12,7 +13,8 @@ import {
 const router = Router();
 
 router
-    .use(isProfesor);
+  .use(authenticateJwt)
+  .use(isAdmin);
 
 router
   .get("/all", getCursos)        

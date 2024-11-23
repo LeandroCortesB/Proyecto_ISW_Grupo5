@@ -19,7 +19,6 @@ const Cursos = () => {
         <Table
           data={cursos}
           columns={columns}
-          dataToFilter={'idCurso'}
           initialSortName={'nombreCurso'}
         />
       </div>

@@ -47,6 +47,7 @@ export async function getCursos(req, res) {
     handleErrorServer(res, 500, error.message);
   }
 }
+
 export async function createCurso(req, res) {
     try {
       const { error } = cursoBodyValidation.validate(req.body);
