@@ -11,6 +11,7 @@ const useCursos = () => {
                 nombreCurso: curso.nombreCurso,
                 createdAt: curso.createdAt
             }));
+            dataLogged(formattedData);
             setCursos(formattedData);
         } catch (error) {
             console.error("Error: ", error);
@@ -20,6 +21,20 @@ const useCursos = () => {
     useEffect(() => {
         fetchCursos();
     }, []);
+
+    const dataLogged = (formattedData) => {
+        try {
+            const { id } = JSON.parse(sessionStorage.getItem('curso'));
+            for(let i = 0; i < formattedData.length ; i++) {
+                if(formattedData[i].idCurso === id) {
+                    formattedData.splice(i, 1);
+                    break;
+                }
+            }
+        } catch (error) {
+            console.error("Error: ", error)
+        }
+    };
 
     return { cursos, fetchCursos, setCursos };
 };

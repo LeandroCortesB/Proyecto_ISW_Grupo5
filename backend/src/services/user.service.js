@@ -98,7 +98,6 @@ export async function updateUserService(query, body) {
     const { password, ...userUpdated } = userData;
     
     //aca se crea una hoja asociada al usuario en caso de que este sea un alumno
-
     
 
     if(rol="alumno"){

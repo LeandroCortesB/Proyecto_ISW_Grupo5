@@ -1,18 +1,18 @@
 "use strict";
 import { Router } from "express";
-import { isProfesor } from "../middlewares/authorization.middleware.js";
+import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import {
   getHoja,
   updateHoja,
 } from "../controllers/hoja.controller.js";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 
 const router = Router();
 
-router
-    .use(isProfesor);
+router.use(authenticateJwt);
 
 router
-    .get("/data",getHoja)
-    .patch("/update",updateHoja);
+    .get("/data",authorizeRoles(["administrador", "profesor"]), getHoja)
+    .patch("/update",authorizeRoles(["administrador", "profesor"]), updateHoja);
 
 export default router;
