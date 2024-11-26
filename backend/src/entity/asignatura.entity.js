@@ -44,6 +44,25 @@ const AsignaturaSchema = new EntitySchema({
             nullable: false,
             onDelete: "CASCADE", // Opcional: borra la asignatura si el curso es eliminado
         },
+        asistencias: {
+            type: "one-to-many",
+            target: "Asistencia",
+            inverseSide: "asignatura",
+            cascade: true, // Borra las asistencias asociadas al eliminar la asignatura
+        },
+        notas: {
+            type: "one-to-many",
+            target: "Nota",
+            inverseSide: "asignatura",
+            cascade: true, // Borra las notas asociadas al eliminar la asignatura
+        },
+        profesor: {
+            type: "many-to-one",
+            target: "User",
+            joinColumn: true,
+            nullable: false, // Cada asignatura debe estar asociada a un profesor
+            onDelete: "SET NULL", // Si el profesor se elimina, la asignatura queda sin profesor
+        },
     },
     indices: [
         {

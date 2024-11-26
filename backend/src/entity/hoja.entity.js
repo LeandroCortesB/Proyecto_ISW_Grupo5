@@ -43,6 +43,13 @@ const HojaSchema = new EntitySchema({
     },
   },
   relations: {
+    alumno: {
+      type: "many-to-one",
+      target: "User", // En este caso, debe apuntar a la entidad de alumnos dentro de User
+      joinColumn: true,
+      nullable: false,
+      onDelete: "CASCADE", // Si el alumno se elimina, también se eliminan sus hojas
+    },
     paginas: {
       type: "one-to-many",
       target: "Pagina",

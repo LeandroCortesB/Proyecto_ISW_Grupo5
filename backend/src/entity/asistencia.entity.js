@@ -30,19 +30,19 @@ const AsistenciaSchema = new EntitySchema({
         },
     },
     relations: {
-        estudiante: {
+        alumno: {
         type: "many-to-one",
-        target: "Estudiante",
+        target: "User",
         joinColumn: true,
-        nullable: false,
-        onDelete: "CASCADE",
+        nullable: false, // La asistencia debe estar asociada a un usuario
+        onDelete: "CASCADE", // Si se elimina el usuario, se elimina la asistencia asociada
     },
-    curso:{
-        type: "many-to-one",
-        target: "Curso",
+    asignatura:{
+        type: "many-to-one",// un alumno puede tener muchas asistencias
+        target: "Asignatura",
         joinColumn: true,
-        nullable: false,
-        onDelete: "CASCADE",
+        nullable: false, // La asistencia debe estar asociada a una asignatura
+        onDelete: "CASCADE",// Si se elimina el curso, se eliminan las asistencias asociadas
     },
 }
 });

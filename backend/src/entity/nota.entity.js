@@ -36,14 +36,14 @@ const NotaSchema = new EntitySchema({
       type: "many-to-one",
       target: "User",
       joinColumn: true,
-      nullable: true,
+      nullable: false,// Una nota siempre debe estar asociada a un estudiante
       onDelete: "CASCADE",
     },
     asignatura: {
       type: "many-to-one",
       target: "Asignatura",
       joinColumn: true,
-      nullable: true,
+      nullable: false,// Una nota siempre debe estar asociada a una asignatura
       onDelete: "CASCADE",
     },
   },
