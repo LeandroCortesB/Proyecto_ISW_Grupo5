@@ -7,6 +7,7 @@ import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
 import Cursos from '@pages/Cursos';
+import Perfil from '@pages/Perfil';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home/>
+      },
+      {
+        path: '/perfil',
+        element: <Perfil />
       },
       {
         path: '/users',

@@ -2,6 +2,7 @@ import { startCase } from 'lodash';
 import { format as formatRut } from 'rut.js';
 import { format as formatTempo } from "@formkit/tempo";
 
+
 export function formatUserData(user) {
     return {
         ...user,
@@ -9,6 +10,16 @@ export function formatUserData(user) {
         rol: startCase(user.rol),
         rut: formatRut(user.rut),
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatAsignaturaData(asignatura) {
+    return {
+        ...asignatura,
+        nombreAsignatura: startCase(asignatura.nombreAsignatura),
+        descripcion: startCase(asignatura.descripcion),
+        createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
+        cursoIdCurso: startCase(asignatura.cursoIdCurso)
     };
 }
 
@@ -38,3 +49,4 @@ export function formatPostUpdate(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
+

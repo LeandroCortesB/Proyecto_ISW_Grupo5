@@ -1,4 +1,4 @@
-import { useAuth } from '../context/AuthContext';
+import {useAuth} from '../context/authContext';
 import '@styles/home.css';
 
 const Home = () => {
