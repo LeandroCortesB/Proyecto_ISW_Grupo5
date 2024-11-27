@@ -46,15 +46,15 @@ export async function getUsersService() {
 
 export async function createUserService(body){
   try{
-    const userRepository = AppDataSource.getRepository(user);
+    const userRepository = AppDataSource.getRepository(User);
   
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }],
+      where: [{ id: body.id }, { rut: body.rut }],
     });
 
     if (userFound) return [null, "Ya existe un usuario con ese rut"];
   
-    const nuevoUsuario = usuarioRepository.create({
+    const nuevoUsuario = userRepository.create({
       nombreCompleto: body.nombreCompleto,
       rut: body.rut,
       email: body.email,
@@ -66,7 +66,7 @@ export async function createUserService(body){
   
     await userRepository.save(nuevoUsuario);
   
-    createHojaService(user.nombreCompleto,user.rut,true,"");
+    await createHojaService(nuevoUsuario.nombreCompleto,nuevoUsuario.rut,true,"");
 
     return [nuevoUsuario, null];
   } catch (error) {
