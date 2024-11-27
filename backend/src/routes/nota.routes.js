@@ -16,7 +16,7 @@ router.use(authenticateJwt);
 
 router
   .get("/all", authorizeRoles(["administrador", "profesor"]),getNotas)         
-  .get("/data", authorizeRoles(["administrador", "profesor"]),getNota)      
+  .get("/", authorizeRoles(["administrador", "profesor"]),getNota)      
   .post("/",authorizeRoles(["administrador", "profesor"]), createNota)       
   .patch("/update",authorizeRoles(["administrador", "profesor"]), updateNota) 
   .delete("/delete",authorizeRoles(["administrador", "profesor"]), deleteNota); 

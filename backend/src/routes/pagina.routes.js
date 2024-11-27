@@ -14,7 +14,7 @@ const router = Router();
 router.use(authenticateJwt);
 
 router
-    .get("/data",authorizeRoles(["administrador", "profesor"]),getPagina)
+    .get("/",authorizeRoles(["administrador", "profesor"]),getPagina)
     .post("/create",authorizeRoles(["administrador", "profesor"]), createPagina)
     .patch("/update",authorizeRoles(["administrador", "profesor"]),updatePagina)
     .delete("/del", authorizeRoles(["administrador", "profesor"]),deletePagina);

@@ -16,7 +16,7 @@ router.use(authenticateJwt);
 
 router
   .get("/all", authorizeRoles(["administrador", "profesor"]), getCursos) 
-  .get("/data", authorizeRoles(["administrador", "profesor"]), getCurso) 
+  .get("/", authorizeRoles(["administrador", "profesor"]), getCurso) 
   .post("/create", authorizeRoles(["administrador"]), createCurso) 
   .patch("/update", authorizeRoles(["administrador"]), updateCurso) 
   .delete("/del", authorizeRoles(["administrador"]), deleteCurso);
