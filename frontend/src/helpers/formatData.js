@@ -13,6 +13,18 @@ export function formatUserData(user) {
     };
 }
 
+export function formatHojaData(hoja) {
+    return {
+        ...hoja,
+        nombreCompleto: startCase(hoja.nombreCompleto),
+        rut: formatRut(hoja.rut),
+        anotacion: startCase(hoja.anotacion),
+        buena: !!(hoja.buena),
+        createdAt: formatTempo(hoja.createdAt, "DD-MM-YYYY")
+    };
+}
+
+
 export function formatAsignaturaData(asignatura) {
     return {
         ...asignatura,

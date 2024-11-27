@@ -27,3 +27,11 @@ export const showErrorAlert = (titleMessage, message) => {
     'error'
   );
 };
+
+export const showMalaHojaAlert = (titleMessage, message) => {
+  Swal.fire(
+    titleMessage,
+    message,
+    'malamala'
+  );
+};
