@@ -9,6 +9,7 @@ const Asignaturas = () => {
   console.log(asignaturas);
   const columns = [
     { title: "Nombre", field: "nombreAsignatura", width: 350, responsive: 0 },
+    { title: "Curso", field: "curso.nombreCurso", width: 200, responsive: 1 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 },
   ];
   return(
