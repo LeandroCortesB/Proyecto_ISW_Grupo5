@@ -29,7 +29,7 @@ const UserSchema = new EntitySchema({
     },
     rol: {
       type: "enum",
-      enum: ["alumno", "profesor", "apoderado","administrador"],
+      enum: ["alumno", "profesor", "apoderado","administrador","usuario"],
       nullable: false,
     },
     password: {
@@ -63,7 +63,7 @@ const UserSchema = new EntitySchema({
       inverseSide: "alumnos",
       joinColumn: true,
       nullable: true, // Nullable para roles como profesor/apoderado
-      onDelete: "CASCADE",
+      
     },
     // Relación con asignaturas (sólo aplica si el rol es 'profesor')
     asignaturas: {

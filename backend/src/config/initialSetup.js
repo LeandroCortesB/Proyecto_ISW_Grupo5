@@ -2,6 +2,7 @@
 import User from "../entity/user.entity.js";
 import Hoja from "../entity/hoja.entity.js";
 import Curso from "../entity/curso.entity.js";
+import Asignatura from "../entity/asignatura.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -12,6 +13,8 @@ async function createUsers() {
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const cursoRepository = AppDataSource.getRepository(Curso);
+
+    const AsignaturaRepository = AppDataSource.getRepository(Asignatura);
 
     const count = await userRepository.count();
 
@@ -40,7 +43,7 @@ async function createUsers() {
           rut: "21.151.897-9",
           email: "usuario1.2024@gmail.cl",
           password: await encryptPassword("user1234"),
-          rol: "usuario",
+          rol: "profesor",
         })
       ),
       hojaRepository.save(
@@ -56,7 +59,7 @@ async function createUsers() {
             rut: "20.630.735-8",
             email: "usuario2.2024@gmail.cl",
             password: await encryptPassword("user1234"),
-            rol: "usuario",
+            rol: "alumno",
           }),
       ),
       hojaRepository.save(
@@ -153,6 +156,13 @@ async function createUsers() {
       cursoRepository.save(
         cursoRepository.create({
           nombreCurso: "1B",
+        }),
+      ),
+      AsignaturaRepository.save(
+        AsignaturaRepository.create({
+          nombreAsignatura: "Matemáticas",
+          descripcion: "Curso de la profesora maria",
+          idCurso: 1,
         }),
       ),
     ]);
