@@ -1,5 +1,6 @@
 "use strict";
 import {
+  createHojaService,
   deleteHojaService,
   getHojaService,
   getHojasService,
@@ -48,6 +49,23 @@ export async function getHojas(req, res) {
       500,
       error.message,
     );
+  }
+}
+
+export async function createHoja(req, res) {
+  try {
+
+    const { error } = hojaQueryValidation.validate(req.body);
+
+    if (error) return handleErrorClient(res, 400, "Error de validacion", error.message);
+
+    const [hoja, errorHoja] = await createHojaService(req.body);
+
+    if (errorHoja) return handleErrorClient(res, 404, errorHoja);
+
+    handleSuccess(res, 200, "Hoja de vida creada correctamente", hoja);
+  } catch (error) {
+    handleErrorServer(res, 500, error.message);
   }
 }
 
