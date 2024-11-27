@@ -1,7 +1,7 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import Hoja from "../entity/hoja.entity.js";
-import deleteHojaService from "../services/hoja.service.js";
+import { createHojaService, deleteHojaService }  from "../services/hoja.service.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 import { hojaQueryValidation } from "../validations/hoja.validation.js";
@@ -43,6 +43,38 @@ export async function getUsersService() {
     return [null, "Error interno del servidor"];
   }
 }
+
+export async function createUserService(body){
+  try{
+    const userRepository = AppDataSource.getRepository(user);
+  
+    const userFound = await userRepository.findOne({
+      where: [{ id: id }, { rut: rut }],
+    });
+
+    if (userFound) return [null, "Ya existe un usuario con ese rut"];
+  
+    const nuevoUsuario = usuarioRepository.create({
+      nombreCompleto: body.nombreCompleto,
+      rut: body.rut,
+      email: body.email,
+      password: await encryptPassword(body.password),
+      rol: body.rol,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  
+    await userRepository.save(nuevoUsuario);
+  
+    createHojaService(user.nombreCompleto,user.rut,true,"");
+
+    return [nuevoUsuario, null];
+  } catch (error) {
+    console.error("Error al crear el usuario:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
 
 export async function updateUserService(query, body) {
   try {
@@ -96,11 +128,8 @@ export async function updateUserService(query, body) {
     }
 
     const { password, ...userUpdated } = userData;
-    
-    //aca se crea una hoja asociada al usuario en caso de que este sea un alumno
-    
 
-    if(rol="alumno"){
+    if(body.rol="alumno"){
       hojaRepository.save(
         hojaRepository.create({
           nombreCompleto: body.nombreCompleto,

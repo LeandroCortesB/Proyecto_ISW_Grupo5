@@ -1,6 +1,6 @@
 import Table from '@components/Table';
 import useAsignaturas from '@hooks/asignaturas/useGetAsignaturas.jsx';
-import {useAuth} from '../context/authContext';
+import { useAuth } from '../context/AuthContext';
 import '@styles/perfil.css';
 
 const Perfil = () => {
