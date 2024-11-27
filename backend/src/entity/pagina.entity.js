@@ -6,7 +6,7 @@ const PaginaSchema = new EntitySchema({
   name: "Pagina",
   tableName: "paginas",
   columns: {
-    id: {
+    idPagina: {
       type: "int",
       primary: true,
       generated: true,

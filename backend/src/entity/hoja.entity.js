@@ -5,7 +5,7 @@ const HojaSchema = new EntitySchema({
   name: "Hoja",
   tableName: "hojas",
   columns: {
-    id: {
+    idHoja: {
       type: "int",
       primary: true,
       generated: true,
@@ -43,6 +43,13 @@ const HojaSchema = new EntitySchema({
     },
   },
   relations: {
+    alumno: {
+      type: "many-to-one",
+      target: "User", // En este caso, debe apuntar a la entidad de alumnos dentro de User
+      joinColumn: true,
+      nullable: true,
+      onDelete: "CASCADE", // Si el alumno se elimina, también se eliminan sus hojas
+    },
     paginas: {
       type: "one-to-many",
       target: "Pagina",
@@ -53,7 +60,7 @@ const HojaSchema = new EntitySchema({
   indices: [
     {
       name: "IDX_HOJA",
-      columns: ["id"],
+      columns: ["idHoja"],
       unique: true,
     },
     {
