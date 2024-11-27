@@ -5,7 +5,7 @@ const HojaSchema = new EntitySchema({
   name: "Hoja",
   tableName: "hojas",
   columns: {
-    id: {
+    idHoja: {
       type: "int",
       primary: true,
       generated: true,
@@ -60,7 +60,7 @@ const HojaSchema = new EntitySchema({
   indices: [
     {
       name: "IDX_HOJA",
-      columns: ["id"],
+      columns: ["idHoja"],
       unique: true,
     },
     {

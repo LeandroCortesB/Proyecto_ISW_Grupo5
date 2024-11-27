@@ -7,7 +7,7 @@ export async function getAsistenciaService(query) {
         const asistenciaRepository = AppDataSource.getRepository(Asistencia);
         const asistencia = await asistenciaRepository.find({
             where: query,
-            relations: ["estudiante", "curso"],
+            relations: ["alumno", "asignatura"],
         });
         
         if (!asistencia || asistencia.length === 0) return [null, "No hay asistencias"];    
@@ -21,7 +21,7 @@ export async function getAsistenciaService(query) {
 export async function getAsistenciasService() {
     try {
         const asistenciaRepository = AppDataSource.getRepository(Asistencia);
-        const asistencias = await asistenciaRepository.find({ relations: ["estudiante", "curso"] });
+        const asistencias = await asistenciaRepository.find({ relations: ["alumno", "asignatura"] });
         if (!asistencias || asistencias.length === 0) return [null, "No hay asistencias"];
         return [asistencias, null];
     } catch (error) {

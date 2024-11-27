@@ -19,10 +19,10 @@ estudiante: Joi.number()
     .positive()
     .required()
     .messages({
-        "number.base": "El idEstudiante debe ser un número.",
-        "number.integer": "El idEstudiante debe ser un número entero.",
-        "number.positive": "El idEstudiante debe ser un número positivo.",
-        "any.required": "El idEstudiante es requerido.",
+        "number.base": "El idAlumno debe ser un número.",
+        "number.integer": "El idAlumno debe ser un número entero.",
+        "number.positive": "El idAlumno debe ser un número positivo.",
+        "any.required": "El idAlumno es requerido.",
     }),
 curso: Joi.number()
     .integer()

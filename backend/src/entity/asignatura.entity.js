@@ -60,7 +60,7 @@ const AsignaturaSchema = new EntitySchema({
             type: "many-to-one",
             target: "User",
             joinColumn: true,
-            nullable: false, // Cada asignatura debe estar asociada a un profesor
+            nullable: true, // Cada asignatura debe estar asociada a un profesor
             onDelete: "SET NULL", // Si el profesor se elimina, la asignatura queda sin profesor
         },
     },

@@ -29,7 +29,7 @@ const UserSchema = new EntitySchema({
     },
     rol: {
       type: "enum",
-      enum: ["alumno", "profesor", "apoderado"],
+      enum: ["alumno", "profesor", "apoderado","administrador"],
       nullable: false,
     },
     password: {

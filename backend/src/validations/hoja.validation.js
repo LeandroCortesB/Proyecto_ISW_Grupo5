@@ -2,7 +2,7 @@
 import Joi from "joi";
 
 export const hojaQueryValidation = Joi.object({
-  id: Joi.number()
+  idHoja: Joi.number()
     .integer()
     .positive()
     .messages({
@@ -22,7 +22,7 @@ export const hojaQueryValidation = Joi.object({
       "string.pattern.base": "Formato rut inválido, debe ser xx.xxx.xxx-x o xxxxxxxx-x.",
     }),
 })
-  .or("id", "rut")
+  .or("idHoja", "rut")
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",

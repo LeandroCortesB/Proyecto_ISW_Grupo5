@@ -5,7 +5,7 @@ import {
     getAsistenciaService,
     getAsistenciasService,
     updateAsistenciaService,
-} from "../controllers/asistencia.service.js";
+} from "../services/asistencia.service.js";
 import { handleErrorClient, handleErrorServer, handleSuccess } from "../handlers/responseHandlers.js";
 
 export async function getAsistencias(req, res) {

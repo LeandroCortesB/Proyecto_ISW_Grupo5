@@ -50,7 +50,7 @@ const CursoSchema = new EntitySchema({
             type: "many-to-one",
             target: "User",
             joinColumn: true,
-            nullable: false, // Cada curso debe estar asociado a un profesor
+            nullable: true, // Cada curso debe estar asociado a un profesor
             onDelete: "SET NULL", // Si el profesor se elimina, el curso queda sin profesor
         },
     },
