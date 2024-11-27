@@ -24,7 +24,6 @@ export function formatHojaData(hoja) {
     };
 }
 
-
 export function formatAsignaturaData(asignatura) {
     return {
         ...asignatura,

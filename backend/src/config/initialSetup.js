@@ -1,15 +1,13 @@
 "use strict";
 import User from "../entity/user.entity.js";
-import Hoja from "../entity/hoja.entity.js";
 import Curso from "../entity/curso.entity.js";
+import createUser from "../controllers/user.controller.js"
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
 async function createUsers() {
   try {
     const userRepository = AppDataSource.getRepository(User);
-
-    const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const cursoRepository = AppDataSource.getRepository(Curso);
 
@@ -18,22 +16,7 @@ async function createUsers() {
     if (count > 0) return;
 
     await Promise.all([
-      userRepository.save(
-        userRepository.create({
-          nombreCompleto: "Diego Alexis Salazar Jara",
-          rut: "21.308.770-3",
-          email: "administrador2024@gmail.cl",
-          password: await encryptPassword("admin1234"),
-          rol: "administrador",
-        }),
-      ),
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: "Diego Alexis Salazar Jara",
-          rut: "21.308.770-3",
-          buena:true,
-        }),
-      ),
+      createUser("Diego Alexis Salazar Jara","21.308.770-3","administrador2024@gmail.cl","admin1234","administrador"),
       userRepository.save(
         userRepository.create({
           nombreCompleto: "Diego Sebastián Ampuero Belmar",

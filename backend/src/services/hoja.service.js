@@ -40,6 +40,34 @@ export async function getHojasService() {
   }
 }
 
+export async function createHojaService(body){
+  try{
+    const hojaRepository = AppDataSource.getRepository(hoja);
+  
+    const hojaFound = await hojaRepository.findOne({
+      where: [{ id: id }, { rut: rut }],
+    });
+
+    if (hojaFound) return [null, "Ya existe una hoja con ese rut"];
+  
+    const nuevoHoja = hojaRepository.create({
+      nombreCompleto: body.nombreCompleto,
+      rut: body.rut,
+      buena: body.buena,
+      anotacion: body.anotacion,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  
+    await hojaRepository.save(nuevoHoja);
+  
+    return [nuevoHoja, null];
+  } catch (error) {
+    console.error("Error al crear la hoja:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
 export async function updateHojaService(query, body) {
   try {
     const { id, rut } = query;
