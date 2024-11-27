@@ -4,6 +4,7 @@ import userRoutes from "./user.routes.js";
 import authRoutes from "./auth.routes.js";
 import notaRoutes from "./nota.routes.js";
 import asignaturaRoutes from "./asignatura.routes.js";
+import asistenciaRoutes from "./asistencia.routes.js";
 import cursoRoutes from "./curso.routes.js";
 import hojaRoutes from "./hoja.routes.js";
 
@@ -13,6 +14,7 @@ router
     .use("/auth", authRoutes)
     .use("/nota", notaRoutes)
     .use("/asignatura", asignaturaRoutes)
+    .use("/asistencia", asistenciaRoutes)
     .use("/curso", cursoRoutes)
     .use("/hoja", hojaRoutes)
     .use("/perfil", userRoutes)

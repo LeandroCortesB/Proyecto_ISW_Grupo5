@@ -1,7 +1,7 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import Curso from "../entity/curso.entity.js";
-import createUser from "../controllers/user.controller.js"
+import Asignatura from "../entity/asignatura.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -11,19 +11,20 @@ async function createUsers() {
 
     const cursoRepository = AppDataSource.getRepository(Curso);
 
+    const AsignaturaRepository = AppDataSource.getRepository(Asignatura);
+
     const count = await userRepository.count();
 
     if (count > 0) return;
 
     await Promise.all([
-      createUser("Diego Alexis Salazar Jara","21.308.770-3","administrador2024@gmail.cl","admin1234","administrador"),
       userRepository.save(
         userRepository.create({
           nombreCompleto: "Diego Sebastián Ampuero Belmar",
           rut: "21.151.897-9",
           email: "usuario1.2024@gmail.cl",
           password: await encryptPassword("user1234"),
-          rol: "usuario",
+          rol: "profesor",
         })
       ),
       hojaRepository.save(
@@ -39,7 +40,7 @@ async function createUsers() {
             rut: "20.630.735-8",
             email: "usuario2.2024@gmail.cl",
             password: await encryptPassword("user1234"),
-            rol: "usuario",
+            rol: "alumno",
           }),
       ),
       hojaRepository.save(
@@ -136,6 +137,13 @@ async function createUsers() {
       cursoRepository.save(
         cursoRepository.create({
           nombreCurso: "1B",
+        }),
+      ),
+      AsignaturaRepository.save(
+        AsignaturaRepository.create({
+          nombreAsignatura: "Matemáticas",
+          descripcion: "Curso de la profesora maria",
+          idCurso: 1,
         }),
       ),
     ]);

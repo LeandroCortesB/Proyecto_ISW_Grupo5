@@ -16,9 +16,11 @@ router.use(authenticateJwt);
 
 router
   .get("/all", authorizeRoles(["administrador", "profesor"]), getCursos) 
-  .get("/", authorizeRoles(["administrador", "profesor"]), getCurso) 
-  .post("/create", authorizeRoles(["administrador"]), createCurso) 
-  .patch("/update", authorizeRoles(["administrador"]), updateCurso) 
-  .delete("/del", authorizeRoles(["administrador"]), deleteCurso);
+  .get("/:idCurso", authorizeRoles(["administrador", "profesor"]), getCurso) 
+  .post("/", authorizeRoles(["administrador"]), createCurso) 
+  .patch("/:idCurso", authorizeRoles(["administrador"]), updateCurso) 
+  .delete("/:idCurso", authorizeRoles(["administrador"]), deleteCurso);
 
 export default router;
+//Primero por id
+// controller en vez de query params

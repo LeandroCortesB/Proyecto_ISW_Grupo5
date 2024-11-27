@@ -18,13 +18,13 @@ import {
 
 export async function getCurso(req, res) {
   try {
-    const { idCurso, nombreCurso } = req.query;
+    const { idCurso } = req.params;
 
-    const { error } = cursoQueryValidation.validate({ idCurso, nombreCurso });
+    const { error } = cursoQueryValidation.validate({ idCurso });
 
     if (error) return handleErrorClient(res, 400, error.message);
 
-    const [curso, errorCurso] = await getCursoService({ idCurso, nombreCurso });
+    const [curso, errorCurso] = await getCursoService({ idCurso });
 
     if (errorCurso) return handleErrorClient(res, 404, errorCurso);
 
@@ -67,7 +67,7 @@ export async function createCurso(req, res) {
 
 export async function updateCurso(req, res) {
   try {
-    const { idCurso, nombreCurso } = req.query;
+    const { idCurso, nombreCurso } = req.params;
     const { body } = req;
 
     const { error: queryError } = cursoQueryValidation.validate({
@@ -110,7 +110,7 @@ export async function updateCurso(req, res) {
 
 export async function deleteCurso(req, res) {
   try {
-    const { idCurso, nombreCurso } = req.query;
+    const { idCurso, nombreCurso } = req.params;
 
     const { error: queryError } = cursoQueryValidation.validate({
       idCurso,

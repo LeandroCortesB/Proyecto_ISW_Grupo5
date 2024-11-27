@@ -10,6 +10,7 @@ export async function getAsignaturaService(query) {
 
         const asignaturaFound = await asignaturaRepository.findOne({
             where: [{ idAsignatura } ],
+            relations: ["curso", "notas", "asistencias", "profesor"],
         });
 
         if (!asignaturaFound) return [null, "Asignatura no encontrada"];
@@ -25,7 +26,9 @@ export async function getAsignaturasService() {
     try {
         const asignaturaRepository = AppDataSource.getRepository(Asignatura);
 
-        const asignaturas = await asignaturaRepository.find();
+        const asignaturas = await asignaturaRepository.find({
+            relations: ["curso", "notas", "asistencias", "profesor"],
+});
 
         if (!asignaturas || asignaturas.length === 0) return [null, "No hay asignaturas"];
 
