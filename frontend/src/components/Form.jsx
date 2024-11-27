@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import '@styles/form.css';
-import HideIcon from '../assets/HideIcon.svg';
-import ViewIcon from '../assets/ViewIcon.svg';
+import HideIcon from '@assets/HideIcon.svg';
+import ViewIcon from '@assets/ViewIcon.svg';
 
 const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundColor }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
