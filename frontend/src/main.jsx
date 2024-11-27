@@ -10,6 +10,7 @@ import Cursos from '@pages/Cursos';
 import Perfil from '@pages/Perfil';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
+import Asignaturas from './pages/asignatura';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/perfil',
         element: <Perfil />
+      },
+      {
+        path: '/asignatura',
+        element: <Asignaturas/>
       },
       {
         path: '/users',

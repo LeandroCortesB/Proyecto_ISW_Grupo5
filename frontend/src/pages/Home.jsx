@@ -1,8 +1,34 @@
-import {useAuth} from '../context/authContext';
+import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import useGetHoja from '@hooks/hojas/useGetHoja';
+import { showMalaHojaAlert } from '@helpers/sweetAlert.js';
 import '@styles/home.css';
 
 const Home = () => {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
+  const { getHoja } = useGetHoja(); 
+
+  useEffect(() => {
+    const fetchHoja = async () => {
+      if (user.rol === 'Alumno') {
+        try {
+          const hoja = await getHoja(user.rut); 
+          if (hoja && !hoja.buena) {
+            showMalaHojaAlert(
+              'Advertencia',
+              `Hola ${user.nombreCompleto}, tu última hoja actualizada el ${new Date(
+                hoja.updatedAt
+              ).toLocaleString()} tiene observaciones negativas.`
+            );
+          }
+        } catch (error) {
+          console.error('Error al obtener la hoja:', error);
+        }
+      }
+    };
+
+    fetchHoja();
+  }, [user, getHoja]);
 
   return (
     <div className="home-container">

@@ -1,0 +1,103 @@
+/* Estilos para el contenedor principal */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+  margin-top: 70px; /* Deja espacio debajo del navbar */
+}
+
+/* Contenedor de la tabla */
+.table-container {
+  width: 90%; /* Reduce el ancho para evitar que toque los bordes */
+  max-width: 1200px; /* Máximo ancho en pantallas grandes */
+  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  margin-top: 20px; /* Espacio superior */
+}
+
+/* Encabezado de la tabla */
+.top-table {
+  text-align: center; /* Centra el texto */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.title-table {
+  font-size: 24px; /* Tamaño del texto */
+  font-weight: bold; /* Negrita */
+  color: #003366; /* Azul oscuro */
+  margin: 0; /* Sin márgenes extra */
+}
+
+/* Tabla principal */
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Elimina espacios entre celdas */
+  margin-top: 20px; /* Espaciado superior */
+  font-size: 16px; /* Tamaño del texto */
+  color: #333333; /* Texto gris oscuro */
+}
+
+/* Celdas de la tabla */
+.table th, .table td {
+  padding: 12px 10px; /* Espaciado interno */
+  text-align: center; /* Centra el contenido */
+  border-bottom: 1px solid #e0e0e0; /* Líneas entre filas */
+}
+
+/* Encabezados */
+.table th {
+  background-color: #003366; /* Azul oscuro */
+  color: #ffffff; /* Texto blanco */
+  font-weight: bold; /* Negrita */
+}
+
+/* Filas de la tabla */
+.table tr:nth-child(even) {
+  background-color: #f7f7f7; /* Fondo alterno */
+}
+
+.table tr:hover {
+  background-color: #eaf4fc; /* Fondo azul claro al pasar el mouse */
+}
+
+/* Paginación */
+.pagination-container {
+  display: flex;
+  justify-content: flex-end; /* Alinea la paginación a la derecha */
+  margin-top: 10px; /* Espaciado superior */
+}
+
+.pagination-container button {
+  background-color: #003366; /* Azul oscuro */
+  color: #ffffff; /* Texto blanco */
+  border: none;
+  padding: 6px 12px; /* Espaciado interno */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer;
+  margin-left: 5px; /* Separación entre botones */
+}
+
+.pagination-container button:hover {
+  background-color: #0055aa; /* Azul más intenso al pasar el mouse */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .table-container {
+      padding: 15px;
+  }
+
+  .title-table {
+      font-size: 20px;
+  }
+
+  .table th, .table td {
+      padding: 8px;
+      font-size: 14px;
+  }
+}
