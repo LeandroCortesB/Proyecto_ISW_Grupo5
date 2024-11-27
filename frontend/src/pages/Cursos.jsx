@@ -1,7 +1,7 @@
 import Table from '@components/Table';
 import useCursos from '@hooks/cursos/useGetCursos.jsx';
 import '@styles/cursos.css';
-import personIcon from '@assets/personIcon.svg';
+import personIcon from '@assets/PersonIcon.svg';
 import { Link} from 'react-router-dom';
 import '@styles/asignatura.css';
 import Navbar from '@components/Navbar';
