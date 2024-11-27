@@ -1,11 +1,11 @@
 import Table from '@components/Table';
 import useUsers from '@hooks/users/useGetUsers.jsx';
-import Search from '../components/Search';
-import Popup from '../components/Popup';
-import DeleteIcon from '../assets/deleteIcon.svg';
-import UpdateIcon from '../assets/updateIcon.svg';
-import UpdateIconDisable from '../assets/updateIconDisabled.svg';
-import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
+import Search from '@components/Search';
+import Popup from '@components/Popup';
+import DeleteIcon from '@assets/deleteIcon.svg';
+import UpdateIcon from '@assets/updateIcon.svg';
+import UpdateIconDisable from '@assets/updateIconDisabled.svg';
+import DeleteIconDisable from '@assets/deleteIconDisabled.svg';
 import { useCallback, useState } from 'react';
 import '@styles/users.css';
 import useEditUser from '@hooks/users/useEditUser';

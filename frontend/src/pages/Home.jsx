@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '@context/AuthContext';
 import useGetHoja from '@hooks/hojas/useGetHoja';
 import { showMalaHojaAlert } from '@helpers/sweetAlert.js';
 import '@styles/home.css';
