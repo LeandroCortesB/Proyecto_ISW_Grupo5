@@ -17,13 +17,13 @@ import {
 
 export async function getHoja(req, res) {
   try {
-    const { rut, id } = req.query;
+    const { rut, idHoja } = req.query;
 
-    const { error } = hojaQueryValidation.validate({ rut, id });
+    const { error } = hojaQueryValidation.validate({ rut, idHoja });
 
     if (error) return handleErrorClient(res, 400, error.message);
 
-    const [hoja, errorHoja] = await getHojaService({ rut, id });
+    const [hoja, errorHoja] = await getHojaService({ rut, idHoja });
 
     if (errorHoja) return handleErrorClient(res, 404, errorUser);
 
@@ -53,7 +53,7 @@ export async function getHojas(req, res) {
 
 export async function updateHoja(req, res) {
   try {
-    const { rut, id } = req.query;
+    const { rut, idHoja } = req.query;
     const { body } = req;
 
     const { error: queryError } = hojaQueryValidation.validate({
@@ -80,7 +80,7 @@ export async function updateHoja(req, res) {
         bodyError.message,
       );
 
-    const [hoja, hojaError] = await updateHojaService({ rut, id }, body);
+    const [hoja, hojaError] = await updateHojaService({ rut, idHoja }, body);
 
     if (hojaError) return handleErrorClient(res, 400, "Error modificando la hoja de vida", hojaError);
 
@@ -92,11 +92,11 @@ export async function updateHoja(req, res) {
 
 export async function deleteHoja(req, res) {
   try {
-    const { rut, id } = req.query;
+    const { rut, idHoja } = req.query;
 
     const { error: queryError } = hojaQueryValidation.validate({
       rut,
-      id,
+      idHoja,
     });
 
     if (queryError) {
@@ -110,7 +110,7 @@ export async function deleteHoja(req, res) {
 
     const [hojaDelete, errorHojaDelete] = await deleteHojaService({
       rut,
-      id,
+      idHoja,
     });
 
     if (errorHojaDelete) return handleErrorClient(res, 404, "Error eliminado la hoja de vida", errorHojaDelete);

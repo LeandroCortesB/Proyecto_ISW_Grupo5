@@ -12,7 +12,7 @@ const CursoSchema = new EntitySchema({
         },
         nombreCurso: {
             type: "varchar",
-            length: 255,
+            length: 5,
             nullable: false,
         },
         createdAt: {
@@ -25,6 +25,33 @@ const CursoSchema = new EntitySchema({
             default: () => "CURRENT_TIMESTAMP",
             onUpdate: "CURRENT_TIMESTAMP",
             nullable: false,
+        },
+    },
+    relations: {
+        asignaturas: {
+            type: "one-to-many",
+            target: "Asignatura",
+            inverseSide: "curso",
+            cascade: true, // Borra las asignaturas asociadas al eliminar el curso
+        },
+        asistencias: {
+            type: "one-to-many",
+            target: "Asistencia",
+            inverseSide: "curso",
+            cascade: true, // Borra las asistencias asociadas al eliminar el curso
+        },
+        notas: {
+            type: "one-to-many",
+            target: "Nota",
+            inverseSide: "curso",
+            cascade: true, // Borra las notas asociadas al eliminar el curso
+        },
+        profesor: {
+            type: "many-to-one",
+            target: "User",
+            joinColumn: true,
+            nullable: true, // Cada curso debe estar asociado a un profesor
+            onDelete: "SET NULL", // Si el profesor se elimina, el curso queda sin profesor
         },
     },
     indices: [

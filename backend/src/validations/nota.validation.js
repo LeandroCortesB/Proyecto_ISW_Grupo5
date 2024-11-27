@@ -11,7 +11,7 @@ export const notaQueryValidation = Joi.object({
       "number.integer": "El idNota debe ser un número entero.",
       "number.positive": "El idNota debe ser un número positivo.",
     }),
-  asignaturaId: Joi.number()
+  asignatura: Joi.number()
     .integer()
     .positive()
     .messages({
@@ -19,22 +19,22 @@ export const notaQueryValidation = Joi.object({
       "number.integer": "El asignaturaId debe ser un número entero.",
       "number.positive": "El asignaturaId debe ser un número positivo.",
     }),
-  estudianteId: Joi.number()
+  alumno: Joi.number()
     .integer()
     .positive()
     .messages({
-      "number.base": "El estudianteId debe ser un número.",
-      "number.integer": "El estudianteId debe ser un número entero.",
-      "number.positive": "El estudianteId debe ser un número positivo.",
+      "number.base": "El alumnoId debe ser un número.",
+      "number.integer": "El alumnoId debe ser un número entero.",
+      "number.positive": "El alumnoId debe ser un número positivo.",
     }),
 })
 
-  .or("idNota", "asignaturaId", "estudianteId")
+  .or("idNota", "idAsignatura", "idAlumno")
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
     "object.missing":
-      "Debes proporcionar al menos un parámetro: idNota, asignaturaId o estudianteId.",
+      "Debes proporcionar al menos un parámetro: idNota, asignaturaId o alumnoId.",
   });
 
 // Validación del cuerpo (body) para crear o actua
@@ -60,18 +60,18 @@ export const notaBodyValidation = Joi.object({
       "string.pattern.base": "El periodo debe contener solo números y el símbolo '-'."
     }),
 
-  estudianteId: Joi.number()
+  alumno: Joi.number()
     .integer()
     .positive()
     .required()
     .messages({
-      "number.base": "El estudianteId debe ser un número.",
-      "number.integer": "El estudianteId debe ser un número entero.",
-      "number.positive": "El estudianteId debe ser un número positivo.",
-      "any.required": "El estudianteId es obligatorio y debe estar asociado a un estudiante válido.",
+      "number.base": "El alumnoId debe ser un número.",
+      "number.integer": "El alumnoId debe ser un número entero.",
+      "number.positive": "El alumnoId debe ser un número positivo.",
+      "any.required": "El alumnoId es obligatorio y debe estar asociado a un alumno válido.",
     }),
 
-  asignaturaId: Joi.number()
+  asignatura: Joi.number()
     .integer()
     .positive()
     .required()
@@ -83,10 +83,10 @@ export const notaBodyValidation = Joi.object({
     })
 })
 
-  .or("calificacion", "periodo", "estudianteId", "asignaturaId")
+  .or("calificacion", "periodo", "idAlumno", "idAsignatura")
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
     "object.missing":
-      "Debes proporcionar al menos un parámetro: calificacion, periodo, estudianteId o asignaturaId.",
+      "Debes proporcionar al menos un parámetro: calificacion, periodo, alumnoId o asignaturaId.",
   });
