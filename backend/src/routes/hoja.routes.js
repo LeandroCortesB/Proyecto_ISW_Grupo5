@@ -12,7 +12,7 @@ const router = Router();
 router.use(authenticateJwt);
 
 router
-    .get("/data",authorizeRoles(["administrador", "profesor"]), getHoja)
+    .get("/",authorizeRoles(["administrador", "profesor"]), getHoja)
     .patch("/update",authorizeRoles(["administrador", "profesor"]), updateHoja);
 
 export default router;
