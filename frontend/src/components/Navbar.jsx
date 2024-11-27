@@ -1,7 +1,7 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from '@services/auth.service.js';
 import { useState } from "react";
-import { useAuth } from '../context/AuthContext';
+import {useAuth} from '../context/authContext';
 import '@styles/navbar.css';
 
 const Navbar = () => {
@@ -84,6 +84,20 @@ const Navbar = () => {
                                 activeClassName="active"
                             >
                                 Cursos
+                            </NavLink>
+                        </li>
+                    )}
+                    {(
+                        <li>
+                            <NavLink 
+                                to="/perfil" 
+                                onClick={() => { 
+                                    setMenuOpen(false); 
+                                    addActiveClass();
+                                }} 
+                                activeClassName="active"
+                            >
+                                Perfil
                             </NavLink>
                         </li>
                     )}

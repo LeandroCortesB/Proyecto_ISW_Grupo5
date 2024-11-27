@@ -48,13 +48,16 @@ export const notaBodyValidation = Joi.object({
       "number.base": "La calificacion debe ser un número.",
       "number.min": "La calificacion debe ser un número mayor o igual a 1.",
       "number.max": "La calificacion debe ser un número menor o igual a 7.",
+      "number.positive": "La calificacion debe ser un número positivo."
     }), 
 
   periodo: Joi.string()
     .length(6)
+    .pattern(/^[0-9-]+$/)
     .messages({
       "string.base": "El periodo debe ser un string.",
       "string.length": "El periodo debe tener 6 caracteres.",
+      "string.pattern.base": "El periodo debe contener solo números y el símbolo '-'."
     }),
 
   estudianteId: Joi.number()
