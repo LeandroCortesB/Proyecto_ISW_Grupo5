@@ -15,6 +15,7 @@ router
     .use("/asignatura", asignaturaRoutes)
     .use("/curso", cursoRoutes)
     .use("/hoja", hojaRoutes)
+    .use("/perfil", userRoutes)
     .use("/user", userRoutes);
 
 export default router;
