@@ -137,7 +137,7 @@ export async function deleteUserService(query) {
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ id: id }, { rut: rut }],
+      where: [{ idHoja: Hoja.idHoja }, { rut: rut }],
     });
 
     deleteHojaService(hojaFound);

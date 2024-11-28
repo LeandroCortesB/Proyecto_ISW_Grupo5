@@ -23,7 +23,7 @@ export async function getCurso(idCurso) {
 
 export async function updateCurso(data, idCurso) {
     try {
-        const response = await axios.patch(`/curso/update/?idCurso=${idCurso}`, data);
+        const response = await axios.patch(`/curso/${idCurso}`, data);
         console.log(response);
         return response.data.data;
     } catch (error) {
@@ -34,7 +34,7 @@ export async function updateCurso(data, idCurso) {
 
 export async function deleteCurso(idCurso) {
     try {
-        const response = await axios.delete(`/curso/del/?idCurso=${idCurso}`);
+        const response = await axios.delete(`/curso/${idCurso}`);
         return response.data;
     } catch (error) {
         return error.response.data;
