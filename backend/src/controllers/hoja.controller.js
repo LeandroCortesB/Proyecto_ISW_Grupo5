@@ -58,7 +58,7 @@ export async function updateHoja(req, res) {
 
     const { error: queryError } = hojaQueryValidation.validate({
       rut,
-      id,
+      idHoja,
     });
 
     if (queryError) {
