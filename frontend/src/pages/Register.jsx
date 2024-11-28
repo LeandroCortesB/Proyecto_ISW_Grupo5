@@ -95,8 +95,8 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
 				buttonText="Registrarse"
 				onSubmit={registerSubmit}
 				footerContent={
-					<p>
-						¿Ya tienes cuenta?, <a href="/auth">¡Inicia sesión aquí!</a>
+					<p className="custom-text">
+						¿Ya tienes cuenta? <a href="/auth">¡Inicia sesión aquí!</a>
 					</p>
 				}
 			/>
