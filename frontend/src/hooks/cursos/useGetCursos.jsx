@@ -8,6 +8,7 @@ const useCursos = () => {
         try {
             const response = await getCursos();
             const formattedData = response.map(curso => ({
+                idCurso: curso.idCurso,
                 nombreCurso: curso.nombreCurso,
                 createdAt: curso.createdAt
             }));
@@ -24,9 +25,9 @@ const useCursos = () => {
 
     const dataLogged = (formattedData) => {
         try {
-            const { id } = JSON.parse(sessionStorage.getItem('curso'));
+            const { idCurso } = JSON.parse(sessionStorage.getItem('curso'));
             for(let i = 0; i < formattedData.length ; i++) {
-                if(formattedData[i].idCurso === id) {
+                if(formattedData[i].idCurso === idCurso) {
                     formattedData.splice(i, 1);
                     break;
                 }
