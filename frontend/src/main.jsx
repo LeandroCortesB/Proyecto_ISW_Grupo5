@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         element: <Perfil />
       },
       {
-        path: '/asignatura',
+        path: '/asignatura/:idCurso',
         element: <Asignaturas/>
       },
       {

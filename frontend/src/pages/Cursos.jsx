@@ -4,7 +4,6 @@ import '@styles/cursos.css';
 import personIcon from '@assets/PersonIcon.svg';
 import { Link} from 'react-router-dom';
 import '@styles/asignatura.css';
-import Navbar from '@components/Navbar';
 import useDeleteCurso from '@hooks/cursos/useDeleteCurso';
 import useEditCurso from '@hooks/cursos/useEditCurso';
 import { useCallback, useState } from 'react';
@@ -66,18 +65,18 @@ const Cursos = () => {
             </button>
         
         
-        <li className="move-right" >
-        <Link 
-        to="/asignatura"
-        onClick={() => {
-          Navbar.setMenuOpen(false);
-          Navbar.addActiveClass();
-        }}
-      activeClassName="active">
-          
-          <img src={personIcon} alt="change" />
-    </Link>
-    </li>
+        
+            {dataCurso.length > 0 ? (
+  <Link to={`/asignatura/${dataCurso[0]?.idCurso}`}>
+    <img src={personIcon} alt="asignaturas" />
+  </Link>
+) : (
+  <button className="Asignaturas" disabled>
+    <img src={personIcon} alt="asignaturas-disabled" />
+  </button>
+)}
+
+    
     </div>
       </div>
       <Table
