@@ -43,6 +43,14 @@ export function formatCursoData(curso) {
     };
 }
 
+export function formatNotaData(nota) {
+    return {
+        ...nota,
+        calificacion: startCase(nota.calificacion),
+        createdAt: formatTempo(nota.createdAt, "DD-MM-YYYY"),
+    };
+}
+
 export function convertirMinusculas(obj) {
     for (let key in obj) {
         if (typeof obj[key] === 'string') {

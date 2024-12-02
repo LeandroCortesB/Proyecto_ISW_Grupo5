@@ -54,7 +54,6 @@ const Navbar = () => {
                                 setMenuOpen(false); 
                                 addActiveClass();
                             }} 
-                            activeClassName="active"
                         >
                             Inicio
                         </NavLink>
@@ -67,7 +66,6 @@ const Navbar = () => {
                                     setMenuOpen(false); 
                                     addActiveClass();
                                 }} 
-                                activeClassName="active"
                             >
                                 Usuarios
                             </NavLink>
@@ -81,9 +79,23 @@ const Navbar = () => {
                                     setMenuOpen(false); 
                                     addActiveClass();
                                 }} 
-                                activeClassName="active"
+                                
                             >
                                 Cursos
+                            </NavLink>
+                        </li>
+                    )}
+                    {(userRole === 'administrador' || userRole === 'profesor') && (
+                        <li>
+                            <NavLink 
+                                to="/nota" 
+                                onClick={() => { 
+                                    setMenuOpen(false); 
+                                    addActiveClass();
+                                }} 
+                               
+                            >
+                                Notas
                             </NavLink>
                         </li>
                     )}
@@ -95,7 +107,7 @@ const Navbar = () => {
                                     setMenuOpen(false); 
                                     addActiveClass();
                                 }} 
-                                activeClassName="active"
+                               
                             >
                                 Perfil
                             </NavLink>

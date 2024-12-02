@@ -8,9 +8,11 @@ import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
 import Cursos from '@pages/Cursos';
 import Perfil from '@pages/Perfil';
+import Nota from '@pages/Nota';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Asignaturas from './pages/asignatura';
+
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/perfil',
         element: <Perfil />
+      },
+      {
+        path: '/nota',
+        element: <Nota />
       },
       {
         path: '/asignatura/:idCurso',
