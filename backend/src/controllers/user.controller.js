@@ -1,6 +1,8 @@
 "use strict";
 import {
+  createUserService,
   deleteUserService,
+  getAlumnosService,
   getUserService,
   getUsersService,
   updateUserService,
@@ -42,6 +44,42 @@ export async function getUsers(req, res) {
     users.length === 0
       ? handleSuccess(res, 204)
       : handleSuccess(res, 200, "Usuarios encontrados", users);
+  } catch (error) {
+    handleErrorServer(
+      res,
+      500,
+      error.message,
+    );
+  }
+}
+
+export async function createUser(req, res) {
+  try {
+    const { rut, id, email, contraseña, rol } = req.query;
+
+    const { error } = userQueryValidation.validate({ rut , id });
+
+    if (error) return handleErrorClient(res, 400, "Error de validacion", error.message);
+
+    const [user, errorUser] = await createUserService(req.body);
+
+    if (errorUser) return handleErrorClient(res, 404, errorUser);
+
+    handleSuccess(res, 200, "Usuario creado correctamente", user);
+  } catch (error) {
+    handleErrorServer(res, 500, error.message);
+  }
+}
+
+export async function getAlumnos(req, res) {
+  try {
+    const [alumnos, errorUsers] = await getAlumnosService();
+
+    if (errorUsers) return handleErrorClient(res, 404, errorUsers);
+
+    alumnos.length === 0
+      ? handleSuccess(res, 204)
+      : handleSuccess(res, 200, "Alumnos encontrados", alumnos);
   } catch (error) {
     handleErrorServer(
       res,

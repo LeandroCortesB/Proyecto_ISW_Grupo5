@@ -17,14 +17,14 @@ router.use(authenticateJwt)
 
 router
     .get("/all",authorizeRoles(["administrador", "profesor","alumno","usuario"
-        ,"apoderado"]),getAsistencias) // Ruta para obtener todas las asistencias
+        ,"apoderado"]),getAsistencias) 
     .get("/:idAsistencia",authorizeRoles(["administrador", "profesor","alumno","usuario"
-        ,"apoderado"]), getAsistencia) // Ruta para obtener una asistencia específica
+        ,"apoderado"]), getAsistencia) 
     .post("/",authorizeRoles(["administrador", "profesor","alumno","usuario"
-        ,"apoderado"]), createAsistencia) // Ruta para crear una asistencia
+        ,"apoderado"]), createAsistencia) 
     .patch("/:idAsistencia",authorizeRoles(["administrador", "profesor","alumno","usuario"
-        ,"apoderado"]), updateAsistencia) // Ruta para actualizar una asistencia específica
+        ,"apoderado"]), updateAsistencia) 
     .delete("/:idAsistencia",authorizeRoles(["administrador", "profesor","alumno","usuario"
-        ,"apoderado"]), deleteAsistencia); // Ruta para eliminar una asistencia específica
+        ,"apoderado"]), deleteAsistencia); 
 
 export default router;

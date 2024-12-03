@@ -30,10 +30,13 @@ const Cursos = () => {
     dataCurso,
     setDataCurso
   } = useEditCurso(setCursos);
+
   const { handleDelete } = useDeleteCurso(fetchCursos, setDataCurso);
+
   const handleNombreFilterChange = (e) => {
     setFilterNombre(e.target.value);
   };
+  
   const handleSelectionChange = useCallback((selectedCursos) => {
     setDataCurso(selectedCursos.map(curso => ({
       ...curso,

@@ -1,9 +1,15 @@
 import axios from './root.service.js';
+import cookies from 'js-cookie';
 import { formatCursoData } from '@helpers/formatData.js';
 
 export async function getCursos() {
     try {
-        const { data } = await axios.get('/curso/all/');
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const { data } = await axios.get('/curso/all/', { headers });
         const formattedData = data.data.map(formatCursoData);
         return formattedData;
     } catch (error) {
@@ -13,7 +19,12 @@ export async function getCursos() {
 
 export async function getCurso(idCurso) {
     try {
-        const { data } = await axios.get(`/curso/${idCurso}`);
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const { data } = await axios.get(`/curso/${idCurso}`, { headers });
         const formattedData = data.data.map(formatCursoData);
         return formattedData;
     } catch (error) {
@@ -23,7 +34,12 @@ export async function getCurso(idCurso) {
 
 export async function updateCurso(data, idCurso) {
     try {
-        const response = await axios.patch(`/curso/${idCurso}`, data);
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.patch(`/curso/${idCurso}`, data, { headers });
         console.log(response);
         return response.data.data;
     } catch (error) {
@@ -34,7 +50,12 @@ export async function updateCurso(data, idCurso) {
 
 export async function deleteCurso(idCurso) {
     try {
-        const response = await axios.delete(`/curso/${idCurso}`);
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.delete(`/curso/${idCurso}`, { headers });
         return response.data;
     } catch (error) {
         return error.response.data;

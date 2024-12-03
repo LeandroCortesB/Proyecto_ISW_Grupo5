@@ -2,9 +2,9 @@
 import User from "../entity/user.entity.js";
 import Hoja from "../entity/hoja.entity.js";
 import deleteHojaService from "../services/hoja.service.js";
+import createHojaService from "../services/hoja.service.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
-import { hojaQueryValidation } from "../validations/hoja.validation.js";
 
 export async function getUserService(query) {
   try {
@@ -27,6 +27,8 @@ export async function getUserService(query) {
   }
 }
 
+
+
 export async function getUsersService() {
   try {
     const userRepository = AppDataSource.getRepository(User);
@@ -43,6 +45,59 @@ export async function getUsersService() {
     return [null, "Error interno del servidor"];
   }
 }
+
+export async function createUserService(body){
+  try{
+    const userRepository = AppDataSource.getRepository(User);
+  
+    const userFound = await userRepository.findOne({
+      where: [{ id: body.id }, { rut: body.rut }],
+    });
+
+    if (userFound) return [null, "Ya existe un usuario con ese rut"];
+  
+    const nuevoUsuario = userRepository.create({
+      nombreCompleto: body.nombreCompleto,
+      rut: body.rut,
+      email: body.email,
+      password: await encryptPassword(body.password),
+      rol: body.rol,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  
+    await userRepository.save(nuevoUsuario);
+  
+    if((rol = "alumno")||(rol = "Alumno")){
+      createHojaService(nuevoUsuario.nombreCompleto,nuevoUsuario.rut,true,"");
+    }
+
+    return [nuevoUsuario, null];
+  } catch (error) {
+    console.error("Error al crear el usuario:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
+export async function getAlumnosService() {
+  try {
+    const userRepository = AppDataSource.getRepository(User);
+
+    const alumnos = await userRepository.find({ 
+      where: [{ rol: "alumno" }], 
+    });
+
+    if (!alumnos || alumnos.length === 0) return [null, "No hay alumnos"];
+
+    const alumnosData = alumnos.map(({ password, ...alumno }) => alumno);
+
+    return [alumnosData, null];
+  } catch (error) {
+    console.error("Error al obtener a los alumnos:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
 
 export async function updateUserService(query, body) {
   try {
@@ -98,17 +153,21 @@ export async function updateUserService(query, body) {
     const { password, ...userUpdated } = userData;
     
     //aca se crea una hoja asociada al usuario en caso de que este sea un alumno
-    
+    const hojaRepository = AppDataSource.getRepository(Hoja);
 
-    if(rol="alumno"){
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: body.nombreCompleto,
-          rut: body.rut,
-          buena:true,
-          updatedAt: new Date(),
-        })
-      )
+    p=hojaRepository.findOne({ where: [{ rut: rut }], })
+
+    if(p=null){
+      if(rol="alumno"){
+        hojaRepository.save(
+          hojaRepository.create({
+            nombreCompleto: body.nombreCompleto,
+            rut: body.rut,
+            buena:true,
+            updatedAt: new Date(),
+          })
+        )
+      }      
     }
 
     return [userUpdated, null];
@@ -151,3 +210,4 @@ export async function deleteUserService(query) {
     return [null, "Error interno del servidor"];
   }
 }
+
