@@ -38,7 +38,7 @@ export async function getHojasService() {
 
 export async function createHojaService(body){
   try{
-    const hojaRepository = AppDataSource.getRepository(hoja);
+    const hojaRepository = AppDataSource.getRepository(Hoja);
   
     const hojaFound = await hojaRepository.findOne({
       where: [ { rut: rut }],

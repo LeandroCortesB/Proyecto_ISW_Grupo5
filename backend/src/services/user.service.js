@@ -49,7 +49,6 @@ export async function getUsersService() {
 export async function createUserService(body){
   try{
     const userRepository = AppDataSource.getRepository(User);
-  
     const userFound = await userRepository.findOne({
       where: [{ id: body.id }, { rut: body.rut }],
     });
@@ -67,8 +66,8 @@ export async function createUserService(body){
     });
   
     await userRepository.save(nuevoUsuario);
-  
-    if((rol = "alumno")||(rol = "Alumno")){
+
+    if((body.rol = "alumno")||(body.rol = "Alumno")){
       createHojaService(nuevoUsuario.nombreCompleto,nuevoUsuario.rut,true,"");
     }
 

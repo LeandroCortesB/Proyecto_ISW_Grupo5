@@ -55,7 +55,7 @@ export async function getUsers(req, res) {
 
 export async function createUser(req, res) {
   try {
-    const { rut, id, email, contraseña, rol } = req.query;
+    const { rut, id, email, contraseña, rol } = req.body;
 
     const { error } = userQueryValidation.validate({ rut , id });
 
