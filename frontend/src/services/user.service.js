@@ -24,10 +24,13 @@ export async function getAlumnos() {
             Autorization: `Bearer ${token}`,
         };
 
-        const { data } = await axios.get('/user/alumnos/',{ headers });
+        const { data } = await axios.get('/user/alumnos/all',{ headers });
+
         const formattedData = data.data.map(formatUserData);
+        
         return formattedData;
     } catch (error) {
+        console.log("error ",error);
         return error.response.data;
     }
 }

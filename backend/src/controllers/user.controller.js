@@ -74,7 +74,6 @@ export async function createUser(req, res) {
 export async function getAlumnos(req, res) {
   try {
     const [alumnos, errorUsers] = await getAlumnosService();
-
     if (errorUsers) return handleErrorClient(res, 404, errorUsers);
 
     alumnos.length === 0

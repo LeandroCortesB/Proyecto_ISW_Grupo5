@@ -15,7 +15,7 @@ import useDeleteUser from '@hooks/users/useDeleteUser';
 import useCreateUser from '@hooks/users/useCreateUser';
 
 const Alumnos = () => {
-  const { users = [], fetchUsers, setUsers } = useAlumnos();
+  const { users , fetchUsers, setUsers } = useAlumnos();
   const [filterRut, setFilterRut] = useState('');
   const [filterAlumno, setFilterAlumnos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

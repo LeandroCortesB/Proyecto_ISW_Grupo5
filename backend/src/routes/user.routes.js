@@ -19,7 +19,7 @@ router
   .get("/all",authorizeRoles(["administrador", "profesor"]), getUsers) 
   .get("/:id", authorizeRoles(["administrador", "profesor"]),getUser)
   .post("/", authorizeRoles(["administrador", "profesor"]),createUser)
-  .get("/", authorizeRoles(["administrador", "profesor"]),getAlumnos)
+  .get("/alumnos/all", authorizeRoles(["administrador", "profesor"]),getAlumnos)
   .patch("/:id", authorizeRoles(["administrador", "profesor"]),updateUser)
   .delete("/:id", authorizeRoles(["administrador", "profesor"]),deleteUser);
 
