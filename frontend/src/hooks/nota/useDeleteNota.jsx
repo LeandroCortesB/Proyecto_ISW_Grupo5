@@ -1,5 +1,5 @@
 import {deleteNota} from '@services/nota.service.js';
-import { deleteDataAlert, showErrorAlert, showSuccessAlert } from '../../helpers/sweetAlert';
+import { deleteDataAlert, showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 
 const useDeleteNota = (fetchNotas, setDataNota) => {
     const handleDelete = async (dataNota) => {

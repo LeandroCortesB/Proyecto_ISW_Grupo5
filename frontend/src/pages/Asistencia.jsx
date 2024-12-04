@@ -9,7 +9,7 @@ import DeleteIcon from "@assets/deleteIcon.svg";
 import UpdateIcon from "@assets/updateIcon.svg";
 import personIcon from "@assets/personIcon.svg"; // Asegúrate de que esta importación sea correcta
 import UpdateIconDisable from "@assets/updateIconDisabled.svg";
-import PopupA from "../components/PopupA";
+import PopupA from "@components/PopupA";
 import { Link } from "react-router-dom"; // Asegúrate de importar Link
 
 const Asistencias = () => {
