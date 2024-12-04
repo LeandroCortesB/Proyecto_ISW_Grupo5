@@ -18,9 +18,11 @@ const useGetHoja = (rut) => {
                 createdAt: response.createdAt,
             };
             setHoja(formattedHoja); 
+
         } catch (err) {
             console.error("Error fetching hoja: ", err);
             setError(err); 
+            
         } finally {
             setLoading(false); 
         }

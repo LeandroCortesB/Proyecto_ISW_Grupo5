@@ -10,9 +10,10 @@ import Root from "@pages/Root";
 import Cursos from "@pages/Cursos";
 import Perfil from "@pages/Perfil";
 import Nota from "@pages/Nota";
+import Hojas from "@pages/Hoja";
 import ProtectedRoute from "@components/ProtectedRoute";
 import "@styles/styles.css";
-import Asignaturas from "./pages/asignatura";
+import Asignaturas from "@pages/asignatura";
 import Asistencias from "./pages/Asistencia";
 import RegistrarAsistencia from "./pages/RegistrarAsistencia";
 
@@ -51,6 +52,18 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
             <RegistrarAsistencia />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/Hoja/:rut",
+        element: <Hojas />,
+      },
+      {
+        path: "/alumnos",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
+            <Asistencias /> {/* Nueva ruta para Asistencias */}
           </ProtectedRoute>
         ),
       },

@@ -2,14 +2,14 @@ import axios from './root.service.js';
 import cookies from 'js-cookie';
 import { formatHojaData } from '@helpers/formatData.js';
 
-export async function getHojas() {
+export async function getHojas(rut) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
             Autorization: `Bearer ${token}`,
         };
 
-        const { data } = await axios.get('/hoja/all/', { headers });
+        const { data } = await axios.get(`/hoja/${rut}`, { headers });
         const formattedData = data.data.map(formatHojaData);
         return formattedData;
     } catch (error) {
@@ -28,6 +28,22 @@ export async function getHoja(rut) {
         const formattedData = data.data.map(formatHojaData);
         return formattedData;
     } catch (error) {
+        return error.response.data;
+    }
+}
+
+export async function createHoja(data) {
+    try {
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.post(`/hoja/`, data, { headers });
+        
+        return response.data.data;
+    } catch (error) {
+        console.log(error);
         return error.response.data;
     }
 }

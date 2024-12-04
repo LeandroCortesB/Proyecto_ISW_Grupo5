@@ -59,7 +59,7 @@ export async function createUser(data) {
         };
 
         const response = await axios.post(`/user/`, data, { headers });
-        console.log(response);
+        
         return response.data.data;
     } catch (error) {
         console.log(error);

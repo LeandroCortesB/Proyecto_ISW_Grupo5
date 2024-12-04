@@ -5,6 +5,9 @@ import Popup from '@components/Popup';
 import Popup2 from '@components/Popup2';
 import DeleteIcon from '@assets/deleteIcon.svg';
 import UpdateIcon from '@assets/updateIcon.svg';
+import paperIcon from '@assets/paperIcon.svg';
+import { Link} from 'react-router-dom';
+import '@styles/Hoja.css';
 import Addicon from '@assets/Addicon.svg';
 import UpdateIconDisable from '@assets/updateIconDisabled.svg';
 import DeleteIconDisable from '@assets/deleteIconDisabled.svg';
@@ -82,9 +85,21 @@ const Alumnos = () => {
                 <img src={DeleteIcon} alt="delete" />
               )}
             </button>
+
+            {dataUser.length > 0 ? (
+             <Link to={`/Hoja/${dataUser[0]?.rut}`}>
+                 <img src={paperIcon} alt="Hojas" />
+             </Link>
+              ) : (
+             <button className="Hojas" disabled>
+                  <img src={paperIcon} alt="hojas-disabled" />
+             </button>
+            )}
+
             <button onClick={handleClickAdd}>
               <img src={Addicon} alt="add" />
             </button>
+            
           </div>
         </div>
         <Table
