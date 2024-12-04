@@ -3,6 +3,8 @@ import User from "../entity/user.entity.js";
 import Hoja from "../entity/hoja.entity.js";
 import Curso from "../entity/curso.entity.js";
 import Asignatura from "../entity/asignatura.entity.js";
+import Asistencia from "../entity/asistencia.entity.js";
+import Nota from "../entity/nota.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -13,6 +15,10 @@ async function createUsers() {
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const cursoRepository = AppDataSource.getRepository(Curso);
+
+    const AsistenciaRepository = AppDataSource.getRepository(Asistencia);
+
+    const NotaRepository = AppDataSource.getRepository(Nota);
 
     const AsignaturaRepository = AppDataSource.getRepository(Asignatura);
 
@@ -165,6 +171,30 @@ async function createUsers() {
           idCurso: 1,
         }),
       ),
+      AsignaturaRepository.save(
+        AsignaturaRepository.create({
+          nombreAsignatura: "Lenguaje",
+          descripcion: "Curso de la profesora maria",
+          idCurso: 1,
+        }),
+      ),
+      AsistenciaRepository.save(
+        AsistenciaRepository.create({
+          fecha: "2024-11-26",
+          asistio: true,
+          alumno: 2,
+          asignatura: 1,
+        }),
+      ),
+      NotaRepository.save(
+        NotaRepository.create({
+          calificacion: 10,
+          periodo: "2023-2",
+          alumno: 2,
+          asignatura: 1,
+        }),
+      ),
+
     ]);
     console.log("* => Usuarios creados exitosamente");
   } catch (error) {
