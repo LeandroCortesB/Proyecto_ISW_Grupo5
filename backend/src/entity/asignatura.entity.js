@@ -1,5 +1,6 @@
 "use strict";
 import { EntitySchema } from "typeorm";
+import User from "./user.entity.js";
 
 const AsignaturaSchema = new EntitySchema({
     name: "Asignatura",
@@ -42,7 +43,7 @@ const AsignaturaSchema = new EntitySchema({
             target: "Curso",
             joinColumn: { name: "idCurso" },
             nullable: false,
-            onDelete: "CASCADE", // Opcional: borra la asignatura si el curso es eliminado
+            onDelete: "CASCADE", // Borra la asignatura si el curso es eliminado
         },
         asistencias: {
             type: "one-to-many",
@@ -60,8 +61,14 @@ const AsignaturaSchema = new EntitySchema({
             type: "many-to-one",
             target: "User",
             joinColumn: true,
-            nullable: true, // Cada asignatura debe estar asociada a un profesor
+            nullable: true, // Cada asignatura puede estar asociada a un profesor
             onDelete: "SET NULL", // Si el profesor se elimina, la asignatura queda sin profesor
+        },
+        alumnos: {
+            type: "one-to-many",
+            target: "User",
+            inverseSide: "asignaturasComoAlumno", // Relación inversa definida en User
+            cascade: false, // Evita conflictos de eliminación en cascada
         },
     },
     indices: [

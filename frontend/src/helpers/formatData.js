@@ -41,6 +41,15 @@ export function formatCursoData(curso) {
         createdAt: formatTempo(curso.createdAt, "DD-MM-YYYY")
     };
 }
+export function formatAsistenciaData(asistencia) {
+    return {
+        ...asistencia,
+        // Ejemplo de formateo de la fecha de la asistencia
+        fechaAsistencia: formatTempo(asistencia.fechaAsistencia, "DD-MM-YYYY"),
+        // Si tienes algún campo booleando, puedes formatearlo también
+        presente: asistencia.presente ? 'Presente' : 'Ausente',
+    };
+}
 
 export function formatNotaData(nota) {
     return {

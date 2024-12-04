@@ -6,15 +6,17 @@ export async function getHojaService(query) {
   try {
     const { rut, idHoja } = query;
 
-    const hojaRepository = AppDataSource.getRepository(Hoja);
+    const HojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ id: idHoja }, { rut: rut }],
+      where: [{ idHoja }, { rut }],
     });
 
     if (!hojaFound) return [null, "Hoja de vida no encontrada"];
 
-    return [hojaFound, null];
+    const { ...hojaData } = hojaFound;
+
+    return [hojaData, null];
   } catch (error) {
     console.error("Error obtener la hoja de vida:", error);
     return [null, "Error interno del servidor"];
@@ -34,7 +36,9 @@ export async function getHojasService(rut) {
       return [null, "No se encontraron hojas de vida para el rut proporcionado"];
     }
 
-    return [hojas, null];
+    const hojasData = hojas.map(({ ...hoja }) => hoja);
+
+    return [hojasData, null];
   } catch (error) {
     console.error("Error al obtener las hojas:", error);
     return [null, "Error interno del servidor"];
@@ -82,17 +86,19 @@ export async function updateHojaService(query, body) {
       updatedAt: new Date(),
     };
 
-    await hojaRepository.update({ id: hojaFound.idHoja }, dataHojaUpdate);
+    await hojaRepository.update({ idHoja: hojaFound.idHoja }, dataHojaUpdate);
 
     const hojaData = await hojaRepository.findOne({
-      where: { idHoja: hojaFound.idHoja },
+      where: { id: hojaFound.idHoja },
     });
 
     if (!hojaData) {
       return [null, "Hoja de vida no encontrada después de actualizar"];
     }
 
-    return [hojaData, null];
+    const { ...hojaUpdated } = hojaData;
+
+    return [hojaUpdated, null];
   } catch (error) {
     console.error("Error al modificar la hoja de vida:", error);
     return [null, "Error interno del servidor"];
@@ -113,7 +119,9 @@ export async function deleteHojaService(query) {
 
     const hojaDeleted = await hojaRepository.remove(hojaFound);
 
-    return [hojaDeleted, null];
+    const { ...dataHoja } = hojaDeleted;
+
+    return [dataHoja, null];
   } catch (error) {
     console.error("Error al eliminar una hoja de vida:", error);
     return [null, "Error interno del servidor"];

@@ -40,8 +40,16 @@ export async function createAsistencia(req, res) {
 
 export async function updateAsistencia(req, res) {
     try {
-        const [asistencia, errorAsistencia] = await updateAsistenciaService(req.params.idAsistencia, req.body);
+        const { fecha, asistio } = req.body; // Asegúrate de usar las propiedades correctas
+        const asistenciaActualizada = {
+            fecha,      // Mapea correctamente los datos
+            asistio,    // Presente o Ausente
+        };
+
+        const [asistencia, errorAsistencia] = 
+        await updateAsistenciaService(req.params.idAsistencia, asistenciaActualizada);
         if (errorAsistencia) return handleErrorClient(res, 404, errorAsistencia);
+
         handleSuccess(res, 200, "Asistencia actualizada correctamente", asistencia);
     } catch (error) {
         handleErrorServer(res, 500, error.message);

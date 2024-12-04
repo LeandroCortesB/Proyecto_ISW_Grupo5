@@ -1,5 +1,6 @@
 "use strict";
 import { EntitySchema } from "typeorm";
+import Asignatura from "./asignatura.entity.js";
 
 const UserSchema = new EntitySchema({
   name: "User",
@@ -29,7 +30,7 @@ const UserSchema = new EntitySchema({
     },
     rol: {
       type: "enum",
-      enum: ["alumno", "profesor", "apoderado","administrador","usuario"],
+      enum: ["alumno", "profesor", "apoderado", "administrador", "usuario"],
       nullable: false,
     },
     password: {
@@ -63,13 +64,19 @@ const UserSchema = new EntitySchema({
       inverseSide: "alumnos",
       joinColumn: true,
       nullable: true, // Nullable para roles como profesor/apoderado
-      
     },
-    // Relación con asignaturas (sólo aplica si el rol es 'profesor')
-    asignaturas: {
+    // Relación con asignaturas como profesor
+    asignaturasComoProfesor: {
       type: "one-to-many",
       target: "Asignatura",
       inverseSide: "profesor",
+      cascade: true,
+    },
+    // Relación con asignaturas como alumno
+    asignaturasComoAlumno: {
+      type: "many-to-one",
+      target: "Asignatura",
+      inverseSide: "alumno",
       cascade: true,
     },
     // Relación con alumnos a cargo (aplica si el rol es 'apoderado')
@@ -101,7 +108,7 @@ const UserSchema = new EntitySchema({
       target: "Hoja", // Referencia al esquema de Hoja
       inverseSide: "alumno", // Relación inversa desde Hoja hacia Alumno
       cascade: true,
-  },
+    },
   },
   indices: [
     {

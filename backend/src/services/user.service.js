@@ -217,4 +217,38 @@ export async function deleteUserService(query) {
     return [null, "Error interno del servidor"];
   }
 }
+export async function getUsersByCursoService(idCurso) {
+  try {
+      const userRepository = AppDataSource.getRepository(User);
 
+      const users = await userRepository.find({
+          where: { idCurso },
+          relations: ["curso"], // Asegúrate de que `curso` esté relacionado
+      });
+
+      if (!users || users.length === 0) {
+          return [null, "No se encontraron usuarios para este curso"];
+      }
+
+      return [users, null];
+  } catch (error) {
+      console.error("Error en getUsersByCursoService:", error);
+      return [null, "Error interno del servidor"];
+  }
+}
+export async function getUsersByAsignaturaService(idAsignatura) {
+  try {
+      const repository = AppDataSource.getRepository("User");
+      const alumnos = await repository.find({
+          relations: ["asignaturasComoAlumno"], // Relación correcta
+          where: {
+              asignaturasComoAlumno: { idAsignatura }, // Filtro por asignatura
+              rol: "alumno", // Filtra solo alumnos
+          },
+      });
+      return [alumnos, null];
+  } catch (error) {
+      console.error("Error en getUsersByAsignaturaService:", error);
+      return [null, error.message];
+  }
+}

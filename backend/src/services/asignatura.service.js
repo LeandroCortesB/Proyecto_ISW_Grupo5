@@ -96,3 +96,23 @@ export async function deleteAsignaturaService(query) {
         return [null, "Error interno del servidor"];
     }
 }
+export async function getAsignaturasByCursoService(idCurso) {
+    try {
+        const asignaturaRepository = AppDataSource.getRepository(Asignatura);
+
+        // Filtrar las asignaturas por idCurso
+        const asignaturas = await asignaturaRepository.find({
+            where: { curso: { idCurso } }, // Filtra por curso
+            relations: ["curso", "notas", "asistencias", "profesor"],
+        });
+
+        if (!asignaturas || asignaturas.length === 0) {
+            return [null, "No hay asignaturas para este curso"];
+        }
+
+        return [asignaturas, null];
+    } catch (error) {
+        console.error("Error al obtener las asignaturas por curso:", error);
+        return [null, "Error interno del servidor"];
+    }
+}

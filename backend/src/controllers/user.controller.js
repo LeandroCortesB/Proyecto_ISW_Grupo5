@@ -3,6 +3,8 @@ import {
   createUserService,
   deleteUserService,
   getAlumnosService,
+  getUsersByAsignaturaService,
+  getUsersByCursoService,
   getUserService,
   getUsersService,
   updateUserService,
@@ -16,6 +18,9 @@ import {
   handleErrorServer,
   handleSuccess,
 } from "../handlers/responseHandlers.js";
+import User from "../entity/user.entity.js";
+import { AppDataSource } from "../config/configDb.js"; // Ajusta el path según la estructura de tu proyecto
+
 
 export async function getUser(req, res) {
   try {
@@ -159,4 +164,35 @@ export async function deleteUser(req, res) {
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
+}
+
+export async function getUsersByCurso(req, res) {
+  try {
+    const { idCurso } = req.params;
+    const users = await getUsersByCursoService(idCurso); // Asegúrate de que este servicio exista
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No se encontraron usuarios para el curso especificado" });
+    }
+    res.status(200).json({ data: users });
+  } catch (error) {
+    console.error("Error al obtener usuarios por curso:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+}
+
+export async function getUsersByAsignatura(req, res) {
+    const { idAsignatura } = req.params;
+
+    try {
+        const [alumnos, error] = await getUsersByAsignaturaService(idAsignatura);
+
+        if (error) {
+            return res.status(400).json({ message: error });
+        }
+
+        return res.status(200).json({ data: alumnos });
+    } catch (error) {
+        console.error("Error al obtener usuarios por asignatura:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
 }
