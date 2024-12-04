@@ -2,12 +2,14 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "@pages/Login";
 import Home from "@pages/Home";
+import Alumnos from "@pages/Alumnos";
 import Users from "@pages/Users";
 import Register from "@pages/Register";
 import Error404 from "@pages/Error404";
 import Root from "@pages/Root";
 import Cursos from "@pages/Cursos";
 import Perfil from "@pages/Perfil";
+import Nota from "@pages/Nota";
 import ProtectedRoute from "@components/ProtectedRoute";
 import "@styles/styles.css";
 import Asignaturas from "./pages/asignatura";
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
         element: <Perfil />,
       },
       {
+        path: "/nota",
+        element: <Nota />,
+      },
+      {
         path: "/asignatura/:idCurso",
         element: <Asignaturas />,
       },
@@ -45,6 +51,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
             <RegistrarAsistencia />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/alumnos",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
+            <Alumnos />
           </ProtectedRoute>
         ),
       },

@@ -24,7 +24,6 @@ export function formatHojaData(hoja) {
     };
 }
 
-
 export function formatAsignaturaData(asignatura) {
     return {
         ...asignatura,
@@ -52,6 +51,14 @@ export function formatAsistenciaData(asistencia) {
     };
 }
 
+export function formatNotaData(nota) {
+    return {
+        ...nota,
+        calificacion: startCase(nota.calificacion),
+        createdAt: formatTempo(nota.createdAt, "DD-MM-YYYY"),
+    };
+}
+
 export function convertirMinusculas(obj) {
     for (let key in obj) {
         if (typeof obj[key] === 'string') {
@@ -70,4 +77,15 @@ export function formatPostUpdate(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
+
+export function formatPostCreate(user) {
+    return {
+        nombreCompleto: startCase(user.nombreCompleto),
+        rol: startCase(user.rol),
+        rut: formatRut(user.rut),
+        email: user.email,
+        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
 

@@ -15,10 +15,13 @@ const useEditCurso = (setCursos) => {
     const handleUpdate = async (updatedCursoData) => {
         if (updatedCursoData) {
             try {
+                console.log('Datos de curso actualizados:', updatedCursoData);
                 const updatedCurso = await updateCurso(updatedCursoData, Number(dataCurso[0].idCurso));
+                console.log('Curso actualizado:', updatedCurso);
                 showSuccessAlert('¡Actualizado!','El curso ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
                 const formattedCurso = formatPostUpdate(updatedCurso);
+                console.log('Curso formateado:', formattedCurso);
 
                 setCursos(prevCursos => prevCursos.map(curso => {
                     console.log("Curso actual:", curso);
