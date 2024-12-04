@@ -21,17 +21,22 @@ export async function getHojaService(query) {
   }
 }
 
-export async function getHojasService() {
+
+export async function getHojasService(rut) {
   try {
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
-    const hojas = await hojaRepository.find();
+    const hojas = await hojaRepository.find({
+      where: { rut: rut },
+    });
 
-    if (!hojas || hojas.length === 0) return [null, "No hay hojas de vida"];
+    if (!hojas || hojas.length === 0) {
+      return [null, "No se encontraron hojas de vida para el rut proporcionado"];
+    }
 
     return [hojas, null];
   } catch (error) {
-    console.error("Error al obtener todas las hojas:", error);
+    console.error("Error al obtener las hojas:", error);
     return [null, "Error interno del servidor"];
   }
 }
@@ -39,12 +44,6 @@ export async function getHojasService() {
 export async function createHojaService(body){
   try{
     const hojaRepository = AppDataSource.getRepository(Hoja);
-  
-    const hojaFound = await hojaRepository.findOne({
-      where: [ { rut: rut }],
-    });
-
-    if (!!hojaFound) return [null, "Ya existe una hoja con ese rut"];
   
     const nuevoHoja = hojaRepository.create({
       nombreCompleto: body.nombreCompleto,
@@ -76,13 +75,6 @@ export async function updateHojaService(query, body) {
 
     if (!hojaFound) return [null, "Hoja de vida no encontrada"];
 
-    const existingHoja = await hojaRepository.findOne({
-      where: [{ rut: body.rut }],
-    });
-
-    if (existingHoja && existingHoja.idHoja !== hojaFound.idHoja) {
-      return [null, "Ya existe una hoja con el mismo rut"];
-    }
 
     const dataHojaUpdate = {
       buena: body.buena,

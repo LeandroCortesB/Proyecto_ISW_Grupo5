@@ -10,7 +10,7 @@ const Asignaturas = () => {
   const [filteredAsignaturas, setFilteredAsignaturas] = useState([]);
 
   useEffect(() => {
-    // Filtrar asignaturas según el curso
+    
     const datosFilter = asignaturas.filter(
       (asignatura) => asignatura.curso.idCurso === Number(idCurso)
     );
@@ -30,7 +30,7 @@ const Asignaturas = () => {
           <h1 className="title-table">Asignaturas</h1>
         </div>
         <Table
-          data={filteredAsignaturas} // Cambiar a la lista filtrada
+          data={filteredAsignaturas} 
           columns={columns}
           initialSortName="nombreAsignatura"
         />

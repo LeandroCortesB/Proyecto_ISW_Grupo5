@@ -36,11 +36,13 @@ export async function getHoja(req, res) {
 
 export async function getHojas(req, res) {
   try {
-    const [hojas, errorHojas] = await getHojasService();
+    const { rut } = req.query;
+
+    const [hojas, errorHojas] = await getHojasService(rut);
 
     if (errorHojas) return handleErrorClient(res, 404, errorHojas);
 
-    users.length === 0
+    hojas.length === 0
       ? handleSuccess(res, 204)
       : handleSuccess(res, 200, "Hojas de vida encontradas", hojas);
   } catch (error) {
