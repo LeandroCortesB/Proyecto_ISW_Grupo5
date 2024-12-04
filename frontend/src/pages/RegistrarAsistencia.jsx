@@ -12,7 +12,7 @@ const RegistrarAsistencia = () => {
   const [asignaturas, setAsignaturas] = useState([]);
   const [asignaturaSeleccionada, setAsignaturaSeleccionada] = useState("");
   const [alumnos, setAlumnos] = useState([]);
-  const [fecha, setFecha] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [fecha, setFecha] = useState(format(new Date(), "dd-MM-yyyy"));
   const [asistencias, setAsistencias] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();

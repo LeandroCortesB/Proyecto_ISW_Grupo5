@@ -97,20 +97,6 @@ const Navbar = () => {
                 }}
                 activeClassName="active"
               >
-                Asistencias
-              </NavLink>
-            </li>
-          )}
-          {(userRole === "administrador" || userRole === "profesor") && (
-            <li>
-              <NavLink
-                to="/perfil"
-                onClick={() => {
-                  setMenuOpen(false);
-                  addActiveClass();
-                }}
-                activeClassName="active"
-              >
                 Alumnos
               </NavLink>
             </li>
