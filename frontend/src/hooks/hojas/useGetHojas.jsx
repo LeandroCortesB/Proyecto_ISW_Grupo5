@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { getHojas } from '@services/hoja.service.js'; 
 
 const useGetHojas = (rut) => {
-  const [hojas, setHojas] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const [ hojas, setHojas] = useState([]); 
+  const [ setLoading ] = useState(true); 
+  const [ setError ] = useState(null); 
 
   const fetchHojas = async () => {
     try {
@@ -28,7 +28,7 @@ const useGetHojas = (rut) => {
     if (rut) fetchHojas(); 
   }, [rut]);
 
-  return { hojas, loading, error, fetchHojas }; 
+  return { hojas, fetchHojas , setHojas }; 
 };
 
 export default useGetHojas;

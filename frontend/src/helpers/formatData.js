@@ -79,4 +79,14 @@ export function formatPostCreate(user) {
     };
 }
 
+export function formatPostCreateHoja(hoja) {
+    return {
+        nombreCompleto: startCase(hoja.nombreCompleto),
+        rut: formatRut(hoja.rut),
+        buena: hoja.buena,
+        anotacion: startCase(hoja.anotacion),
+        createdAt: formatTempo(hoja.createdAt, "DD-MM-YYYY")
+    };
+}
+
 

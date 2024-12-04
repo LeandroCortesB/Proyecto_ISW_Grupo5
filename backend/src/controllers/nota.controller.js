@@ -15,8 +15,8 @@ import { notaBodyValidation, notaQueryValidation } from "../validations/nota.val
 
 export async function getNota(req, res) {
   try {
-    const { idNota } = req.params;
-    const [nota, error] = await getNotaService({ idNota });
+    const { rut } = req.params;
+    const [nota, error] = await getNotaService({ rut });
 
     if (error) return handleErrorClient(res, 404, error);
     handleSuccess(res, 200, "Nota encontrada", nota);

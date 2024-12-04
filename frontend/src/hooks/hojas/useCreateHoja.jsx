@@ -1,27 +1,27 @@
 import { useState } from 'react';
 import { createHoja } from '@services/hoja.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostCreate } from '@helpers/formatData.js';
+import { formatPostCreateHoja } from '@helpers/formatData.js';
 
-//Falta crear el handleonClick, la popup y el formatPostCreate 
+//Falta crear el handleonClick
 
 const useCreateHoja = (setHojas) => {
-    const [isPopup2Open, setIsPopup2Open] = useState(false);
+    const [isPopupHojaOpen, setIsPopupHojaOpen] = useState(false);
 
     const handleClickAdd = () => {
-        setIsPopup2Open(true);
+        setIsPopupHojaOpen(true);
     };
 
     const handleCreate = async (newHojaData) => {
             try {
                 const createdHoja = await createHoja(newHojaData);
 
-                const formattedHoja = formatPostCreate(createdHoja); 
+                const formattedHoja = formatPostCreateHoja(createdHoja); 
                 
-                setHojas(prevUsers => [...prevUsers, formattedHoja]);
+                setHojas(prevHojas => [...prevHojas, formattedHoja]);
 
                 showSuccessAlert('¡Creada!', 'La hoja ha sido creado exitosamente.');
-                setIsPopup2Open(false);
+                setIsPopupHojaOpen(false);
 
             } catch (error) {
                 console.error('Error al crear la hoja:', error);
@@ -32,8 +32,8 @@ const useCreateHoja = (setHojas) => {
     return {
         handleClickAdd,   
         handleCreate,      
-        isPopup2Open,       
-        setIsPopup2Open     
+        isPopupHojaOpen,       
+        setIsPopupHojaOpen     
     };
 };
 
