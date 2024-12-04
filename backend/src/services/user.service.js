@@ -2,7 +2,6 @@
 import User from "../entity/user.entity.js";
 import Hoja from "../entity/hoja.entity.js";
 import deleteHojaService from "../services/hoja.service.js";
-import createHojaService from "../services/hoja.service.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -68,7 +67,16 @@ export async function createUserService(body){
     await userRepository.save(nuevoUsuario);
 
     if((body.rol = "alumno")||(body.rol = "Alumno")){
-      createHojaService(nuevoUsuario.nombreCompleto,nuevoUsuario.rut,true,"");
+      const hojaRepository = AppDataSource.getRepository(Hoja);
+      hojaRepository.save(
+        hojaRepository.create({
+          nombreCompleto: body.nombreCompleto,
+          rut: body.rut,
+          buena:true,
+          anotacion: " ",
+          updatedAt: new Date(),
+        })
+      )
     }
 
     return [nuevoUsuario, null];
@@ -157,7 +165,7 @@ export async function updateUserService(query, body) {
     p=hojaRepository.findOne({ where: [{ rut: rut }], })
 
     if(p=null){
-      if(rol="alumno"){
+      if((body.rol="alumno")||(body.rol="Alumno")){
         hojaRepository.save(
           hojaRepository.create({
             nombreCompleto: body.nombreCompleto,
@@ -178,12 +186,12 @@ export async function updateUserService(query, body) {
 
 export async function deleteUserService(query) {
   try {
-    const { id, rut, email } = query;
+    const { id, rut } = query;
 
     const userRepository = AppDataSource.getRepository(User);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: [{ id: id }, { rut: rut }],
     });
 
     if (!userFound) return [null, "Usuario no encontrado"];
@@ -195,7 +203,7 @@ export async function deleteUserService(query) {
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ idHoja: Hoja.idHoja }, { rut: rut }],
+      where: [{ rut: rut }],
     });
 
     deleteHojaService(hojaFound);
