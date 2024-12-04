@@ -5,7 +5,7 @@ import PopupHoja from '@components/PopupHoja';
 import '@styles/Hoja.css';
 import { useParams } from 'react-router-dom';
 import useCreateHoja from '@hooks/hojas/useCreateHoja.jsx';
-import Addicon from '@assets/Addicon.svg';
+import Addicon from '@assets/AddIcon.svg';
 
 const Hojas = () => {
   const { rut } = useParams();
