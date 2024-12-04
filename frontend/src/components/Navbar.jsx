@@ -1,20 +1,20 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from '@services/auth.service.js';
 import { useState } from "react";
-import {useAuth} from '@context/AuthContext';
+import { useAuth } from '@context/AuthContext';
 import '@styles/navbar.css';
 
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useAuth();  
+    const { user } = useAuth();
     const userRole = user?.rol;
     const [menuOpen, setMenuOpen] = useState(false);
 
     const logoutSubmit = () => {
         try {
             logout();
-            navigate('/auth'); 
+            navigate('/auth');
         } catch (error) {
             console.error('Error al cerrar sesión:', error);
         }
@@ -48,12 +48,12 @@ const Navbar = () => {
             <div className={`nav-menu ${menuOpen ? 'activado' : ''}`}>
                 <ul>
                     <li>
-                        <NavLink 
-                            to="/home" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
+                        <NavLink
+                            to="/home"
+                            onClick={() => {
+                                setMenuOpen(false);
                                 addActiveClass();
-                            }} 
+                            }}
                             activeClassName="active"
                         >
                             Inicio
@@ -61,12 +61,12 @@ const Navbar = () => {
                     </li>
                     {(userRole === 'administrador' || userRole === 'profesor') && (
                         <li>
-                            <NavLink 
-                                to="/users" 
-                                onClick={() => { 
-                                    setMenuOpen(false); 
+                            <NavLink
+                                to="/users"
+                                onClick={() => {
+                                    setMenuOpen(false);
                                     addActiveClass();
-                                }} 
+                                }}
                                 activeClassName="active"
                             >
                                 Usuarios
@@ -75,39 +75,51 @@ const Navbar = () => {
                     )}
                     {(userRole === 'administrador' || userRole === 'profesor') && (
                         <li>
-                            <NavLink 
-                                to="/cursos" 
-                                onClick={() => { 
-                                    setMenuOpen(false); 
+                            <NavLink
+                                to="/cursos"
+                                onClick={() => {
+                                    setMenuOpen(false);
                                     addActiveClass();
-                                }} 
+                                }}
                                 activeClassName="active"
                             >
                                 Cursos
                             </NavLink>
                         </li>
                     )}
-                    {(
+                    {(userRole === 'administrador' || userRole === 'profesor') && (
                         <li>
-                            <NavLink 
-                                to="/perfil" 
-                                onClick={() => { 
-                                    setMenuOpen(false); 
+                            <NavLink
+                                to="/asistencias"
+                                onClick={() => {
+                                    setMenuOpen(false);
                                     addActiveClass();
-                                }} 
+                                }}
                                 activeClassName="active"
                             >
-                                Perfil
+                                Asistencias
                             </NavLink>
                         </li>
                     )}
                     <li>
-                        <NavLink 
-                            to="/auth" 
-                            onClick={() => { 
-                                logoutSubmit(); 
-                                setMenuOpen(false); 
-                            }} 
+                        <NavLink
+                            to="/perfil"
+                            onClick={() => {
+                                setMenuOpen(false);
+                                addActiveClass();
+                            }}
+                            activeClassName="active"
+                        >
+                            Perfil
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/auth"
+                            onClick={() => {
+                                logoutSubmit();
+                                setMenuOpen(false);
+                            }}
                             activeClassName="active"
                         >
                             Cerrar sesión
@@ -122,7 +134,7 @@ const Navbar = () => {
             </div>
             {user && (
                 <div className="username-display">
-                    Hola {user.nombreCompleto || 'Usuario'}! 😊 
+                    Hola {user.nombreCompleto || 'Usuario'}! 😊
                 </div>
             )}
         </nav>

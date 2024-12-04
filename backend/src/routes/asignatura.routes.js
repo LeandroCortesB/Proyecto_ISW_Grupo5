@@ -6,6 +6,7 @@ import {
     deleteAsignatura,
     getAsignatura,
     getAsignaturas,
+    getAsignaturasByCurso,
     updateAsignatura,
 } from "../controllers/asignatura.controller.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
@@ -18,6 +19,7 @@ router.use(authenticateJwt)
 router
     .get("/all",  authorizeRoles(["administrador", "profesor"]),getAsignaturas)
     .get("/:idAsignatura",  authorizeRoles(["administrador", "profesor"]),getAsignatura)
+    .get("/curso/:idCurso",   authorizeRoles(["administrador", "profesor"]),getAsignaturasByCurso)
     .post("/", authorizeRoles(["administrador", "profesor"]), createAsignatura)
     .patch("/:idAsignatura", authorizeRoles(["administrador", "profesor"]), updateAsignatura)
     .delete("/:idAsignatura",  authorizeRoles(["administrador", "profesor"]),deleteAsignatura);

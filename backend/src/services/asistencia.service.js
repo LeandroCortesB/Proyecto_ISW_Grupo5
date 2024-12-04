@@ -30,18 +30,21 @@ export async function getAsistenciasService() {
     }
 }
 
-export async function createAsistenciaService(body) {
-    try {
-        const asistenciaRepository = AppDataSource.getRepository(Asistencia);
-        const nuevaAsistencia = asistenciaRepository.create(body);
-        await asistenciaRepository.save(nuevaAsistencia);
+export async function createAsistenciaService(data) {
+    const asistenciaRepository = AppDataSource.getRepository(Asistencia);
 
-        return [nuevaAsistencia, null];
-    } catch (error) {
-        console.error("Error al crear la asistencia:", error);
-        return [null, "Error interno del servidor"];
-    }
-}
+    const asistencias = data.asistencias.map((asistencia) =>
+      asistenciaRepository.create({
+        fecha: data.fecha,
+        asistio: asistencia.asistio, // Aquí asignamos el valor recibido del frontend
+        alumno: { id: asistencia.idAlumno }, // Relación con el alumno
+        asignatura: { idAsignatura: data.idAsignatura }, // Relación con la asignatura
+      })
+    );
+  
+    await asistenciaRepository.save(asistencias);
+    return asistencias;
+  }
 
 export async function updateAsistenciaService(idAsistencia, body){
     try{

@@ -10,7 +10,7 @@ const Asignaturas = () => {
   const [filteredAsignaturas, setFilteredAsignaturas] = useState([]);
 
   useEffect(() => {
-    // Filtrar asignaturas según el curso
+    // Filtrar asignaturas segÃºn el curso
     const datosFilter = asignaturas.filter(
       (asignatura) => asignatura.curso.idCurso === Number(idCurso)
     );
@@ -35,9 +35,6 @@ const Asignaturas = () => {
           initialSortName="nombreAsignatura"
         />
       </div>
-
-      {/* Aquí mostrarías la asignatura seleccionada (solo para probar) */}
-      {selectedAsignatura && <p>Seleccionaste la asignatura con ID: {selectedAsignatura}</p>}
     </div>
   );
 };

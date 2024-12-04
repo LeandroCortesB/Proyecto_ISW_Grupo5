@@ -6,6 +6,8 @@ import {
   deleteUser,
   getUser,
   getUsers,
+  getUsersByAsignatura,
+  getUsersByCurso,
   updateUser,
 } from "../controllers/user.controller.js";
 
@@ -16,6 +18,8 @@ router.use(authenticateJwt)
 router
   .get("/:id",authorizeRoles(["administrador", "profesor"]), getUsers)
   .get("/", authorizeRoles(["administrador", "profesor"]),getUser)
+  .get("/curso/:id", authorizeRoles(["administrador", "profesor"]),getUsersByCurso)
+  .get("/asignatura/:idAsignatura", authorizeRoles(["administrador", "profesor"]),getUsersByAsignatura)
   .patch("/:id", authorizeRoles(["administrador", "profesor"]),updateUser)
   .delete("/:id", authorizeRoles(["administrador", "profesor"]),deleteUser);
 

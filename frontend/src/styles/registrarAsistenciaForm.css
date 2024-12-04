@@ -1,0 +1,107 @@
+/* FORMULARIO REGISTRAR ASISTENCIA */
+.register-assistance-form {
+    background-color: #eef7ff; /* Fondo claro */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    align-items: center;
+    max-width: 600px;
+    margin: 50px auto; /* Centrar formulario */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  }
+  
+  /* TÍTULO DEL FORMULARIO */
+  .register-assistance-form h1 {
+    color: #003366; /* Azul fuerte */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* GRUPOS DE CAMPOS */
+  .register-assistance-form .form-group {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  /* ETIQUETAS */
+  .register-assistance-form label {
+    color: #003366; /* Azul fuerte */
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  /* INPUTS Y SELECT */
+  .register-assistance-form input,
+  .register-assistance-form select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #003366; /* Borde azul */
+    border-radius: 8px;
+    background-color: #eef7ff;
+    font-size: 14px;
+    color: #003366;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* EFECTOS EN HOVER Y FOCUS */
+  .register-assistance-form input:focus,
+  .register-assistance-form select:focus {
+    background-color: rgba(0, 110, 223, 0.14); /* Azul claro */
+    border-color: #0056b3; /* Azul más oscuro */
+    outline: none;
+  }
+  
+  /* BOTÓN DE ENVIAR */
+  .register-assistance-form .submit-button {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #003366;
+    color: #eef7ff;
+    border: 2px solid #003366;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .register-assistance-form .submit-button:hover {
+    background-color: #eef7ff;
+    color: #003366;
+  }
+  
+  /* MENSAJE DE ERROR */
+  .register-assistance-form .error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* RESPONSIVE PARA MÓVILES */
+  @media (max-width: 480px) {
+    .register-assistance-form {
+      padding: 10px;
+      width: 90%;
+    }
+  
+    .register-assistance-form h1 {
+      font-size: 20px;
+    }
+  
+    .register-assistance-form input,
+    .register-assistance-form select {
+      font-size: 12px;
+      padding: 10px;
+    }
+  
+    .register-assistance-form .submit-button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  
