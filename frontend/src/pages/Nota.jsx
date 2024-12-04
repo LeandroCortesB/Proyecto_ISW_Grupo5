@@ -11,14 +11,15 @@ import PopupN from '@components/PopupN';
 
 const Notas = () => {
     const { notas, fetchNotas } = useNotas();
-    const [filter, setFilterNombre] = useState(""); // Estado para el filtro
-    const [notasLocal, setNotas] = useState([]); // Estado para manejar las notas
+    const [filter, setFilterNombre] = useState(""); 
+    const [notasLocal, setNotas] = useState([]); 
 
     const columns = [
         { title: "Nota", field: "calificacion", width: 150, responsive: 2 },
         { title: "Asignatura", field: "asignatura.nombreAsignatura", width: 200, responsive: 0 },
-        { title: "Creado", field: "createdAt", width: 200, responsive: 2 },
         { title: "Nombre", field: "alumno.nombreCompleto", width: 200, responsive: 2 },
+        { title: "Creado", field: "createdAt", width: 200, responsive: 2 },
+
     ];
     notasLocal
     const {
@@ -28,7 +29,7 @@ const Notas = () => {
         setIsPopupOpen,
         dataNota,
         setDataNota
-    } = useEditNota(setNotas); // Ahora `setNotas` es una función válida
+    } = useEditNota(setNotas); 
 
     const { handleDelete } = useDeleteNota(fetchNotas, setDataNota);
     const handleNombreFilterChange = (e) => {

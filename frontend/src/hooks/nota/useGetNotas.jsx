@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
-import { getNotas } from '@services/nota.service.js'; // Importa el servicio para obtener las notas
+import { getNotas } from '@services/nota.service.js';
 
 const useGetNotas = () => {
-    const [notas, setNotas] = useState([]); // Estado para almacenar las notas
-    const [loading, setLoading] = useState(true); // Estado para manejar el loading
-    const [error, setError] = useState(null); // Estado para manejar errores
+    const [notas, setNotas] = useState([]); 
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
     const fetchNotas = async () => {
         try {
             setLoading(true);
-            const response = await getNotas(); // Llama al servicio para obtener las notas
-            setNotas(response); // Guarda las notas en el estado
+            const response = await getNotas(); 
+            setNotas(response); 
         } catch (err) {
             console.error("Error fetching notas: ", err);
-            setError(err); // Guarda el error si ocurre
+            setError(err);
         } finally {
-            setLoading(false); // Finaliza el estado de carga
+            setLoading(false); 
         }
     };
 
     useEffect(() => {
-        fetchNotas(); // Llama a fetchNotas al montar el componente
+        fetchNotas(); 
     }, []);
 
     return { notas, loading, error, fetchNotas };
