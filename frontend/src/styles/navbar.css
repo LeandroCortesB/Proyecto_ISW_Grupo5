@@ -16,7 +16,7 @@
   
   .username-display {
 	position: absolute;
-	margin-left: 85%; /* Empuja este elemento hacia la derecha */
+	margin-left: 85%;
 	font-size: 1rem;
 	color: #ffffff;
 	font-weight: bold;
