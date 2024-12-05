@@ -161,7 +161,7 @@ const Navbar = () => {
       </div>
       {user && (
         <div className="username-display">
-          Hola {user.nombreCompleto || "Usuario"}! 😊
+          Hola {user.nombreCompleto.split(" ")[0] || "Usuario"}! 😊
         </div>
       )}
     </nav>
