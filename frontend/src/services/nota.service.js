@@ -4,12 +4,7 @@ import { formatNotaData } from '@helpers/formatData.js';
 
 export async function getNotas() {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-
-        const { data } = await axios.get('/nota/all/', { headers });
+        const { data } = await axios.get('/nota/all/');
         console.log('Respuesta completa:', data);
         const formattedData = data.data.map(formatNotaData);
         return formattedData;
