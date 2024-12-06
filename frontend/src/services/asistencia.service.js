@@ -1,16 +1,12 @@
-import axios from './root.service.js'; // Importamos la configuración básica de axios
+import axios from './root.service.js'; 
 import cookies from 'js-cookie';
-import { formatAsistenciaData } from '@helpers/formatData.js'; // Si tienes un helper para formatear los datos
+import { formatAsistenciaData } from '@helpers/formatData.js';
 
-// Función para obtener todas las asistencias
+
 export async function getAsistencias() {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-        const { data } = await axios.get('/asistencia/all', { headers });
-        const formattedData = data.data.map(formatAsistenciaData); // Aquí puedes formatear la data si es necesario
+        const { data } = await axios.get('/asistencia/all');
+        const formattedData = data.data.map(formatAsistenciaData);
         return formattedData;
     } catch (error) {
         console.error("Error al obtener las asistencias:", error);
@@ -19,29 +15,24 @@ export async function getAsistencias() {
 }
 export async function registrarAsistencia(idAsignatura) {
     try {
-        const token = cookies.get('jwt-auth'); // Obtenemos el token de las cookies
+        const token = cookies.get('jwt-auth');
         const headers = {
-            Autorization: `Bearer ${token}`, // Configuramos los headers con el token
+            Autorization: `Bearer ${token}`, 
         };
-        // Hacemos una llamada POST para registrar la asistencia, pasando el ID de la asignatura en el cuerpo de la solicitud
+        
         const response = await axios.post('/asistencia', {
-            idAsignatura,headers  // El ID de la asignatura que se pasa al backend
+            idAsignatura,headers  
         });
-        return response.data;  // Devolvemos la respuesta
+        return response.data;  
     } catch (error) {
         console.error("Error al registrar la asistencia:", error);
-        throw error;  // Lanzamos el error para que pueda ser manejado en el frontend
+        throw error;  
     }
 }
 
-// Función para obtener una asistencia específica por su ID
 export async function getAsistencia(idAsistencia) {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-        const { data } = await axios.get(`/asistencia/${idAsistencia}`, { headers });
+        const { data } = await axios.get(`/asistencia/${idAsistencia}`);
         const formattedData = formatAsistenciaData(data.data);
         return formattedData;
     } catch (error) {
@@ -50,7 +41,6 @@ export async function getAsistencia(idAsistencia) {
     }
 }
 
-// Función para crear una nueva asistencia
 export async function createAsistencia(asistenciaData) {
     try {
         const token = cookies.get('jwt-auth');
@@ -65,7 +55,6 @@ export async function createAsistencia(asistenciaData) {
     }
 }
 
-// Función para actualizar una asistencia existente
 export async function updateAsistencia(asistenciaData, idAsistencia) {
     try {
         const token = cookies.get('jwt-auth');
@@ -81,7 +70,6 @@ export async function updateAsistencia(asistenciaData, idAsistencia) {
     }
 }
 
-// Función para eliminar una asistencia por ID
 export async function deleteAsistencia(idAsistencia) {
     try {
         const token = cookies.get('jwt-auth');

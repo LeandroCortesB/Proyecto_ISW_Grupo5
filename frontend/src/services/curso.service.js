@@ -4,12 +4,7 @@ import { formatCursoData } from '@helpers/formatData.js';
 
 export async function getCursos() {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-
-        const { data } = await axios.get('/curso/all/', { headers });
+        const { data } = await axios.get('/curso/all/');
         const formattedData = data.data.map(formatCursoData);
         return formattedData;
     } catch (error) {
@@ -19,12 +14,7 @@ export async function getCursos() {
 
 export async function getCurso(idCurso) {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-
-        const { data } = await axios.get(`/curso/${idCurso}`, { headers });
+        const { data } = await axios.get(`/curso/${idCurso}`);
         const formattedData = data.data.map(formatCursoData);
         return formattedData;
     } catch (error) {
