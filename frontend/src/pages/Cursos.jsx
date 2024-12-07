@@ -11,7 +11,7 @@ import Search from '@components/Search';
 import DeleteIcon from '@assets/deleteIcon.svg';
 import UpdateIcon from '@assets/updateIcon.svg';
 import UpdateIconDisable from '@assets/updateIconDisabled.svg';
-import PopupC from '../components/PopupC'; 
+import PopupC from '@components/PopupC'; 
 
 
 const Cursos = () => {

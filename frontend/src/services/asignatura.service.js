@@ -4,12 +4,7 @@ import { formatAsignaturaData } from '@helpers/formatData.js';
 
 export async function getAsignaturas() {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-
-        const { data } = await axios.get('/asignatura/all/', { headers });
+        const { data } = await axios.get('/asignatura/all/');
         const formattedData = data.data.map(formatAsignaturaData);
         return formattedData;
     } catch (error) {
@@ -19,12 +14,7 @@ export async function getAsignaturas() {
 
 export async function getAsignatura(idAsignatura) {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-
-        const { data } = await axios.get(`/asignatura/${idAsignatura}`, { headers });
+        const { data } = await axios.get(`/asignatura/${idAsignatura}`);
         return data.data;
     } catch (error) {
         return error.response.data;
@@ -75,12 +65,7 @@ export async function deleteAsignatura(idAsignatura) {
 
 export async function getAsignaturasByCurso(idCurso) {
     try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-
-        const { data } = await axios.get(`/asignatura/curso/${idCurso}`, { headers });
+        const { data } = await axios.get(`/asignatura/curso/${idCurso}`);
         return data.data;
     } catch (error) {
         return error.response.data;

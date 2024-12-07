@@ -8,7 +8,7 @@ import UpdateIcon from '@assets/updateIcon.svg';
 import paperIcon from '@assets/paperIcon.svg';
 import { Link} from 'react-router-dom';
 import '@styles/Hoja.css';
-import Addicon from '@assets/Addicon.svg';
+import Addicon from '@assets/AddIcon.svg';
 import UpdateIconDisable from '@assets/updateIconDisabled.svg';
 import DeleteIconDisable from '@assets/deleteIconDisabled.svg';
 import { useCallback, useState, useEffect } from 'react';

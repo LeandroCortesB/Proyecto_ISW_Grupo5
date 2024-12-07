@@ -19,9 +19,9 @@ const useGetNota = (idNota) => {
         }
     };
 
-    useEffect(() => {
-        fetchNota(); // Llama a fetchNotas al montar el componente
-    }, []);
+    useEffect(() => { 
+        if (idNota) fetchNota(); 
+    }, [idNota]);
 
     return { nota, loading, error, fetchNota };
 }

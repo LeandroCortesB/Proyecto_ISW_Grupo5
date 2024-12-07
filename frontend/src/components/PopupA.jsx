@@ -1,6 +1,6 @@
 import Form from "./Form";
 import CloseIcon from "@assets/XIcon.svg";
-import "@styles/Popup.css";
+import "@styles/popup.css";
 
 export default function PopupA({ show, setShow, data, action }) {
   const asistenciaData = data && data.length > 0 ? data[0] : {};

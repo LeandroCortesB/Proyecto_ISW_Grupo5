@@ -171,11 +171,18 @@ async function createUsers() {
           idCurso: 1,
         }),
       ),
+      AsignaturaRepository.save(
+        AsignaturaRepository.create({
+          nombreAsignatura: "Lenguaje",
+          descripcion: "Curso de la profesora maria",
+          idCurso: 1,
+        }),
+      ),
       AsistenciaRepository.save(
         AsistenciaRepository.create({
           fecha: "2024-11-26",
           asistio: true,
-          alumno: 3,
+          alumno: 2,
           asignatura: 1,
         }),
       ),
@@ -183,7 +190,7 @@ async function createUsers() {
         NotaRepository.create({
           calificacion: 10,
           periodo: "2023-2",
-          alumno: 3,
+          alumno: 2,
           asignatura: 1,
         }),
       ),
