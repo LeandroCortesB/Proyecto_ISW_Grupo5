@@ -40,17 +40,21 @@ export async function getAsignaturasService() {
 }
 
 export async function createAsignaturaService(body) {
-    try {
-        const asignaturaRepository = AppDataSource.getRepository(Asignatura);
+    try{
+   const asignaturaRepository = AppDataSource.getRepository(Asignatura);
+   const nuevaAsignatura = asignaturaRepository.create({
+         nombreAsignatura: body.nombreAsignatura,
+         idCurso: { idCurso: body.idCurso },
+         createdAt: new Date(),
+         updatedAt: new Date(),
+    });
+    await asignaturaRepository.save(nuevaAsignatura);
+    return [nuevaAsignatura, null];
+} catch (error) {
+    console.error("Error al crear la asignatura:", error);
+    return [null, "Error interno del servidor"];
+}
 
-        const nuevaAsignatura = asignaturaRepository.create(body);
-        await asignaturaRepository.save(nuevaAsignatura);
-
-        return [nuevaAsignatura, null];
-    } catch (error) {
-        console.error("Error al crear la asignatura:", error);
-        return [null, "Error interno del servidor"];
-    }
 }
 
 export async function updateAsignaturaService(query, body) {
@@ -67,8 +71,16 @@ export async function updateAsignaturaService(query, body) {
 
         await asignaturaRepository.update(idAsignatura, body);
 
-        const asignaturaUpdated = await asignaturaRepository.findOne({ where: { idAsignatura } });
-
+        const dataAsignaturaUpdated = {
+            nombreAsignatura: body.nombreAsignatura,
+            idCurso: body.idCurso,
+            updatedAt: new Date(),
+        };
+        await asignaturaRepository.update(idAsignatura, dataAsignaturaUpdated);
+        const asignaturaUpdated = await asignaturaRepository.findOne({
+            where: [{ idAsignatura } ],
+        });
+        if(!asignaturaUpdated) return [null, "Error al actualizar la asignatura"];
         return [asignaturaUpdated, null];
     } catch (error) {
         console.error("Error al actualizar la asignatura:", error);

@@ -51,3 +51,18 @@ export async function deleteCurso(idCurso) {
         return error.response.data;
     }
 }
+
+export async function createCurso(data) {
+    try {
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.post('/curso/', data, { headers });
+        return response.data.data;
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+}
