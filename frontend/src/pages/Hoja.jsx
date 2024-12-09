@@ -36,11 +36,16 @@ const Hojas = () => {
 
   const { handleClickAddHoja, handleCreateHoja, isPopupHojaOpen, setIsPopupHojaOpen } = useCreateHoja(setHojas);
 
+  filtradas = filtradas.map((hoja) => ({
+    ...hoja,
+    anotacionTexto: hoja.buena ? 'Buena' : 'Mala',
+  }));
+
   const columns = [
     { title: 'Numero', field: 'idHoja', width: 80, responsive: 0 },
     { title: 'Nombre', field: 'nombreCompleto', width: 250, responsive: 0 },
     { title: 'Rut', field: 'rut', width: 250, responsive: 1 },
-    { title: 'Anotacion buena', field: 'buena', width: 100, responsive: 2 },
+    { title: 'Anotacion', field: 'anotacionTexto', width: 100, responsive: 2,},
     { title: 'Descripcion', field: 'anotacion', width: 300, responsive: 2 },
     { title: 'Creado', field: 'createdAt', width: 100, responsive: 2 },
   ];
