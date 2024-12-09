@@ -3,30 +3,28 @@ import { getHojas } from '@services/hoja.service.js';
 
 const useGetHojas = (rut) => {
   const [ hojas, setHojas] = useState([]); 
-  const [ setLoading ] = useState(true); 
-  const [ setError ] = useState(null); 
 
   const fetchHojas = async () => {
     try {
-      setLoading(true);
-      const [response, error] = await getHojas(rut); 
-      if (error) {
-        throw new Error(error);
-      }
-      setHojas(response); 
+      const response = await getHojas(rut);
+      const formattedData = response.map(hoja => ({
+        idHoja: hoja.idHoja,
+        nombreCompleto: hoja.nombreCompleto,
+        rut: hoja.rut,
+        buena: hoja.buena,
+        anotacion: hoja.anotacion,
+        createdAt: hoja.createdAt
+        }));
+        setHojas(formattedData);
+    } catch (error) {
+      console.error("Error: ", error);
+    };
 
-    } catch (err) {
-      console.error("Error fetching hojas: ", err);
-      setError(err.message); 
-      
-    } finally {
-      setLoading(false); 
-    }
-  };
+  }
 
   useEffect(() => {
-    if (rut) fetchHojas(); 
-  }, [rut]);
+    fetchHojas(); 
+  }, []);
 
   return { hojas, fetchHojas , setHojas }; 
 };

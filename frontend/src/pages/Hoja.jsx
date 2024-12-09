@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Table from '@components/Table';
 import useGetHojas from '@hooks/hojas/useGetHojas.jsx';
 import PopupHoja from '@components/PopupHoja';
@@ -10,22 +10,35 @@ import Addicon from '@assets/AddIcon.svg';
 const Hojas = () => {
   const { rut } = useParams();
   const { hojas, fetchHojas , setHojas } = useGetHojas(rut);
-  const [filteredHojas, setFilteredHojas] = useState([]);
   const [ isLoading, setIsLoading ] = useState(false);
 
-  useEffect(() => {
+  function hojasrut(x){
+    let arreglo = []
+    for(let i=0; i<hojas.length;i++){
+        if(hojas[i].rut === x){
+          arreglo.push(hojas[i]);
+        }
+    }
+    return arreglo
+  }
+  
+  let filtradas = hojasrut(rut);
 
-    const datosFilter = hojas.filter(
-      (hoja) => hoja.user.rut === (rut)
-    );
-    setFilteredHojas(datosFilter);
-  }, [rut, hojas]);
+  function hojasnom(x){
+    let arreglo = "";
+    for(let i=0; i<x.length;i++){
+        arreglo=x[i].nombreCompleto;
+    }
+    return arreglo
+  }
 
-  const { handleClickAdd, handleCreate, isPopupHojaOpen, setIsPopupHojaOpen } = useCreateHoja(setHojas);
+  let nombre = hojasnom(filtradas);
+
+  const { handleClickAddHoja, handleCreateHoja, isPopupHojaOpen, setIsPopupHojaOpen } = useCreateHoja(setHojas);
 
   const columns = [
-    { title: 'IdHoja', field: 'IdHoja', width: 80, responsive: 0 },
-    { title: 'Nombre', field: 'NombreCompleto', width: 250, responsive: 0 },
+    { title: 'Numero', field: 'idHoja', width: 80, responsive: 0 },
+    { title: 'Nombre', field: 'nombreCompleto', width: 250, responsive: 0 },
     { title: 'Rut', field: 'rut', width: 250, responsive: 1 },
     { title: 'Anotacion buena', field: 'buena', width: 100, responsive: 2 },
     { title: 'Descripcion', field: 'anotacion', width: 300, responsive: 2 },
@@ -39,14 +52,14 @@ const Hojas = () => {
           <h1 className="title-table">Hojas</h1>
           <div className="filter-actions">
 
-            <button onClick={handleClickAdd}>
+            <button onClick={handleClickAddHoja}>
               <img src={Addicon} alt="add" />
             </button>
 
           </div>
         </div>
         <Table
-          data={filteredHojas} 
+          data={filtradas} 
           columns={columns}
           initialSortName="nombreCompleto"
         />
@@ -55,9 +68,10 @@ const Hojas = () => {
         show={isPopupHojaOpen}
         setShow={setIsPopupHojaOpen}
         rutSeleccionado={rut}
+        nombreSeleccionado={nombre}
         action={(data) => {
           setIsLoading(true);
-          handleCreate(data).finally(() => setIsLoading(false));
+          handleCreateHoja(data).finally(() => setIsLoading(false));
         }}
       />
     </div>

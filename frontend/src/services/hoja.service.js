@@ -9,7 +9,7 @@ export async function getHojas(rut) {
             Autorization: `Bearer ${token}`,
         };
 
-        const { data } = await axios.get(`/hoja/${rut}`, { headers });
+        const { data } = await axios.get(`/hoja/all/${rut}`, { headers });
         const formattedData = data.data.map(formatHojaData);
         return formattedData;
     } catch (error) {

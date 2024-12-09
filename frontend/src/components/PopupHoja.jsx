@@ -2,10 +2,10 @@ import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
-export default function PopupHoja({ show, setShow, action, rutSeleccionado }) {
+export default function PopupHoja({ show, setShow, action, rutSeleccionado, nombreSeleccionado }) {
     
     const handleSubmit = (formData) => {
-        const dataWithRut = { ...formData, rut: rutSeleccionado };
+        const dataWithRut = { ...formData, rut: rutSeleccionado, nombreCompleto: nombreSeleccionado };
         action(dataWithRut);
     };
 

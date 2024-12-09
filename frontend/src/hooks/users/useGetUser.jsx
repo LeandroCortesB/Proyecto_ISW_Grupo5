@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
-import { getUser } from '@services/user.service.js'; // Importa el servicio para obtener un usuario
+import { getUser } from '@services/user.service.js'; 
 
 const useGetUser = (rut) => {
-    const [user, setUser] = useState(null); // Estado para almacenar el usuario
-    const [loading, setLoading] = useState(true); // Estado para manejar el loading
-    const [error, setError] = useState(null); // Estado para manejar errores
-
+    const [user, setUser] = useState(null); 
+    
     const fetchUser = async () => {
         try {
-            setLoading(true);
-            const response = await getUser(rut); // Llama al servicio con el rut del usuario
+            const response = await getUser(rut); 
+            console.log("responsexd ",response);
             const formattedUser = {
                 nombreCompleto: response.nombreCompleto,
                 rut: response.rut,
@@ -17,20 +15,17 @@ const useGetUser = (rut) => {
                 rol: response.rol,
                 createdAt: response.createdAt,
             };
-            setUser(formattedUser); // Guarda el usuario formateado en el estado
-        } catch (err) {
-            console.error("Error fetching user: ", err);
-            setError(err); // Guarda el error si ocurre
-        } finally {
-            setLoading(false); // Finaliza el estado de carga
-        }
-    };
-
+            setUser(formattedUser); 
+        } catch (error) {
+            console.error("Error: ", error);
+        };
+}
     useEffect(() => {
-        if (rut) fetchUser(); // Llama a fetchUser solo si hay un rut definido
-    }, [rut]);
+        fetchUser(); 
+    }, []);
 
-    return { user, loading, error, fetchUser };
+    return { user, fetchUser, setUser };
 };
+
 
 export default useGetUser;

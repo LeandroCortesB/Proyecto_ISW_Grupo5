@@ -53,11 +53,11 @@ const Alumnos = () => {
   );
 
   const columns = [
-    { title: 'Nombre', field: 'nombreCompleto', width: 350, responsive: 0 },
+    { title: 'Nombre', field: 'nombreCompleto', width: 360, responsive: 0 },
     { title: 'Correo electrónico', field: 'email', width: 300, responsive: 3 },
-    { title: 'Rut', field: 'rut', width: 150, responsive: 2 },
-    { title: 'Rol', field: 'rol', width: 200, responsive: 2 },
-    { title: 'Creado', field: 'createdAt', width: 200, responsive: 2 },
+    { title: 'Rut', field: 'rut', width: 130, responsive: 2 },
+    { title: 'Rol', field: 'rol', width: 150, responsive: 2 },
+    { title: 'Creado', field: 'createdAt', width: 150, responsive: 2 },
   ];
 
   return (
@@ -87,8 +87,8 @@ const Alumnos = () => {
             </button>
 
             {dataUser.length > 0 ? (
-             <Link to={`/Hoja/${dataUser[0]?.rut}`}>
-                 <img src={paperIcon} alt="Hojas" />
+             <Link to={`/Hoja/all/${dataUser[0]?.rut}`}>
+                 <img src={paperIcon} alt="hojas" />
              </Link>
               ) : (
              <button className="Hojas" disabled>

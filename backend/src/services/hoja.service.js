@@ -23,9 +23,9 @@ export async function getHojaService(query) {
   }
 }
 
-
 export async function getHojasService(rut) {
   try {
+
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojas = await hojaRepository.find({

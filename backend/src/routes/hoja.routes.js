@@ -16,7 +16,7 @@ router.use(authenticateJwt);
 
 router
     .get("/:idHoja",authorizeRoles(["administrador", "profesor","alumno","apoderado"]), getHoja)
-    .get("/all/:rut",authorizeRoles(["administrador", "profesor"]), getHojas)
+    .get("/all/:rut",authorizeRoles(["administrador", "profesor","alumno","apoderado"]), getHojas)
     .post("/", authorizeRoles(["administrador", "profesor"]),createHoja)
     .patch("/:idHoja",authorizeRoles(["administrador", "profesor"]), updateHoja)
     .delete("/:id", authorizeRoles(["administrador", "profesor"]),deleteHoja);
