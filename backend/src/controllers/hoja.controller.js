@@ -57,7 +57,7 @@ export async function getHojas(req, res) {
 export async function createHoja(req, res) {
   try {
 
-    const { error } = hojabodyValidation.validate(req.body);
+    const { error } = hojaBodyValidation.validate(req.body);
 
     if (error) return handleErrorClient(res, 400, "Error de validacion", error.message);
 

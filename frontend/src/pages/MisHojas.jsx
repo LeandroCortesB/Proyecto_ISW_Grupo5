@@ -1,16 +1,15 @@
-import { useState } from 'react';
 import Table from '@components/Table';
 import useGetHojas from '@hooks/hojas/useGetHojas.jsx';
-import PopupHoja from '@components/PopupHoja';
 import '@styles/Hoja.css';
-import { useParams } from 'react-router-dom';
-import useCreateHoja from '@hooks/hojas/useCreateHoja.jsx';
-import Addicon from '@assets/AddIcon.svg';
+import {useAuth} from '@context/AuthContext.jsx';
 
-const Hojas = () => {
-  const { rut } = useParams();
+const MisHojas = () => {
+  const { user } = useAuth();
+
+  const rut = user.rut;
+  const nombre = user.nombreCompleto;
+
   const { hojas, fetchHojas , setHojas } = useGetHojas(rut);
-  const [ isLoading, setIsLoading ] = useState(false);
 
   function hojasrut(x){
     let arreglo = []
@@ -26,18 +25,6 @@ const Hojas = () => {
   }
   
   let filtradas = hojasrut(rut);
-
-  function hojasnom(x){
-    let arreglo = "";
-    for(let i=0; i<x.length;i++){
-        arreglo=x[i].nombreCompleto;
-    }
-    return arreglo
-  }
-
-  let nombre = hojasnom(filtradas);
-
-  const { handleClickAddHoja, handleCreateHoja, isPopupHojaOpen, setIsPopupHojaOpen } = useCreateHoja(setHojas);
 
   filtradas = filtradas.map((hoja) => ({
     ...hoja,
@@ -57,11 +44,6 @@ const Hojas = () => {
         <div className="top-table">
           <h1 className="title-table">Hojas de {nombre}</h1>
           <div className="filter-actions">
-
-            <button onClick={handleClickAddHoja}>
-              <img src={Addicon} alt="add" />
-            </button>
-
           </div>
         </div>
         <Table
@@ -70,18 +52,8 @@ const Hojas = () => {
           initialSortName="nombreCompleto"
         />
       </div>
-      <PopupHoja
-        show={isPopupHojaOpen}
-        setShow={setIsPopupHojaOpen}
-        rutSeleccionado={rut}
-        nombreSeleccionado={nombre}
-        action={(data) => {
-          setIsLoading(true);
-          handleCreateHoja(data).finally(() => setIsLoading(false));
-        }}
-      />
     </div>
   );
 };
 
-export default Hojas;
+export default MisHojas;

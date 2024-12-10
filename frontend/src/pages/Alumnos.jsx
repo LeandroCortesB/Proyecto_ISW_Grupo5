@@ -64,7 +64,7 @@ const Alumnos = () => {
     <div className="main-container">
       <div className="table-container">
         <div className="top-table">
-          <h1 className="title-table">Usuarios</h1>
+          <h1 className="title-table">Lista de alumnos</h1>
           <div className="filter-actions">
             <Search value={filterRut} onChange={handleRutFilterChange} placeholder="Filtrar por rut" />
             <button onClick={handleClickUpdate} disabled={dataUser?.length === 0 || isLoading}>

@@ -8,6 +8,7 @@ import Register from "@pages/Register";
 import Error404 from "@pages/Error404";
 import Root from "@pages/Root";
 import Cursos from "@pages/Cursos";
+import MisHojas from "@pages/MisHojas";
 import Perfil from "@pages/Perfil";
 import Nota from "@pages/Nota";
 import Hojas from "@pages/Hoja";
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
             <Asistencias /> {/* Nueva ruta para Asistencias */}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/MisHojas",
+        element: (
+          <ProtectedRoute allowedRoles={["alumno"]}>
+            <MisHojas /> 
           </ProtectedRoute>
         ),
       },

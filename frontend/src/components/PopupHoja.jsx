@@ -5,7 +5,9 @@ import CloseIcon from '@assets/XIcon.svg';
 export default function PopupHoja({ show, setShow, action, rutSeleccionado, nombreSeleccionado }) {
     
     const handleSubmit = (formData) => {
+        
         const dataWithRut = { ...formData, rut: rutSeleccionado, nombreCompleto: nombreSeleccionado };
+        console.log(dataWithRut);
         action(dataWithRut);
     };
 
@@ -18,7 +20,7 @@ export default function PopupHoja({ show, setShow, action, rutSeleccionado, nomb
                             <img src={CloseIcon} alt="Close" />
                         </button>
                         <Form
-                            title="Crear Hoja de Vida"
+                            title="Crear anotacion"
                             fields={[
                                 {
                                     label: "Anotación",
