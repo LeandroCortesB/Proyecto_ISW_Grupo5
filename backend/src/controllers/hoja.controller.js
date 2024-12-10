@@ -36,7 +36,7 @@ export async function getHoja(req, res) {
 
 export async function getHojas(req, res) {
   try {
-    const { rut } = req.query;
+    const { rut } = req.body;
 
     const [hojas, errorHojas] = await getHojasService(rut);
 
@@ -57,7 +57,7 @@ export async function getHojas(req, res) {
 export async function createHoja(req, res) {
   try {
 
-    const { error } = hojaQueryValidation.validate(req.body);
+    const { error } = hojabodyValidation.validate(req.body);
 
     if (error) return handleErrorClient(res, 400, "Error de validacion", error.message);
 
