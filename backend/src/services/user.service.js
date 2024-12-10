@@ -73,7 +73,7 @@ export async function createUserService(body){
           nombreCompleto: body.nombreCompleto,
           rut: body.rut,
           buena:true,
-          anotacion: "Prueba ",
+          anotacion: "Portada (Hoja en blanco)",
           updatedAt: new Date(),
         })
       )
