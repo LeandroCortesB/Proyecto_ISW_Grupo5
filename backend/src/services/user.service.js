@@ -1,7 +1,7 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import Hoja from "../entity/hoja.entity.js";
-import deleteHojaService from "../services/hoja.service.js";
+import { createHojaService, deleteHojaService }  from "../services/hoja.service.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -159,10 +159,7 @@ export async function updateUserService(query, body) {
     }
 
     const { password, ...userUpdated } = userData;
-    
-    //aca se crea una hoja asociada al usuario en caso de que este sea un alumno
-    const hojaRepository = AppDataSource.getRepository(Hoja);
-    
+
     return [userUpdated, null];
   } catch (error) {
     console.error("Error al modificar un usuario:", error);
