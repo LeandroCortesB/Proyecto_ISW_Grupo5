@@ -73,7 +73,7 @@ export async function createUserService(body){
           nombreCompleto: body.nombreCompleto,
           rut: body.rut,
           buena:true,
-          anotacion: " ",
+          anotacion: "Prueba ",
           updatedAt: new Date(),
         })
       )
@@ -162,20 +162,6 @@ export async function updateUserService(query, body) {
     
     //aca se crea una hoja asociada al usuario en caso de que este sea un alumno
     const hojaRepository = AppDataSource.getRepository(Hoja);
-    p=hojaRepository.findOne({ where: [{ rut: rut }], })
-    if(p=null){
-      if((body.rol="alumno")||(body.rol="Alumno")){
-        hojaRepository.save(
-          hojaRepository.create({
-            nombreCompleto: body.nombreCompleto,
-            rut: body.rut,
-            buena:true,
-            updatedAt: new Date(),
-          })
-        )
-      }      
-    }
-
     
     return [userUpdated, null];
   } catch (error) {
