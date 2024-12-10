@@ -56,7 +56,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/Hoja/:rut",
+        path: "/Hoja/all/:rut",
         element: <Hojas />,
       },
       {
