@@ -2,10 +2,24 @@ import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import QuestionIcon from '@assets/QuestionCircleIcon.svg';
+import { getCursos } from '@services/curso.service.js';
+import { useEffect , useState } from 'react';
 
 export default function Popup({ show, setShow, data, action }) {
     const userData = data && data.length > 0 ? data[0] : {};
 
+    const [cursos, setCursos] = useState([]);
+    useEffect(() => {
+    const fetchCursos = async () => {
+        try {
+            const response = await getCursos(); 
+            setCursos(response);
+        } catch (err) {
+            console.error("Error fetching cursos: ", err);
+        }
+    };
+    fetchCursos();
+},[]);
     const handleSubmit = (formData) => {
         action(formData);
     };
@@ -92,7 +106,15 @@ export default function Popup({ show, setShow, data, action }) {
                                 maxLength: 26,
                                 pattern: /^[a-zA-Z0-9]+$/,
                                 patternMessage: "Debe contener solo letras y números",
-                            }
+                            },
+                            {
+                                label: "Curso",
+                                name: "curso",
+                                fieldType: 'select',
+                                options: cursos.map((curso) => ({ value: curso.idCurso, label: curso.nombreCurso })),
+                                required: true,
+                                defaultValue: userData.curso || "",
+                            },
                         ]}
                         onSubmit={handleSubmit}
                         buttonText="Editar usuario"
