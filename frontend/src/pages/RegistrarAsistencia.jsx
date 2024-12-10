@@ -5,6 +5,7 @@ import { getCursos } from "@services/curso.service.js";
 import { getAsignaturasByCurso } from "@services/asignatura.service.js";
 import { getUsersByAsignatura } from "@services/user.service.js"; // NUEVO
 import { createAsistencia } from "@services/asistencia.service.js";
+import "../styles/registroAsistencia.css";
 
 const RegistrarAsistencia = () => {
   const [cursos, setCursos] = useState([]);
@@ -123,27 +124,28 @@ const RegistrarAsistencia = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 border rounded-md shadow">
-      <h1 className="text-xl font-bold mb-4">Registrar Asistencia</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="registro-asistencia">
+      <h1 className="titulo">Registrar Asistencia</h1>
+      <p className="descripcion">
+        Seleccione la fecha, curso y asignatura para registrar la asistencia
+      </p>
+      {error && <p className="error-message">{error}</p>}
+      <form onSubmit={handleSubmit}>
         {/* Fecha */}
-        <div>
-          <label className="block mb-2 font-medium">Fecha</label>
+        <div className="form-group">
+          <label>Fecha</label>
           <input
             type="date"
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
-            className="w-full px-3 py-2 border rounded"
           />
         </div>
         {/* Cursos */}
-        <div>
-          <label className="block mb-2 font-medium">Curso</label>
+        <div className="form-group">
+          <label>Curso</label>
           <select
             value={cursoSeleccionado}
             onChange={(e) => setCursoSeleccionado(e.target.value)}
-            className="w-full px-3 py-2 border rounded"
           >
             <option value="">Selecciona un curso</option>
             {cursos.map((curso) => (
@@ -158,12 +160,11 @@ const RegistrarAsistencia = () => {
           </select>
         </div>
         {/* Asignaturas */}
-        <div>
-          <label className="block mb-2 font-medium">Asignatura</label>
+        <div className="form-group">
+          <label>Asignatura</label>
           <select
             value={asignaturaSeleccionada}
             onChange={(e) => setAsignaturaSeleccionada(e.target.value)}
-            className="w-full px-3 py-2 border rounded"
             disabled={!cursoSeleccionado}
           >
             <option value="">Selecciona una asignatura</option>
@@ -179,11 +180,11 @@ const RegistrarAsistencia = () => {
           </select>
         </div>
         {/* Alumnos */}
-        <div>
-          <label className="block mb-2 font-medium">Alumnos</label>
-          <ul className="space-y-2">
+        <div className="form-group">
+          <label>Alumnos</label>
+          <ul>
             {alumnos.map((alumno) => (
-              <li key={alumno.id} className="flex items-center space-x-4">
+              <li key={alumno.id} className="alumno-item">
                 <span>{alumno.nombreCompleto}</span>
                 <select
                   value={
@@ -193,7 +194,7 @@ const RegistrarAsistencia = () => {
                   onChange={(e) =>
                     handleEstadoChange(alumno.id, e.target.value)
                   }
-                  className="px-2 py-1 border rounded"
+                  className="alumno-select"
                 >
                   <option value="Presente">Presente</option>
                   <option value="Ausente">Ausente</option>
@@ -204,10 +205,7 @@ const RegistrarAsistencia = () => {
           </ul>
         </div>
         {/* Botón para guardar */}
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white rounded"
-        >
+        <button type="submit" className="submit-button">
           Guardar Asistencia
         </button>
       </form>
