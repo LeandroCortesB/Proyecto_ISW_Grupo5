@@ -3,16 +3,14 @@ import { createHoja } from '@services/hoja.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { formatPostCreateHoja } from '@helpers/formatData.js';
 
-//Falta crear el handleonClick
-
 const useCreateHoja = (setHojas) => {
     const [isPopupHojaOpen, setIsPopupHojaOpen] = useState(false);
 
-    const handleClickAdd = () => {
+    const handleClickAddHoja = () => {
         setIsPopupHojaOpen(true);
     };
 
-    const handleCreate = async (newHojaData) => {
+    const handleCreateHoja = async (newHojaData) => {
             try {
                 const createdHoja = await createHoja(newHojaData);
 
@@ -30,8 +28,8 @@ const useCreateHoja = (setHojas) => {
     };
 
     return {
-        handleClickAdd,   
-        handleCreate,      
+        handleClickAddHoja,   
+        handleCreateHoja,      
         isPopupHojaOpen,       
         setIsPopupHojaOpen     
     };
