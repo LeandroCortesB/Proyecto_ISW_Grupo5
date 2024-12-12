@@ -22,11 +22,15 @@ const Alumnos = () => {
   const [filterRut, setFilterRut] = useState('');
   const [filterAlumno, setFilterAlumnos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filterNombre, setFilterNombre] = useState('');
 
   useEffect(() => {
-    const datosFilter = users.filter((user) => user.rol?.toLowerCase() === 'alumno');
+    const datosFilter = users.filter((user) => 
+      user.rol?.toLowerCase() === 'alumno' &&
+      user.nombreCompleto?.toLowerCase().includes(filterNombre.toLowerCase())
+    );
     setFilterAlumnos(datosFilter);
-  }, [users]);
+  }, [users, filterNombre]);
 
   const {
     handleClickUpdate,
@@ -43,6 +47,10 @@ const Alumnos = () => {
 
   const handleRutFilterChange = (e) => {
     setFilterRut(e.target.value.trim());
+  };
+
+  const handleNombreFilterChange = (e) => {
+    setFilterNombre(e.target.value);
   };
 
   const handleSelectionChange = useCallback(
@@ -66,6 +74,7 @@ const Alumnos = () => {
         <div className="top-table">
           <h1 className="title-table">Lista de alumnos</h1>
           <div className="filter-actions">
+            <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder='Filtrar por nombre' />
             <Search value={filterRut} onChange={handleRutFilterChange} placeholder="Filtrar por rut" />
             <button onClick={handleClickUpdate} disabled={dataUser?.length === 0 || isLoading}>
               {dataUser?.length === 0 ? (

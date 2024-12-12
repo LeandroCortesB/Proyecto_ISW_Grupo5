@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Table from '@components/Table';
 import useGetHojas from '@hooks/hojas/useGetHojas.jsx';
 import PopupHoja from '@components/PopupHoja';
@@ -6,11 +6,25 @@ import '@styles/Hoja.css';
 import { useParams } from 'react-router-dom';
 import useCreateHoja from '@hooks/hojas/useCreateHoja.jsx';
 import Addicon from '@assets/AddIcon.svg';
+import DeleteIcon from '@assets/deleteIcon.svg';
+import useEditHoja from '@hooks/hojas/useEditHoja';
+import useDeleteHoja from '@hooks/hojas/useDeleteHoja';
 
 const Hojas = () => {
   const { rut } = useParams();
   const { hojas, fetchHojas , setHojas } = useGetHojas(rut);
   const [ isLoading, setIsLoading ] = useState(false);
+
+  const {
+    handleClickUpdate,
+    handleUpdate,
+    isPopupOpen,
+    setIsPopupOpen,
+    dataHoja,
+    setDataHoja
+} = useEditHoja(setHojas); 
+
+const { handleDelete } = useDeleteHoja(fetchHojas, setDataHoja);
 
   function hojasrut(x){
     let arreglo = []
@@ -51,6 +65,14 @@ const Hojas = () => {
     { title: 'Creado', field: 'createdAt', width: 100, responsive: 2 },
   ];
 
+  const handleSelectionChange = useCallback((selectedHojas) => {
+    setDataHoja(selectedHojas.map(hoja => ({
+        ...hoja,
+        idHoja: (hoja.idHoja), 
+    })));
+}, [setDataHoja]);
+
+
   return (
     <div className="main-container">
       <div className="table-container">
@@ -62,12 +84,21 @@ const Hojas = () => {
               <img src={Addicon} alt="add" />
             </button>
 
+            <button className="delete-user-button" disabled={dataHoja.length === 0} onClick={() => handleDelete(dataHoja)}>
+              {dataHoja.length === 0 ? (
+                  <img src={DeleteIcon} alt="delete-disabled" />
+                    ) : (
+                  <img src={DeleteIcon} alt="delete" />
+              )}
+            </button>
+
           </div>
         </div>
         <Table
           data={filtradas} 
           columns={columns}
           initialSortName="nombreCompleto"
+          onSelectionChange={handleSelectionChange}
         />
       </div>
       <PopupHoja
