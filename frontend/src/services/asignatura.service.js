@@ -28,7 +28,7 @@ export async function createAsignatura(data) {
             Autorization: `Bearer ${token}`,
         };
 
-        const response = await axios.post('/asignatura/create/', data, { headers });
+        const response = await axios.post(`/asignatura/`, data, { headers });
         return response.data.data;
     } catch (error) {
         return error.response.data;
@@ -42,7 +42,7 @@ export async function updateAsignatura(data, idAsignatura) {
             Autorization: `Bearer ${token}`,
         };
 
-        const response = await axios.patch(`/asignatura/update/?idAsignatura=${idAsignatura}`, data, { headers });
+        const response = await axios.patch(`/asignatura/${idAsignatura}`, data, { headers });
         return response.data.data;
     } catch (error) {
         return error.response.data;
@@ -56,7 +56,7 @@ export async function deleteAsignatura(idAsignatura) {
             Autorization: `Bearer ${token}`,
         };
 
-        const response = await axios.delete(`/asignatura/del/?idAsignatura=${idAsignatura}`, { headers });
+        const response = await axios.delete(`/asignatura/${idAsignatura}`, { headers });
         return response.data;
     } catch (error) {
         return error.response.data;

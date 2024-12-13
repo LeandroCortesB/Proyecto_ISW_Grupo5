@@ -14,11 +14,13 @@ export default function PopupA({ show, setShow, action , idCurso }) {
   
     // Asignar el nombre del curso basado en el idCurso
   
-    const curso = Number(idCurso) ;
     const handleSubmit = (formData) => {
-        action(formData);
+        // Agregar idCurso a los datos del formulario
+        const dataWithCourseId = { ...formData, idCurso: Number(idCurso) };
+        console.log(dataWithCourseId);
+        action(dataWithCourseId);
     };
-
+    
     return (
         <div>
             {show && (
@@ -41,16 +43,6 @@ export default function PopupA({ show, setShow, action , idCurso }) {
                                     maxLength: 50,
                                     pattern: patterName,
                                     patternMessage: "El nombre de la Asignatura solo puede tener caracteres del diccionario español",
-                                },
-                                {
-                                    label: "Curso Asociado",
-                                    name: "curso",
-                                    placeholder: idCurso,
-                                    fieldType: "input",
-                                    type: "number",
-                                    value: curso, // Usar el estado del nombre del curso
-                                    readOnly: true, // Hacer el campo no modificable
-                                    style: { backgroundColor: "#f5f5f5", cursor: "not-allowed" },
                                 },
                             ]}
                             onSubmit={handleSubmit}
