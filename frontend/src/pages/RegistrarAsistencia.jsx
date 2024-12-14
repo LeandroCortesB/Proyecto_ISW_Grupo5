@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { format } from "date-fns";
+//import { format } from "date-fns";
 import { getCursos } from "@services/curso.service.js";
 import { getAsignaturasByCurso } from "@services/asignatura.service.js";
 import { getUsersByAsignatura } from "@services/user.service.js"; // NUEVO
@@ -13,7 +13,9 @@ const RegistrarAsistencia = () => {
   const [asignaturas, setAsignaturas] = useState([]);
   const [asignaturaSeleccionada, setAsignaturaSeleccionada] = useState("");
   const [alumnos, setAlumnos] = useState([]);
-  const [fecha, setFecha] = useState(format(new Date(), "dd-MM-yyyy"));
+  const [fecha, setFecha] = useState(
+    () => new Date().toISOString().split("T")[0]
+  ); // NUEVO
   const [asistencias, setAsistencias] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -62,11 +64,10 @@ const RegistrarAsistencia = () => {
           );
           setAlumnos(alumnosData || []);
 
-          // Inicializar los estados de asistencia para los alumnos cargados
           setAsistencias(
             alumnosData.map((alumno) => ({
               idAlumno: alumno.id,
-              estado: "Presente", // Estado inicial predeterminado
+              estado: "Presente",
             }))
           );
         } catch (err) {
@@ -77,10 +78,10 @@ const RegistrarAsistencia = () => {
       fetchAlumnos();
     } else {
       setAlumnos([]);
-      setAsistencias([]); // Reiniciar asistencias si no hay asignatura seleccionada
+      setAsistencias([]);
     }
   }, [asignaturaSeleccionada]);
-  // Cambiar estado de asistencia de un alumno
+
   const handleEstadoChange = (idAlumno, nuevoEstado) => {
     setAsistencias((prevAsistencias) =>
       prevAsistencias.map((asistencia) =>
@@ -91,7 +92,6 @@ const RegistrarAsistencia = () => {
     );
   };
 
-  // Enviar formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -109,8 +109,7 @@ const RegistrarAsistencia = () => {
         asistencias: asistencias.map((asistencia) => ({
           idAlumno: asistencia.idAlumno,
           asistio:
-            asistencia.estado === "Presente" ||
-            asistencia.estado === "Justificado", // Traducir a booleano
+            asistencia.estado === "Presente" || asistencia.estado === "Ausente",
         })),
       };
 
