@@ -30,7 +30,7 @@ export function formatAsignaturaData(asignatura) {
         nombreAsignatura: startCase(asignatura.nombreAsignatura),
         descripcion: startCase(asignatura.descripcion),
         createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
-        cursoIdCurso: startCase(asignatura.cursoIdCurso)
+        
     };
 }
 
@@ -97,5 +97,23 @@ export function formatPostCreateHoja(hoja) {
         createdAt: formatTempo(hoja.createdAt, "DD-MM-YYYY")
     };
 }
+export function formatPostCreateAsignatura(asignatura) {
+    return {
+        nombreAsignatura: startCase(asignatura.nombreAsignatura),
+        descripcion: startCase(asignatura.descripcion),
+        createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
+
+    };
+}
+
+export function formatPutEditAsignatura(asignatura) {
+    return {
+        nombreAsignatura: startCase(asignatura.nombreAsignatura),
+        descripcion: startCase(asignatura.descripcion),
+        createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
+    };
+}
+
+
 
 

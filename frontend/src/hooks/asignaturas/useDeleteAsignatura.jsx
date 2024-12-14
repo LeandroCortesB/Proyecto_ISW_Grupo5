@@ -1,26 +1,27 @@
-import {deleteCurso} from '@services/curso.service.js';
-import { deleteDataAlert, showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
+import {deleteAsignatura} from '@services/asignatura.service.js';
+import {deleteDataAlert , showErrorAlert, showSuccessAlert} from '@helpers/sweetAlert.js';
 
-const useDeleteCurso = (fetchCursos, setDataCurso) => {
-    const handleDelete = async (dataCurso) => {
-        if (dataCurso.length > 0) {
+const useDeleteAsignatura = (fetchAsignaturas, setDataAsignatura) => {
+    const handleDelete = async (dataAsignatura) => {
+        if (dataAsignatura.length > 0) {
             try {
+                console.log('Datos de asignatura a eliminar:', dataAsignatura);
                 const result = await deleteDataAlert();
-                const idCurso = Number(dataCurso[0]?.idCurso);
+                const idAsignatura = Number(dataAsignatura[0]?.idAsignatura);
                 if (result.isConfirmed) {
-                    const response = await deleteCurso(idCurso);
+                    const response = await deleteAsignatura(idAsignatura);
                     if(response.status === 'Client error') {
                         return showErrorAlert('Error', response.details);
                     }
-                    showSuccessAlert('¡Eliminado!','El curso ha sido eliminado correctamente.');
-                    await fetchCursos();
-                    setDataCurso([]);
+                    showSuccessAlert('¡Eliminada!','La asignatura ha sido eliminada correctamente.');
+                    showSuccessAlert('Actualice la pagina','Actualice la pagina para ver los cambios');
+                    setDataAsignatura([]);
                 } else {
                     showErrorAlert('Cancelado', 'La operación ha sido cancelada.');
                 }
             } catch (error) {
-                console.error('Error al eliminar el curso:', error);
-                showErrorAlert('Cancelado', 'Ocurrió un error al eliminar el curso.');
+                console.error('Error al eliminar la asignatura:', error);
+                showErrorAlert('Cancelado', 'Ocurrió un error al eliminar la asignatura.');
             }
         }
     };
@@ -29,4 +30,4 @@ const useDeleteCurso = (fetchCursos, setDataCurso) => {
         handleDelete
     };
 };
-export default useDeleteCurso;  
+export default useDeleteAsignatura;

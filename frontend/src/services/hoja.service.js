@@ -64,14 +64,14 @@ export async function updateHoja(data, rut) {
     }
 }
 
-export async function deleteHoja(rut) {
+export async function deleteHoja(idHoja) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
             Autorization: `Bearer ${token}`,
         };
 
-        const response = await axios.delete(`/hoja/del/?rut=${rut}`, { headers });
+        const response = await axios.delete(`/hoja/del/?rut=${idHoja}`, { headers });
         return response.data;
     } catch (error) {
         return error.response.data;

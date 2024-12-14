@@ -1,35 +1,42 @@
-import { useState } from "react";
-import { createAsignatura } from "@services/Asignatura.service.js";
-import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert.js";
-import { formatPostCreate } from "@helpers/formatData.js";
+import { useState } from 'react';
+import { createAsignatura } from '@services/asignatura.service.js';
+import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
+import { formatPostCreateAsignatura } from '@helpers/formatData.js';
 
-const useCreateAsignatura = (setAsistencias) => {
-    const [isPopupCAOpen, setIsPopupCAOpen] = useState(false);
+const useCreateAsignatura = (setAsignaturas) => {
+    const [isPopupAsignaturaOpen, setIsPopupAsignaturaOpen] = useState(false);
 
-    const handleClickAdd = () => {
-        setIsPopupCAOpen(true);
+    const handleClickAddAsignatura = () => {
+        setIsPopupAsignaturaOpen(true);
     }
-    const handleCreate = async (newAsignaturaData) => {
+
+    const handleCreateAsignatura = async (newAsignaturaData) => {
         try {
-            const createdAsistencia = await createAsignatura(newAsignaturaData);
-
-            const formattedAsistencia = formatPostCreate(createdAsistencia);
-
-            setAsistencias(prevAsistencias => [...prevAsistencias, formattedAsistencia]);
-
-            showSuccessAlert("¡Creado!", "La asignatura ha sido creada exitosamente.");
-            setIsPopupCAOpen(false);
+            console.log("CONSOLE 1",newAsignaturaData);
+            newAsignaturaData.idCurso = parseInt(newAsignaturaData.idCurso);
+            const createdAsignatura = await createAsignatura(newAsignaturaData);
+            console.log('console 2',createdAsignatura);
+            const formattedAsignatura = formatPostCreateAsignatura(createdAsignatura);
+            formattedAsignatura.idCurso = newAsignaturaData.idCurso;
+            
+            console .log('console 3',formattedAsignatura);
+            
+            setAsignaturas(prevAsignaturas => [...prevAsignaturas, formattedAsignatura]);
+            console.log('console 4',prevAsignaturas => [...prevAsignaturas, formattedAsignatura]);
+            showSuccessAlert('¡Creada!', 'La asignatura ha sido creado exitosamente.');
+            setIsPopupAsignaturaOpen(false);
 
         } catch (error) {
-            console.error("Error al crear la asignatura:", error);
-            showErrorAlert("Cancelado", "Ocurrió un error al crear la asignatura.");
+            console.error('Error al crear la asignatura:', error);
+            showErrorAlert('Cancelado', 'Ocurrió un error al crear la asignatura.');
         }
     };
+
     return {
-        handleClickAdd,
-        handleCreate,
-        isPopupCAOpen,
-        setIsPopupCAOpen
+        handleClickAddAsignatura,
+        handleCreateAsignatura,
+        isPopupAsignaturaOpen,
+        setIsPopupAsignaturaOpen
     };
-}
-export default useCreateAsignatura;
+    }
+    export default useCreateAsignatura;

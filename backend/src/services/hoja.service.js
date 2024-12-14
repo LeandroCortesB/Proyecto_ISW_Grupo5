@@ -67,6 +67,7 @@ export async function createHojaService(body){
   }
 }
 
+
 export async function updateHojaService(query, body) {
   try {
     const { idHoja, rut } = query;
@@ -107,12 +108,12 @@ export async function updateHojaService(query, body) {
 
 export async function deleteHojaService(query) {
   try {
-    const { idHoja, rut } = query;
+    const { idHoja } = query;
 
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ idHoja: idHoja }, { rut: rut }],
+      where: [{ idHoja: idHoja }],
     });
 
     if (!hojaFound) return [null, "Hoja de vida no encontrada"];

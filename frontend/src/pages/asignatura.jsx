@@ -1,4 +1,4 @@
-import { useState, useEffect  } from "react";
+import { useState } from "react";
 import Table from "@components/Table";
 import Search from "@components/Search";
 import useAsignaturas from "@hooks/asignaturas/useGetAsignaturas.jsx";
@@ -12,22 +12,26 @@ import DeleteIcon from "@assets/deleteIcon.svg";
 import UpdateIcon from "@assets/updateIcon.svg";
 import PopupCA from "@components/PopupCA";
 import PopupEA from "@components/PopupEA";
+import { useMemo } from "react";
+
 
 const Asignaturas = () => {
   const { idCurso } = useParams();
   const [filterNombre, setFilterNombre] = useState("");
-  const [filteredAsignaturas, setFilteredAsignaturas] = useState([]);
-  const [ asignaturas , fetchAsignatura, setAsignatura] = useAsignaturas();
+  const {asignaturas , fetchAsignatura, setAsignaturas} = useAsignaturas();
+  const [isLoading, setIsLoading] = useState(false);
 
 
-  useEffect(() => {
-    const datosFilter = asignaturas.filter(
-      (asignatura) => asignatura.curso.idCurso === Number(idCurso)
+  const filteredAsignaturas = useMemo(() => {
+    return asignaturas.filter(
+      (asignatura) =>
+        asignatura.idCurso === Number(idCurso) &&
+        asignatura.nombreAsignatura.toLowerCase().includes(filterNombre.toLowerCase())  
     );
-    setFilteredAsignaturas(datosFilter);
-  }, [idCurso, asignaturas]);
+  }, [idCurso, asignaturas, filterNombre ]);
 
   const columns = [
+    { title: "ID", field: "idAsignatura", width: 100, responsive: 3 },
     { title: "Nombre", field: "nombreAsignatura", width: 350, responsive: 0 },
     { title: "Curso", field: "curso.nombreCurso", width: 200, responsive: 1 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 },
@@ -39,13 +43,13 @@ const Asignaturas = () => {
     setIsPopupOpen,
     dataAsignatura,
     setDataAsignatura
-  } = useEditAsignatura(setAsignatura);
+  } = useEditAsignatura(setAsignaturas);
   const {
-    handleClickAdd,
-    handleCreate,
-    isPopupCAOpen,
-    setIsPopupCAOpen
-  } = useCreateAsignatura(setAsignatura);
+    handleClickAddAsignatura,
+        handleCreateAsignatura,
+        isPopupAsignaturaOpen,
+        setIsPopupAsignaturaOpen
+  } = useCreateAsignatura(setAsignaturas);
 
   const { handleDelete } = useDeleteAsignatura(fetchAsignatura, setDataAsignatura);
 
@@ -66,7 +70,7 @@ const Asignaturas = () => {
           <h1 className="title-table">Asignaturas</h1>
           <div className="filter-actions">
             <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder={'Filtrar por nombre'} />
-          <button className="add-button" onClick={handleClickAdd}>
+          <button className="add-button" onClick={handleClickAddAsignatura}>
               <img src={AddIcon} alt="add" />
             </button>
             <button onClick={handleClickUpdate} disabled={dataAsignatura.length === 0}>
@@ -95,7 +99,10 @@ const Asignaturas = () => {
         />
       </div>
       <PopupEA show={isPopupOpen} setShow={setIsPopupOpen} data={dataAsignatura} action={handleUpdate} />
-      <PopupCA show={isPopupCAOpen} setShow={setIsPopupCAOpen} action={handleCreate} idCurso={idCurso}  />
+      <PopupCA show={isPopupAsignaturaOpen} setShow={setIsPopupAsignaturaOpen} action={(data)=>{
+        handleCreateAsignatura(data).finally(()=>setIsPopupAsignaturaOpen(false));
+        setIsLoading(true);
+      }} idCurso={idCurso}  />
     </div>
   );
 };
