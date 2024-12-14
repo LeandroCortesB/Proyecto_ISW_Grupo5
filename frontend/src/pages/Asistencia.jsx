@@ -1,63 +1,51 @@
 import Table from "@components/Table";
 import useAsistencias from "@hooks/asistencias/useGetAsistencia.jsx";
-import "@styles/asignatura.css";
+//import "@styles/asignatura.css";
+import "@styles/asistencia.css";
+import "@styles/tablaAsistencia.css";
+import "@styles/customFiltroCalendario.css";
 import useDeleteAsistencia from "@hooks/asistencias/useDeleteAsistencia";
 import useEditAsistencia from "@hooks/asistencias/useEditAsistencia";
-import { useCallback, useState } from "react";
-import Search from "@components/Search";
+import { useCallback, useState, useEffect } from "react";
 import DeleteIcon from "@assets/deleteIcon.svg";
 import UpdateIcon from "@assets/updateIcon.svg";
-import personIcon from "@assets/PersonIcon.svg"; 
+import personIcon from "@assets/PersonIcon.svg";
 import UpdateIconDisable from "@assets/updateIconDisabled.svg";
 import PopupA from "@components/PopupA";
-import { Link } from "react-router-dom"; // Asegúrate de importar Link
+import { Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format, parse } from "date-fns";
 
 const Asistencias = () => {
   const { asistencias, fetchAsistencias, setAsistencias } = useAsistencias();
-  const [filter, setFilterFecha] = useState("");
-  const [filterAsignatura, setFilterAsignatura] = useState(""); // Estado para filtrar por asignatura
+  const [filterAlumno, setFilterAlumno] = useState(""); // Filtro por alumno
+  const [filterDate, setFilterDate] = useState(null); // Filtro por fecha
+  const [filterAsignatura, setFilterAsignatura] = useState(""); // Filtro por asignatura
+  const [filteredAsistencias, setFilteredAsistencias] = useState([]); // Datos filtrados
+  const [selectedRows, setSelectedRows] = useState([]); // Filas seleccionadas
 
-  // Configuración de las columnas de la tabla
   const columns = [
-    { title: "ID", field: "idAsistencia", width: 150, responsive: 2 },
-    {
-      title: "Alumno",
-      field: "alumno.nombreCompleto",
-      width: 350,
-      responsive: 0,
-    },
+    { title: "N° Asistencia", field: "idAsistencia", width: 150 },
+    { title: "Alumno", field: "alumno.nombreCompleto", width: 350 },
     {
       title: "Fecha",
       field: "fecha",
       width: 200,
-      responsive: 2,
-      render: (rowData) => {
-        const fecha = new Date(rowData.fecha);
-        return fecha.toLocaleDateString("es-ES", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        });
-      },
-    },
-    {
-      title: "Asistió",
-      field: "asistio",
-      width: 200,
-      responsive: 2,
       formatter: (cell) => {
         const value = cell.getValue();
-        if (value === true) return "Presente";
-        if (value === false) return "Ausente";
-        return "No especificado";
+        if (!value) return "Fecha inválida";
+        const fecha = parse(value, "yyyy-MM-dd", new Date());
+        return format(fecha, "dd-MM-yyyy");
       },
     },
     {
-      title: "Asignatura",
-      field: "asignatura.nombreAsignatura",
+      title: "Estado",
+      field: "asistio",
       width: 200,
-      responsive: 2,
+      formatter: (cell) => (cell.getValue() ? "Presente" : "Ausente"),
     },
+    { title: "Asignatura", field: "asignatura.nombreAsignatura", width: 200 },
   ];
 
   const {
@@ -74,97 +62,156 @@ const Asistencias = () => {
     setDataAsistencia
   );
 
-  const handleFechaFilterChange = (e) => {
-    setFilterFecha(e.target.value);
-  };
+  // Filtros combinados
+  useEffect(() => {
+    const normalizeDate = (date) => {
+      const normalized = new Date(date);
+      normalized.setHours(0, 0, 0, 0);
+      return normalized;
+    };
+
+    const filtered = asistencias.filter((asistencia) => {
+      const matchesAlumno = filterAlumno
+        ? asistencia.alumno.nombreCompleto === filterAlumno
+        : true;
+
+      const matchesDate = filterDate
+        ? normalizeDate(asistencia.fecha).getTime() ===
+          normalizeDate(filterDate).getTime()
+        : true;
+
+      const matchesAsignatura = filterAsignatura
+        ? asistencia.asignatura.nombreAsignatura === filterAsignatura
+        : true;
+
+      return matchesAlumno && matchesDate && matchesAsignatura;
+    });
+
+    setFilteredAsistencias(filtered);
+  }, [filterAlumno, filterDate, filterAsignatura, asistencias]);
+
+  useEffect(() => {
+    const visibleSelectedRows = selectedRows.filter((selectedRow) =>
+      filteredAsistencias.some(
+        (asistencia) => asistencia.idAsistencia === selectedRow.idAsistencia
+      )
+    );
+    setSelectedRows(visibleSelectedRows);
+  }, [filteredAsistencias]);
 
   const handleSelectionChange = useCallback(
     (selectedAsistencias) => {
-      setDataAsistencia(
-        selectedAsistencias.map((asistencia) => ({
-          ...asistencia,
-          idAsistencia: Number(asistencia.idAsistencia), // Convertir idAsistencia a número
-        }))
-      );
+      setSelectedRows(selectedAsistencias);
+      setDataAsistencia(selectedAsistencias);
     },
     [setDataAsistencia]
   );
 
   return (
-    <div className="main-container">
-      <div className="table-container">
-        <div className="top-table">
-          <h1 className="title-table">Asistencias</h1>
-          <div className="filter-actions">
-            {/* Filtro por asignatura */}
-            <select
-              value={filterAsignatura}
-              onChange={(e) => setFilterAsignatura(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Todas las asignaturas</option>
-              {[
-                ...new Set(
-                  asistencias.map((a) => a.asignatura?.nombreAsignatura || "")
-                ),
-              ].map((asignatura, index) => (
-                <option key={index} value={asignatura}>
-                  {asignatura}
-                </option>
-              ))}
-            </select>
-            {/* Filtro por fecha */}
-            <Search
-              value={filter}
-              onChange={handleFechaFilterChange}
-              placeholder={"Filtrar por fecha"}
-            />
-            <div className="action-buttons">
+    <div className="asistencia-page">
+      <div className="main-container">
+        <div className="table-container">
+          {/* Título de la tabla */}
+          <h1 className="title-table">Tabla de Registro de Asistencias</h1>
+
+          {/* Filtros y botones */}
+          <div className="filter-and-buttons">
+            {/* Contenedor para los filtros alineados a la izquierda */}
+            <div className="filters">
+              <select
+                value={filterAlumno}
+                onChange={(e) => setFilterAlumno(e.target.value)}
+                className="filter-select"
+              >
+                <option value="">Todos los alumnos</option>
+                {[
+                  ...new Set(asistencias.map((a) => a.alumno.nombreCompleto)),
+                ].map((alumno, index) => (
+                  <option key={index} value={alumno}>
+                    {alumno}
+                  </option>
+                ))}
+              </select>
+
+              <DatePicker
+                selected={filterDate}
+                onChange={(date) => setFilterDate(date)}
+                dateFormat="dd-MM-yyyy"
+                placeholderText="Filtrar por fecha"
+                isClearable
+                className="filter-date-picker"
+              />
+
+              <select
+                value={filterAsignatura}
+                onChange={(e) => setFilterAsignatura(e.target.value)}
+                className="filter-select"
+              >
+                <option value="">Todas las asignaturas</option>
+                {[
+                  ...new Set(
+                    asistencias.map((a) => a.asignatura.nombreAsignatura)
+                  ),
+                ].map((asignatura, index) => (
+                  <option key={index} value={asignatura}>
+                    {asignatura}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Contenedor para los botones alineados a la derecha */}
+            <div className="buttons">
               <button
                 onClick={handleClickUpdate}
-                disabled={dataAsistencia.length === 0}
+                disabled={selectedRows.length === 0}
+                className="icon-button"
               >
-                {dataAsistencia.length === 0 ? (
-                  <img src={UpdateIconDisable} alt="edit-disabled" />
-                ) : (
-                  <img src={UpdateIcon} alt="edit" />
-                )}
+                <img
+                  src={
+                    selectedRows.length === 0 ? UpdateIconDisable : UpdateIcon
+                  }
+                  alt="edit"
+                />
               </button>
               <button
                 className="delete-user-button"
-                disabled={dataAsistencia.length === 0}
-                onClick={() => handleDelete(dataAsistencia)}
+                disabled={selectedRows.length === 0}
+                onClick={() => handleDelete(selectedRows)}
               >
-                {dataAsistencia.length === 0 ? (
-                  <img src={DeleteIcon} alt="delete-disabled" />
-                ) : (
-                  <img src={DeleteIcon} alt="delete" />
-                )}
+                <img src={DeleteIcon} alt="delete" />
               </button>
               <Link to="/asistencias/registrar">
-                <button className="icon-button">
+                <button className="register-button">
                   <img src={personIcon} alt="Registrar Asistencia" />
+                  <span>Registrar Asistencia</span>
                 </button>
               </Link>
             </div>
           </div>
-        </div>
 
-        <Table
-          data={asistencias}
-          columns={columns}
-          filter={filter}
-          dataToFilter={["fecha"]}
-          initialSortName="fecha"
-          onSelectionChange={handleSelectionChange}
-        />
+          {/* Tabla de asistencias */}
+          {filteredAsistencias.length > 0 ? (
+            <Table
+              data={filteredAsistencias}
+              columns={columns}
+              selectable={true}
+              selectedRowKeys={selectedRows.map((row) => row.idAsistencia)}
+              onSelectionChange={handleSelectionChange}
+            />
+          ) : (
+            <div>No hay asistencias registradas.</div>
+          )}
+
+          {/* Popup para edición */}
+          <PopupA
+            show={isPopupOpen}
+            setShow={setIsPopupOpen}
+            data={dataAsistencia}
+            action={handleUpdate}
+          />
+        </div>
       </div>
-      <PopupA
-        show={isPopupOpen}
-        setShow={setIsPopupOpen}
-        data={dataAsistencia}
-        action={handleUpdate}
-      />
     </div>
   );
 };
