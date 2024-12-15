@@ -15,7 +15,20 @@ const useGetHojas = (rut) => {
         anotacion: hoja.anotacion,
         createdAt: hoja.createdAt
         }));
-        setHojas(formattedData);
+
+        function hojasrut(x) {
+          let arreglo = [];
+          for (let i = 0; i < formattedData.length; i++) {
+            if (formattedData[i].rut === x) {
+              arreglo.push(formattedData[i]);
+            }
+          }
+          return arreglo;
+        }
+      
+        let filtradas = hojasrut(rut);
+
+        setHojas(filtradas);
     } catch (error) {
       console.error("Error: ", error);
     };

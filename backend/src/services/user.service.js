@@ -94,6 +94,8 @@ export async function getAlumnosService() {
       where: [{ rol: "alumno" }], 
     });
 
+    console.log("Alumnitos: ", alumnos)
+
     if (!alumnos || alumnos.length === 0) return [null, "No hay alumnos"];
 
     const alumnosData = alumnos.map(({ password, ...alumno }) => alumno);
@@ -200,6 +202,7 @@ export async function deleteUserService(query) {
     return [null, "Error interno del servidor"];
   }
 }
+
 export async function getUsersByCursoService(idCurso) {
   try {
       const userRepository = AppDataSource.getRepository(User);
@@ -219,6 +222,7 @@ export async function getUsersByCursoService(idCurso) {
       return [null, "Error interno del servidor"];
   }
 }
+
 export async function getUsersByAsignaturaService(idAsignatura) {
   try {
       const repository = AppDataSource.getRepository("User");

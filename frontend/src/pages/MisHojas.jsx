@@ -11,20 +11,9 @@ const MisHojas = () => {
 
   const { hojas, fetchHojas , setHojas } = useGetHojas(rut);
 
-  function hojasrut(x){
-    let arreglo = []
-    for(let i=0; i<hojas.length;i++){
-        if(hojas[i].rut === x){
-          arreglo.push(hojas[i]);
-        }
-    }
-    for(let i=0; i<arreglo.length;i++){
-      arreglo[i].idHoja = i+1;
-    }
-    return arreglo
-  }
+  console.log("rut yut:",hojas);
   
-  let filtradas = hojasrut(rut);
+  let filtradas = hojas;
 
   filtradas = filtradas.map((hoja) => ({
     ...hoja,

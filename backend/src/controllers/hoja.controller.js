@@ -112,10 +112,10 @@ export async function updateHoja(req, res) {
 
 export async function deleteHoja(req, res) {
   try {
-    const { rut, idHoja } = req.query;
+    const { idHoja } = req.query;
+    console.log("IdDel ",idHoja);
 
     const { error: queryError } = hojaQueryValidation.validate({
-      rut,
       idHoja,
     });
 
@@ -129,7 +129,6 @@ export async function deleteHoja(req, res) {
     }
 
     const [hojaDelete, errorHojaDelete] = await deleteHojaService({
-      rut,
       idHoja,
     });
 

@@ -7,6 +7,7 @@ import asignaturaRoutes from "./asignatura.routes.js";
 import asistenciaRoutes from "./asistencia.routes.js";
 import cursoRoutes from "./curso.routes.js";
 import hojaRoutes from "./hoja.routes.js";
+import paginaRoutes from "./pagina.routes.js";
 
 const router = Router();
 
@@ -16,6 +17,7 @@ router
     .use("/asignatura", asignaturaRoutes)
     .use("/asistencia", asistenciaRoutes)
     .use("/curso", cursoRoutes)
+    .use("/pagina", paginaRoutes)
     .use("/hoja", hojaRoutes)
     .use("/perfil", userRoutes)
     .use("/user", userRoutes);

@@ -19,6 +19,6 @@ router
     .get("/all/:rut",authorizeRoles(["administrador", "profesor","alumno","apoderado"]), getHojas)
     .post("/", authorizeRoles(["administrador", "profesor"]),createHoja)
     .patch("/:idHoja",authorizeRoles(["administrador", "profesor"]), updateHoja)
-    .delete("/:id", authorizeRoles(["administrador", "profesor"]),deleteHoja);
+    .delete("/del/:idHoja", authorizeRoles(["administrador", "profesor"]),deleteHoja);
 
 export default router;

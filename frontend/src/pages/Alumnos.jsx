@@ -26,7 +26,6 @@ const Alumnos = () => {
 
   useEffect(() => {
     const datosFilter = users.filter((user) => 
-      user.rol?.toLowerCase() === 'alumno' &&
       user.nombreCompleto?.toLowerCase().includes(filterNombre.toLowerCase())
     );
     setFilterAlumnos(datosFilter);
@@ -96,13 +95,13 @@ const Alumnos = () => {
             </button>
 
             {dataUser.length > 0 ? (
-             <Link to={`/Hoja/all/${dataUser[0]?.rut}`}>
-                 <img src={paperIcon} alt="hojas" />
-             </Link>
+            <Link to={`/Hoja/all/${dataUser[0]?.rut}`}>
+                <img src={paperIcon} alt="hojas" />
+            </Link>
               ) : (
-             <button className="Hojas" disabled>
+            <button className="Hojas" disabled>
                   <img src={paperIcon} alt="hojas-disabled" />
-             </button>
+            </button>
             )}
 
             <button onClick={handleClickAdd}>

@@ -1,45 +1,29 @@
 import axios from './root.service.js';
 import cookies from 'js-cookie';
-import { formatHojaData } from '@helpers/formatData.js';
 
-export async function getHojas(rut) {
+export async function getPagina(rut) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
             Autorization: `Bearer ${token}`,
         };
 
-        const { data } = await axios.get(`/hoja/all/${rut}`, { headers });
-        const formattedData = data.data.map(formatHojaData);
-        return formattedData;
+        const { data } = await axios.get(`/pagina/${rut}`, { headers });
+        data.data
+        return data.data;
     } catch (error) {
         return error.response.data;
     }
 }
 
-export async function getHoja(rut) {
+export async function createPagina(data) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
             Autorization: `Bearer ${token}`,
         };
 
-        const { data } = await axios.get(`/hoja/${rut}`, { headers });
-        const formattedData = data.data.map(formatHojaData);
-        return formattedData;
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
-export async function createHoja(data) {
-    try {
-        const token = cookies.get('jwt-auth');
-        const headers = {
-            Autorization: `Bearer ${token}`,
-        };
-
-        const response = await axios.post(`/hoja/`, data, { headers });
+        const response = await axios.post(`/pagina/`, data, { headers });
         
         return response.data.data;
     } catch (error) {
@@ -48,14 +32,14 @@ export async function createHoja(data) {
     }
 }
 
-export async function updateHoja(data, rut) {
+export async function updatePagina(data, rut) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
             Autorization: `Bearer ${token}`,
         };
 
-        const response = await axios.patch(`/hoja/update/?rut=${rut}`, data, { headers });
+        const response = await axios.patch(`/pagina/update/${rut}`, data, { headers });
         console.log(response);
         return response.data.data;
     } catch (error) {
@@ -64,14 +48,14 @@ export async function updateHoja(data, rut) {
     }
 }
 
-export async function deleteHoja(idHoja) {
+export async function deletePagina(rut) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
             Autorization: `Bearer ${token}`,
         };
 
-        const response = await axios.delete(`/hoja/del/${idHoja}`, { headers });
+        const response = await axios.delete(`/pagina/del/${rut}`, { headers });
         console.log(response);
         return response.data;
     } catch (error) {
