@@ -32,8 +32,8 @@ const Home = () => {
 
           if (filtradas.length>=1) {
             showMalaHojaAlert(
-              'Advertencia',
-              `Hola ${user.nombreCompleto}, tiene una anotacion negativa de el dia ${filtradas[0].createdAt}.`
+              'Advertencia!',
+              `Hola ${user.nombreCompleto}, tiene una anotacion negativa de el dia ${filtradas[0].createdAt}. 😥`
             );
           }
         } catch (error) {

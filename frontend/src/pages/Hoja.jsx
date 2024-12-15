@@ -30,6 +30,8 @@ const Hojas = () => {
     setDataHoja,
   } = useEditHoja(setHojas);
 
+  console.log("dataHoja aca ",dataHoja);
+
   const { handleDelete } = useDeleteHoja(fetchHojas, setDataHoja);
 
   const { handleClickAddHoja, handleCreateHoja, isPopupHojaOpen, setIsPopupHojaOpen } =
@@ -65,7 +67,9 @@ const Hojas = () => {
   ];
 
   const handleSelectionChange = useCallback(
+    
     (selectedHojas) => {
+      console.log("Handle ",selectedHojas);
       setDataHoja(selectedHojas);
     },
     [setDataHoja]

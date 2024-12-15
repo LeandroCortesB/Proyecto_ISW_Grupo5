@@ -1,7 +1,7 @@
 import Table from '@components/Table';
 import useAlumnos from '@hooks/users/useGetAlumnos.jsx';
 import Search from '@components/Search';
-import Popup from '@components/Popup';
+import PopupAlumno from '@components/PopupAlumno';
 import Popup2 from '@components/Popup2';
 import DeleteIcon from '@assets/deleteIcon.svg';
 import UpdateIcon from '@assets/updateIcon.svg';
@@ -64,7 +64,7 @@ const Alumnos = () => {
     { title: 'Correo electrónico', field: 'email', width: 300, responsive: 3 },
     { title: 'Rut', field: 'rut', width: 130, responsive: 2 },
     { title: 'Rol', field: 'rol', width: 150, responsive: 2 },
-    { title: 'Creado', field: 'createdAt', width: 150, responsive: 2 },
+    { title: 'Matricula', field: 'createdAt', width: 150, responsive: 2 },
   ];
 
   return (
@@ -119,7 +119,7 @@ const Alumnos = () => {
           onSelectionChange={handleSelectionChange}
         />
       </div>
-      <Popup
+      <PopupAlumno
         show={isPopupOpen}
         setShow={setIsPopupOpen}
         data={dataUser}
