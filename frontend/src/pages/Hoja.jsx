@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useMemo } from 'react';
 import Table from '@components/Table';
 import useGetHojas from '@hooks/hojas/useGetHojas.jsx';
 import PopupHoja from '@components/PopupHoja';
@@ -30,8 +31,6 @@ const Hojas = () => {
     setDataHoja,
   } = useEditHoja(setHojas);
 
-  console.log("dataHoja aca ",dataHoja);
-
   const { handleDelete } = useDeleteHoja(fetchHojas, setDataHoja);
 
   const { handleClickAddHoja, handleCreateHoja, isPopupHojaOpen, setIsPopupHojaOpen } =
@@ -51,16 +50,27 @@ const Hojas = () => {
 
   let nombre = hojasnombre(rut);
 
-  filtradas = filtradas
+  /*filtradas = filtradas
     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) 
     .map((hoja, index) => ({
       ...hoja,
       numeroOrden: index + 1, 
       anotacionTexto: hoja.buena ? 'Buena' : 'Mala',
     }));
-
+  */
+    const filtradasVisual = useMemo(() => {
+      return [...filtradas]
+        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        .map((hoja, index) => ({
+          ...hoja,
+          numeroOrden: index + 1,
+          anotacionTexto: hoja.buena ? 'Buena' : 'Mala',
+        }));
+    }, [filtradas]);
+    
   const columns = [
-    { title: 'Numero', field: 'numeroOrden', width: 100, responsive: 0 },
+    { title: 'IdHoja', field: 'idHoja', width: 100, responsive: 0 },
+    { title: 'Pagina', field: 'numeroOrden', width: 100, responsive: 0 },
     { title: 'Anotacion', field: 'anotacionTexto', width: 140, responsive: 2 },
     { title: 'Descripcion', field: 'anotacion', width: 700, responsive: 2 },
     { title: 'Creado', field: 'createdAt', width: 100, responsive: 2 },
@@ -94,7 +104,7 @@ const Hojas = () => {
             </button>
 
             <button
-              className="delete-hoja-button"
+              className='delete-hoja-button'
               disabled={dataHoja.length === 0|| isLoading}
               onClick={() => handleDelete(dataHoja)}
             >
@@ -107,7 +117,7 @@ const Hojas = () => {
           </div>
         </div>
         <Table
-          data={filtradas}
+          data={filtradasVisual}
           columns={columns}
           initialSortName="numeroOrden"
           onSelectionChange={handleSelectionChange}
@@ -127,6 +137,7 @@ const Hojas = () => {
         show={isPopupHOpen}
         setShow={setIsPopupHOpen}
         data={dataHoja}
+        idHojaSeleccionado={dataHoja}
         action={(data) => {
           setIsLoading(true);
           handleUpdateH(data).finally(() => setIsLoading(false));

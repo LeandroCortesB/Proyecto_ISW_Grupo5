@@ -6,8 +6,9 @@ const useDeleteHoja = (fetchHojas, setDataHoja) => {
         if (dataHoja.length > 0) {
             try {
                 const result = await deleteDataAlert();
+                const idHoja = Number(dataHoja[0]?.idHoja);
             if (result.isConfirmed) {
-                const response = await deleteHoja(dataHoja[0].idHoja);
+                const response = await deleteHoja(idHoja);
                 if(response.status === 'Client error') {
                     return showErrorAlert('Error', response.details);
                 }

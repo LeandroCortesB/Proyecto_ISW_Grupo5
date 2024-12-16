@@ -7,10 +7,12 @@ export default function PopupUHoja({
     setShow, 
     data,
     action,
+    idHojaSeleccionado,
 }) {
+
     const handleSubmit = (formData) => {
-        const dataToUpdate = { ...formData, idHoja: data.idHoja };
-        console.log('Datos actualizados:', dataToUpdate);
+        const idHojaldre = Number(idHojaSeleccionado[0].idHoja);
+        const dataToUpdate = { ...formData, idHoja: idHojaldre };
         action(dataToUpdate); 
     };
 
