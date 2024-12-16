@@ -62,7 +62,7 @@ const UserSchema = new EntitySchema({
       type: "many-to-one",
       target: "Curso",
       inverseSide: "alumnos",
-      joinColumn: true,
+      joinColumn: { name: "idCurso", referencedColumnName: "idCurso" },
       nullable: true, // Nullable para roles como profesor/apoderado
     },
     // Relación con asignaturas como profesor
@@ -74,9 +74,10 @@ const UserSchema = new EntitySchema({
     },
     // Relación con asignaturas como alumno
     asignaturasComoAlumno: {
-      type: "many-to-one",
+      type: "many-to-many",
       target: "Asignatura",
-      inverseSide: "alumno",
+      inverseSide: "alumnos",
+      joinTable: true, //Crea tabla intermedia
       cascade: true,
     },
     // Relación con alumnos a cargo (aplica si el rol es 'apoderado')

@@ -15,7 +15,12 @@ import PopupA from "@components/PopupA";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import es from "date-fns/locale/es"; // Español
 import { format, parse } from "date-fns";
+
+registerLocale("es", es);
+setDefaultLocale("es");
 
 const Asistencias = () => {
   const { asistencias, fetchAsistencias, setAsistencias } = useAsistencias();
@@ -65,19 +70,23 @@ const Asistencias = () => {
   // Filtros combinados
   useEffect(() => {
     const normalizeDate = (date) => {
+      if (!date) return null;
       const normalized = new Date(date);
+      // Elimina el desfase local al UTC
+      normalized.setMinutes(
+        normalized.getMinutes() - normalized.getTimezoneOffset()
+      );
       normalized.setHours(0, 0, 0, 0);
       return normalized;
     };
-
     const filtered = asistencias.filter((asistencia) => {
       const matchesAlumno = filterAlumno
         ? asistencia.alumno.nombreCompleto === filterAlumno
         : true;
 
       const matchesDate = filterDate
-        ? normalizeDate(asistencia.fecha).getTime() ===
-          normalizeDate(filterDate).getTime()
+        ? normalizeDate(asistencia.fecha).toISOString().split("T")[0] ===
+          normalizeDate(filterDate).toISOString().split("T")[0]
         : true;
 
       const matchesAsignatura = filterAsignatura
@@ -137,6 +146,7 @@ const Asistencias = () => {
                 selected={filterDate}
                 onChange={(date) => setFilterDate(date)}
                 dateFormat="dd-MM-yyyy"
+                locale="es"
                 placeholderText="Filtrar por fecha"
                 isClearable
                 className="filter-date-picker"

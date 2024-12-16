@@ -33,18 +33,35 @@ export async function getAsistenciasService() {
 export async function createAsistenciaService(data) {
     const asistenciaRepository = AppDataSource.getRepository(Asistencia);
 
-    const asistencias = data.asistencias.map((asistencia) =>
-      asistenciaRepository.create({
-        fecha: data.fecha,
-        asistio: asistencia.asistio, // Aquí asignamos el valor recibido del frontend
-        alumno: { id: asistencia.idAlumno }, // Relación con el alumno
-        asignatura: { idAsignatura: data.idAsignatura }, // Relación con la asignatura
-      })
-    );
-  
+    const asistencias = [];
+    for (const asistencia of data.asistencias) {
+        const existeAsistencia = await asistenciaRepository.findOne({
+            where: {
+                alumno: { id: asistencia.idAlumno },
+                asignatura: { idAsignatura: data.idAsignatura },
+                fecha: data.fecha,
+            },
+        });
+
+        if (existeAsistencia) {
+            throw new Error(
+                `El alumno con ID ${asistencia.idAlumno} ya tiene una asistencia registrada en esta fecha y asignatura.`
+            );
+        }
+
+        const nuevaAsistencia = asistenciaRepository.create({
+            fecha: data.fecha,
+            asistio: asistencia.asistio,
+            alumno: { id: asistencia.idAlumno },
+            asignatura: { idAsignatura: data.idAsignatura },
+        });
+        asistencias.push(nuevaAsistencia);
+    }
+
     await asistenciaRepository.save(asistencias);
     return asistencias;
-  }
+}
+
 
 export async function updateAsistenciaService(idAsistencia, body){
     try{

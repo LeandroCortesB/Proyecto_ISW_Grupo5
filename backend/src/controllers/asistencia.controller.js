@@ -30,13 +30,25 @@ export async function getAsistencia(req, res) {
 
 export async function createAsistencia(req, res) {
     try {
-        const [asistencia, errorAsistencia] = await createAsistenciaService(req.body);
-        if (errorAsistencia) return handleErrorClient(res, 400, errorAsistencia);
+        const asistencia = await createAsistenciaService(req.body);
         handleSuccess(res, 201, "Asistencia creada correctamente", asistencia);
     } catch (error) {
-        handleErrorServer(res, 500, error.message);
+        console.error("Error capturado en createAsistencia:", error.message);
+
+        // Verifica si el error es por duplicado y devuelve un 400 con un mensaje claro
+        if (error.message.includes("registrada")) {
+            return res.status(400).json({
+                message: "El alumno ya presenta una asistencia para esta fecha y asignatura.",
+            });
+        }
+
+        // Para otros errores, devuelve 500
+        return res.status(500).json({
+            message: "Error interno del servidor.",
+        });
     }
 }
+
 
 export async function updateAsistencia(req, res) {
     try {
