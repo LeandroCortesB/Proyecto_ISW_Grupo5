@@ -1,24 +1,39 @@
 import { useEffect } from 'react';
 import { useAuth } from '@context/AuthContext';
-import useGetHoja from '@hooks/hojas/useGetHoja';
+import useGetHojas from '@hooks/hojas/useGetHojas';
 import { showMalaHojaAlert } from '@helpers/sweetAlert.js';
+import { format as formatTempo } from "@formkit/tempo";
 import '@styles/home.css';
 
 const Home = () => {
   const { user } = useAuth();
-  const { getHoja } = useGetHoja(); 
+  const { hojas, fetchHojas , setHojas }= useGetHojas(user.rut); 
 
   useEffect(() => {
-    const fetchHoja = async () => {
-      if (user.rol === 'Alumno') {
+    const fetchHojas = async () => {
+      if (user.rol === 'alumno') {
         try {
-          const hoja = await getHoja(user.rut); 
-          if (hoja && !hoja.buena) {
+  
+          function hojasmal(a) {
+            const now = new Date();
+            const tenDaysAgo = new Date();
+            tenDaysAgo.setDate(now.getDate() - 7);
+          
+            const formattedTenDaysAgo = formatTempo(tenDaysAgo, "DD-MM-YYYY");
+          
+            return a.filter(
+              (hoja) => (!hoja.buena && ((hoja.createdAt) >= formattedTenDaysAgo))
+            );
+          }
+          
+          let filtradas = (hojasmal(hojas));
+          
+          console.log("aca sa",filtradas);
+
+          if (filtradas.length>=1) {
             showMalaHojaAlert(
-              'Advertencia',
-              `Hola ${user.nombreCompleto}, tu última hoja actualizada el ${new Date(
-                hoja.updatedAt
-              ).toLocaleString()} tiene observaciones negativas.`
+              'Advertencia!',
+              `Hola ${user.nombreCompleto}, tiene una anotacion negativa de el dia ${filtradas[0].createdAt}. 😥`
             );
           }
         } catch (error) {
@@ -27,8 +42,8 @@ const Home = () => {
       }
     };
 
-    fetchHoja();
-  }, [user, getHoja]);
+    fetchHojas();
+  }, [user, hojas]);
 
   return (
     <div className="home-container">

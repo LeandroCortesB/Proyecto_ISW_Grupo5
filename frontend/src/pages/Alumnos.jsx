@@ -1,7 +1,7 @@
 import Table from '@components/Table';
 import useAlumnos from '@hooks/users/useGetAlumnos.jsx';
 import Search from '@components/Search';
-import Popup from '@components/Popup';
+import PopupAlumno from '@components/PopupAlumno';
 import Popup2 from '@components/Popup2';
 import DeleteIcon from '@assets/deleteIcon.svg';
 import UpdateIcon from '@assets/updateIcon.svg';
@@ -26,7 +26,6 @@ const Alumnos = () => {
 
   useEffect(() => {
     const datosFilter = users.filter((user) => 
-      user.rol?.toLowerCase() === 'alumno' &&
       user.nombreCompleto?.toLowerCase().includes(filterNombre.toLowerCase())
     );
     setFilterAlumnos(datosFilter);
@@ -65,7 +64,7 @@ const Alumnos = () => {
     { title: 'Correo electrónico', field: 'email', width: 300, responsive: 3 },
     { title: 'Rut', field: 'rut', width: 130, responsive: 2 },
     { title: 'Rol', field: 'rol', width: 150, responsive: 2 },
-    { title: 'Creado', field: 'createdAt', width: 150, responsive: 2 },
+    { title: 'Matricula', field: 'createdAt', width: 150, responsive: 2 },
   ];
 
   return (
@@ -96,13 +95,13 @@ const Alumnos = () => {
             </button>
 
             {dataUser.length > 0 ? (
-             <Link to={`/Hoja/all/${dataUser[0]?.rut}`}>
-                 <img src={paperIcon} alt="hojas" />
-             </Link>
+            <Link to={`/Hoja/all/${dataUser[0]?.rut}`}>
+                <img src={paperIcon} alt="hojas" />
+            </Link>
               ) : (
-             <button className="Hojas" disabled>
+            <button className="Hojas" disabled>
                   <img src={paperIcon} alt="hojas-disabled" />
-             </button>
+            </button>
             )}
 
             <button onClick={handleClickAdd}>
@@ -120,7 +119,7 @@ const Alumnos = () => {
           onSelectionChange={handleSelectionChange}
         />
       </div>
-      <Popup
+      <PopupAlumno
         show={isPopupOpen}
         setShow={setIsPopupOpen}
         data={dataUser}

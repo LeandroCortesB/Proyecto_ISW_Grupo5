@@ -27,7 +27,7 @@ const useAlumnos = () => {
 
     const dataLogged = (formattedData) => {
         try {
-            const { rut } = JSON.parse(sessionStorage.getItem('alumno'));
+            const { rut } = JSON.parse(sessionStorage.getItem('usuario'));
             for(let i = 0; i < formattedData.length ; i++) {
                 if(formattedData[i].rut === rut) {
                     formattedData.splice(i, 1);

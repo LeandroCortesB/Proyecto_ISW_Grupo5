@@ -4,31 +4,32 @@ import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert";
 import { formatHojaData } from "@helpers/formatData";
 
 const useEditHoja = (setHojas) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupHOpen, setIsPopupHOpen] = useState(false);
     const [dataHoja, setDataHoja] = useState([]);
 
-    const handleClickUpdate = () => {
+    const handleClickUpdateH = () => {
         if (dataHoja.length > 0) {
-            setIsPopupOpen(true);
+            setIsPopupHOpen(true);
         }
     };
 
-    const handleUpdate = async (updatedHojaData) => {
+    const handleUpdateH = async (updatedHojaData) => {
         if (updatedHojaData) {
             try {
-                console.log("Datos de hoja actualizados:", updatedHojaData);
-                const updatedHoja = await updateHoja(updatedHojaData, Number(dataHoja[0].idHoja));
-                console.log("Hoja actualizada:", updatedHoja);
+                const updatedHoja = await updateHoja(updatedHojaData, dataHoja[0].idHoja);
                 showSuccessAlert("¡Actualizado!", "La hoja ha sido actualizada correctamente.");
-                setIsPopupOpen(false);
+                setIsPopupHOpen(false);
                 const formattedHoja = formatHojaData(updatedHoja);
+
                 console.log("Hoja formateada:", formattedHoja);
 
-                setHojas((prevHojas) =>
-                    prevHojas.map((hoja) =>
-                        hoja.idHoja === formattedHoja.idHoja ? formattedHoja : hoja
-                    )
-                );
+                setHojas(prevHojas => prevHojas.map(hoja => {
+                    console.log("Hoja actual:", hoja);
+                    if (hoja.idHoja === formattedHoja.idHoja) {
+                        console.log("Reemplazando con:", formattedHoja);
+                    }
+                    return hoja.nombreCompleto === formattedHoja.nombreCompleto ? formattedHoja : hoja;
+                }));
 
                 setDataHoja([]);
             } catch (error) {
@@ -39,10 +40,10 @@ const useEditHoja = (setHojas) => {
     };
 
     return {
-        handleClickUpdate,
-        handleUpdate,
-        isPopupOpen,
-        setIsPopupOpen,
+        handleClickUpdateH,
+        handleUpdateH,
+        isPopupHOpen,
+        setIsPopupHOpen,
         dataHoja,
         setDataHoja,
     };

@@ -1,6 +1,7 @@
 import axios from './root.service.js';
 import cookies from 'js-cookie';
 import { formatUserData } from '@helpers/formatData.js';
+import { formatAlumnoData } from '@helpers/formatData.js';
 
 export async function getUsers() {
     try {
@@ -112,5 +113,19 @@ export async function getUsersByAsignatura(idAsignatura) {
     } catch (error) {
         console.error("Error al obtener usuarios por asignatura:", error);
         return error.response?.data || { message: "Error desconocido" };
+    }
+}
+
+export async function getUserByRut(rut) {
+    try {
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const { data } = await axios.get(`/user/hoja/${rut}`,{ headers });
+        return data.data;
+    } catch (error) {
+        return error.response.data;
     }
 }

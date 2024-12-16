@@ -20,6 +20,7 @@ router.use(authenticateJwt)
 router
   .get("/all",authorizeRoles(["administrador", "profesor"]), getUsers) 
   .get("/:id", authorizeRoles(["administrador", "profesor"]),getUser)
+  .get("/hoja/:rut", authorizeRoles(["administrador", "profesor","alumno","apoderado"]),getUser)
   .post("/", authorizeRoles(["administrador", "profesor"]),createUser)
   .get("/curso/:id", authorizeRoles(["administrador", "profesor"]),getUsersByCurso)
   .get("/asignatura/:idAsignatura", authorizeRoles(["administrador", "profesor"]),getUsersByAsignatura)

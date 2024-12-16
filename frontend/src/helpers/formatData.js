@@ -13,6 +13,18 @@ export function formatUserData(user) {
     };
 }
 
+export function formatAlumnoData(user) {
+    return {
+        ...user,
+        id: user.id,
+        nombreCompleto: startCase(user.nombreCompleto),
+        email: startCase(user.email),
+        rol: startCase(user.rol),
+        rut: formatRut(user.rut),
+        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
 export function formatHojaData(hoja) {
     return {
         ...hoja,

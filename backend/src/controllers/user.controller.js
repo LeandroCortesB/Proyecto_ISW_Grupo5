@@ -24,13 +24,13 @@ import { AppDataSource } from "../config/configDb.js"; // Ajusta el path según 
 
 export async function getUser(req, res) {
   try {
-    const { rut, id, email } = req.query;
+    const { rut } = req.params;
 
-    const { error } = userQueryValidation.validate({ rut, id, email });
+    const { error } = userQueryValidation.validate({ rut });
 
     if (error) return handleErrorClient(res, 400, error.message);
 
-    const [user, errorUser] = await getUserService({ rut, id, email });
+    const [user, errorUser] = await getUserService({ rut });
 
     if (errorUser) return handleErrorClient(res, 404, errorUser);
 

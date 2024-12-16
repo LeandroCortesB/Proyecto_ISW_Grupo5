@@ -48,15 +48,14 @@ export async function createHoja(data) {
     }
 }
 
-export async function updateHoja(data, rut) {
+export async function updateHoja(data, idHoja) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
             Autorization: `Bearer ${token}`,
         };
 
-        const response = await axios.patch(`/hoja/update/?rut=${rut}`, data, { headers });
-        console.log(response);
+        const response = await axios.patch(`/hoja/update/${idHoja}`, data, { headers });
         return response.data.data;
     } catch (error) {
         console.log(error);
@@ -70,8 +69,11 @@ export async function deleteHoja(idHoja) {
         const headers = {
             Autorization: `Bearer ${token}`,
         };
+        const data = idHoja;
+        
+        console.log("id adasd:",data);
+        const response = await axios.delete(`/hoja/del/${idHoja}`, data, { headers });
 
-        const response = await axios.delete(`/hoja/del/?rut=${idHoja}`, { headers });
         return response.data;
     } catch (error) {
         return error.response.data;
