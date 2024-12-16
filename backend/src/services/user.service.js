@@ -205,21 +205,23 @@ export async function deleteUserService(query) {
 
 export async function getUsersByCursoService(idCurso) {
   try {
-      const userRepository = AppDataSource.getRepository(User);
+    const userRepository = AppDataSource.getRepository(User);
 
-      const users = await userRepository.find({
-          where: { idCurso },
-          relations: ["curso"], // Asegúrate de que `curso` esté relacionado
-      });
+    const users = await userRepository.find({
+      where: { curso: { idCurso: idCurso }, rol: "alumno" }, // Filtra por idCurso y rol
+      relations: ["curso"],
+    });
 
-      if (!users || users.length === 0) {
-          return [null, "No se encontraron usuarios para este curso"];
-      }
+    console.log("Usuarios obtenidos:", users); // Log para verificar datos
 
-      return [users, null];
+    if (!users || users.length === 0) {
+      return []; // Retorna un array vacío si no hay usuarios
+    }
+
+    return users; // Solo devuelve la lista de usuarios
   } catch (error) {
-      console.error("Error en getUsersByCursoService:", error);
-      return [null, "Error interno del servidor"];
+    console.error("Error en getUsersByCursoService:", error);
+    throw new Error("Error interno del servidor");
   }
 }
 

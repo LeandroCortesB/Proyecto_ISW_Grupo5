@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import { format } from "date-fns";
 import { getCursos } from "@services/curso.service.js";
 import { getAsignaturasByCurso } from "@services/asignatura.service.js";
-import { getUsersByAsignatura } from "@services/user.service.js"; // NUEVO
+import { getUsersByCurso } from "@services/user.service.js";
 import { createAsistencia } from "@services/asistencia.service.js";
-import "../styles/registroAsistencia.css";
+import "@styles/registroAsistencia.css";
 
 const RegistrarAsistencia = () => {
   const [cursos, setCursos] = useState([]);
@@ -15,12 +14,14 @@ const RegistrarAsistencia = () => {
   const [alumnos, setAlumnos] = useState([]);
   const [fecha, setFecha] = useState(
     () => new Date().toISOString().split("T")[0]
-  ); // NUEVO
+  );
   const [asistencias, setAsistencias] = useState([]);
-  const [error, setError] = useState(null);
+  const [errorCurso, setErrorCurso] = useState("");
+  const [errorAsignatura, setErrorAsignatura] = useState("");
+  const [errorFecha, setErrorFecha] = useState("");
+  const [errorGeneral, setErrorGeneral] = useState(""); // Nuevo estado para errores generales
   const navigate = useNavigate();
 
-  // 1. Cargar cursos al montar el componente
   useEffect(() => {
     const fetchCursos = async () => {
       try {
@@ -28,13 +29,11 @@ const RegistrarAsistencia = () => {
         setCursos(cursosData || []);
       } catch (err) {
         console.error("Error al cargar cursos:", err);
-        setError("Error al cargar los cursos.");
       }
     };
     fetchCursos();
   }, []);
 
-  // 2. Cargar asignaturas al seleccionar un curso
   useEffect(() => {
     if (cursoSeleccionado) {
       const fetchAsignaturas = async () => {
@@ -45,25 +44,13 @@ const RegistrarAsistencia = () => {
           setAsignaturas(asignaturasData || []);
         } catch (err) {
           console.error("Error al cargar asignaturas:", err);
-          setError("Error al cargar las asignaturas.");
         }
       };
-      fetchAsignaturas();
-    } else {
-      setAsignaturas([]);
-    }
-  }, [cursoSeleccionado]);
 
-  // 3. Cargar alumnos al seleccionar una asignatura
-  useEffect(() => {
-    if (asignaturaSeleccionada) {
       const fetchAlumnos = async () => {
         try {
-          const alumnosData = await getUsersByAsignatura(
-            asignaturaSeleccionada
-          );
+          const alumnosData = await getUsersByCurso(cursoSeleccionado);
           setAlumnos(alumnosData || []);
-
           setAsistencias(
             alumnosData.map((alumno) => ({
               idAlumno: alumno.id,
@@ -71,16 +58,18 @@ const RegistrarAsistencia = () => {
             }))
           );
         } catch (err) {
-          console.error("Error al cargar alumnos:", err);
-          setError("Error al cargar los alumnos.");
+          console.error("Error al cargar alumnos del curso:", err);
         }
       };
+
+      fetchAsignaturas();
       fetchAlumnos();
     } else {
+      setAsignaturas([]);
       setAlumnos([]);
       setAsistencias([]);
     }
-  }, [asignaturaSeleccionada]);
+  }, [cursoSeleccionado]);
 
   const handleEstadoChange = (idAlumno, nuevoEstado) => {
     setAsistencias((prevAsistencias) =>
@@ -94,10 +83,24 @@ const RegistrarAsistencia = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+    setErrorCurso("");
+    setErrorAsignatura("");
+    setErrorFecha("");
+    setErrorGeneral("");
 
-    if (!cursoSeleccionado || !asignaturaSeleccionada || !fecha) {
-      setError("Por favor, completa todos los campos.");
+    // Validaciones
+    if (!fecha) {
+      setErrorFecha("Por favor, selecciona una fecha.");
+      return;
+    }
+
+    if (!cursoSeleccionado) {
+      setErrorCurso("Por favor, selecciona un curso.");
+      return;
+    }
+
+    if (!asignaturaSeleccionada) {
+      setErrorAsignatura("Debes seleccionar una asignatura.");
       return;
     }
 
@@ -108,17 +111,23 @@ const RegistrarAsistencia = () => {
         fecha,
         asistencias: asistencias.map((asistencia) => ({
           idAlumno: asistencia.idAlumno,
-          asistio:
-            asistencia.estado === "Presente" || asistencia.estado === "Ausente",
+          asistio: asistencia.estado === "Presente",
         })),
       };
 
       await createAsistencia(registro);
-      alert("Asistencia registrada con éxito.");
+      alert("Asistencia registrada con éxito."); // Popup para éxito
       navigate("/asistencias");
     } catch (err) {
       console.error("Error al registrar asistencia:", err);
-      setError("Error al registrar la asistencia.");
+
+      // Captura el error y muestra el popup con el mensaje
+      const errorMessage =
+        err.response && err.response.data && err.response.data.message
+          ? err.response.data.message
+          : "Error de duplicado, ya existen asistencias registradas en esta fecha y asignatura.";
+
+      alert(errorMessage); // Popup para error
     }
   };
 
@@ -128,7 +137,7 @@ const RegistrarAsistencia = () => {
       <p className="descripcion">
         Seleccione la fecha, curso y asignatura para registrar la asistencia
       </p>
-      {error && <p className="error-message">{error}</p>}
+      {errorGeneral && <p className="error-message">{errorGeneral}</p>}
       <form onSubmit={handleSubmit}>
         {/* Fecha */}
         <div className="form-group">
@@ -138,7 +147,9 @@ const RegistrarAsistencia = () => {
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
           />
+          {errorFecha && <p className="error-message">{errorFecha}</p>}
         </div>
+
         {/* Cursos */}
         <div className="form-group">
           <label>Curso</label>
@@ -148,16 +159,14 @@ const RegistrarAsistencia = () => {
           >
             <option value="">Selecciona un curso</option>
             {cursos.map((curso) => (
-              <option
-                key={curso.idCurso}
-                value={curso.idCurso}
-                label={curso.nombreCurso}
-              >
-                {curso.nombre}
+              <option key={curso.idCurso} value={curso.idCurso}>
+                {curso.nombreCurso}
               </option>
             ))}
           </select>
+          {errorCurso && <p className="error-message">{errorCurso}</p>}
         </div>
+
         {/* Asignaturas */}
         <div className="form-group">
           <label>Asignatura</label>
@@ -171,21 +180,25 @@ const RegistrarAsistencia = () => {
               <option
                 key={asignatura.idAsignatura}
                 value={asignatura.idAsignatura}
-                label={asignatura.nombreAsignatura}
               >
-                {asignatura.nombre}
+                {asignatura.nombreAsignatura}
               </option>
             ))}
           </select>
+          {errorAsignatura && (
+            <p className="error-message">{errorAsignatura}</p>
+          )}
         </div>
+
         {/* Alumnos */}
         <div className="form-group">
           <label>Alumnos</label>
           <ul>
             {alumnos.map((alumno) => (
               <li key={alumno.id} className="alumno-item">
-                <span>{alumno.nombreCompleto}</span>
+                <span className="alumno-nombre">{alumno.nombreCompleto}</span>
                 <select
+                  className="alumno-select"
                   value={
                     asistencias.find((a) => a.idAlumno === alumno.id)?.estado ||
                     "Presente"
@@ -193,18 +206,17 @@ const RegistrarAsistencia = () => {
                   onChange={(e) =>
                     handleEstadoChange(alumno.id, e.target.value)
                   }
-                  className="alumno-select"
                 >
                   <option value="Presente">Presente</option>
                   <option value="Ausente">Ausente</option>
-                  <option value="Justificado">Justificado</option>
                 </select>
               </li>
             ))}
           </ul>
         </div>
+
         {/* Botón para guardar */}
-        <button type="submit" className="submit-button">
+        <button type="submit" className="boton-guardar">
           Guardar Asistencia
         </button>
       </form>

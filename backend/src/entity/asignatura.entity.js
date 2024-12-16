@@ -65,7 +65,7 @@ const AsignaturaSchema = new EntitySchema({
             onDelete: "SET NULL", // Si el profesor se elimina, la asignatura queda sin profesor
         },
         alumnos: {
-            type: "one-to-many",
+            type: "many-to-many",
             target: "User",
             inverseSide: "asignaturasComoAlumno", // Relación inversa definida en User
             cascade: false, // Evita conflictos de eliminación en cascada

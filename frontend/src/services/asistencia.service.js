@@ -45,15 +45,17 @@ export async function createAsistencia(asistenciaData) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
-            Autorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Corregí 'Autorization' a 'Authorization'
         };
         const response = await axios.post('/asistencia', asistenciaData, { headers });
         return response.data.data; // Asumiendo que la respuesta está en data.data
     } catch (error) {
         console.error("Error al crear la asistencia:", error);
-        return error.response.data;
+        // Lanza el error para que sea manejado en handleSubmit
+        throw error.response ? error.response.data : new Error("Error desconocido al crear la asistencia.");
     }
 }
+
 
 export async function updateAsistencia(asistenciaData, idAsistencia) {
     try {
