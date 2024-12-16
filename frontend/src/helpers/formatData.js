@@ -13,6 +13,16 @@ export function formatUserData(user) {
     };
 }
 
+export function formatPostUpdate(user) {
+    return {
+        nombreCompleto: startCase(user.nombreCompleto),
+        rol: startCase(user.rol),
+        rut: formatRut(user.rut),
+        email: user.email,
+        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
 export function formatAlumnoData(user) {
     return {
         ...user,
@@ -28,6 +38,16 @@ export function formatAlumnoData(user) {
 export function formatHojaData(hoja) {
     return {
         ...hoja,
+        nombreCompleto: startCase(hoja.nombreCompleto),
+        rut: formatRut(hoja.rut),
+        anotacion: startCase(hoja.anotacion),
+        buena: !!(hoja.buena),
+        createdAt: formatTempo(hoja.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatPostUpdateHoja(hoja) {
+    return {
         nombreCompleto: startCase(hoja.nombreCompleto),
         rut: formatRut(hoja.rut),
         anotacion: startCase(hoja.anotacion),
@@ -80,16 +100,6 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
-export function formatPostUpdate(user) {
-    return {
-        nombreCompleto: startCase(user.nombreCompleto),
-        rol: startCase(user.rol),
-        rut: formatRut(user.rut),
-        email: user.email,
-        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
-    };
-}
-
 export function formatPostCreate(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
@@ -104,11 +114,20 @@ export function formatPostCreateHoja(hoja) {
     return {
         nombreCompleto: startCase(hoja.nombreCompleto),
         rut: formatRut(hoja.rut),
-        buena: hoja.buena,
+        buena: booleanizacion(hoja.buena),
         anotacion: startCase(hoja.anotacion),
         createdAt: formatTempo(hoja.createdAt, "DD-MM-YYYY")
     };
 }
+
+export function booleanizacion(buena) {
+    let x = Boolean
+    if(buena==='true'||buena==="true"||buena===true){
+        x=true;
+    }else{x=false;}
+    return x
+}
+
 export function formatPostCreateAsignatura(asignatura) {
     return {
         nombreAsignatura: startCase(asignatura.nombreAsignatura),

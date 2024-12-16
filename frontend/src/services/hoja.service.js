@@ -56,7 +56,8 @@ export async function updateHoja(data, idHoja) {
         };
 
         const response = await axios.patch(`/hoja/update/${idHoja}`, data, { headers });
-        return response.data.data;
+        return response;
+
     } catch (error) {
         console.log(error);
         return error.response.data;

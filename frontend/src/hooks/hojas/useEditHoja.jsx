@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { updateHoja } from "@services/hoja.service";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert";
-import { formatHojaData } from "@helpers/formatData";
+import { formatPostUpdateHoja } from "@helpers/formatData";
 
 const useEditHoja = (setHojas) => {
     const [isPopupHOpen, setIsPopupHOpen] = useState(false);
@@ -17,19 +17,19 @@ const useEditHoja = (setHojas) => {
         if (updatedHojaData) {
             try {
                 const updatedHoja = await updateHoja(updatedHojaData, dataHoja[0].idHoja);
-                showSuccessAlert("¡Actualizado!", "La hoja ha sido actualizada correctamente.");
-                setIsPopupHOpen(false);
-                const formattedHoja = formatHojaData(updatedHoja);
-
-                console.log("Hoja formateada:", formattedHoja);
+                
+                const formattedHoja = formatPostUpdateHoja(updatedHoja);
 
                 setHojas(prevHojas => prevHojas.map(hoja => {
                     console.log("Hoja actual:", hoja);
                     if (hoja.idHoja === formattedHoja.idHoja) {
                         console.log("Reemplazando con:", formattedHoja);
                     }
-                    return hoja.nombreCompleto === formattedHoja.nombreCompleto ? formattedHoja : hoja;
+                    return hoja.rut === formattedHoja.rut ? formattedHoja : hoja;
                 }));
+                
+                showSuccessAlert("¡Actualizado!", "La hoja ha sido actualizada correctamente.");
+                setIsPopupHOpen(false);
 
                 setDataHoja([]);
             } catch (error) {
