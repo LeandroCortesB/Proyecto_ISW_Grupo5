@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createAsignatura } from '@services/asignatura.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostCreateAsignatura } from '@helpers/formatData.js';
+import { formatAsignaturaData } from '@helpers/formatData.js';
 
 const useCreateAsignatura = (setAsignaturas) => {
     const [isPopupAsignaturaOpen, setIsPopupAsignaturaOpen] = useState(false);
@@ -16,13 +16,13 @@ const useCreateAsignatura = (setAsignaturas) => {
             newAsignaturaData.idCurso = parseInt(newAsignaturaData.idCurso);
             const createdAsignatura = await createAsignatura(newAsignaturaData);
             console.log('console 2',createdAsignatura);
-            const formattedAsignatura = formatPostCreateAsignatura(createdAsignatura);
+            const formattedAsignatura = formatAsignaturaData(createdAsignatura);
             formattedAsignatura.idCurso = newAsignaturaData.idCurso;
             
             console .log('console 3',formattedAsignatura);
             
             setAsignaturas(prevAsignaturas => [...prevAsignaturas, formattedAsignatura]);
-            console.log('console 4',prevAsignaturas => [...prevAsignaturas, formattedAsignatura]);
+            
             showSuccessAlert('¡Creada!', 'La asignatura ha sido creado exitosamente.');
             setIsPopupAsignaturaOpen(false);
 

@@ -15,19 +15,51 @@ import UpdateIconDisable from '@assets/updateIconDisabled.svg';
 import PopupCC from '@components/PopupCC'; 
 import PopupC from '@components/PopupC'; 
 import AddIcon from '@assets/AddIcon.svg';
-
-
-
+import useAlumnos from '@hooks/users/useGetAlumnos';
+import { useMemo } from 'react';
 
 const Cursos = () => {
-  const { cursos , fetchCursos , setCursos } = useCursos();
+  const { cursos, fetchCursos, setCursos } = useCursos();
+  const { users } = useAlumnos();
   const [filter, setFilterNombre] = useState('');
   const [setIsLoading] = useState(false);
+
+  const cursosConAlumnos = useMemo(() => {
+    // Filtrar solo los usuarios con rol de "alumno
+    // Crear un nuevo array combinando los cursos con la cantidad de alumnos
+    console.log("users",users);
+    const resultado = cursos.map(curso => {
+      const cantidadAlumnos = users.filter(alumno => {
+        if(alumno.curso === null) return false; // Verificar si el alumno tiene curso asignado
+        console.log(`Comparando: alumno.idCurso (${alumno.curso.idCurso}) === curso.idCurso (${curso.idCurso})`);
+        return alumno.curso.idCurso === curso.idCurso// Verificar coincidencias exactas
+      }).length;
+      console.log("cant:",cantidadAlumnos);
+      return {
+        ...curso,
+        cantidadAlumnos, // Agregar la cantidad de alumnos al curso
+      };
+    });
+  
+    return resultado;
+  }, [cursos, users]);
+  
+  
+  
+
+  // Filtrar cursos por nombre
+  const cursosFiltrados = useMemo(() => {
+    return cursosConAlumnos.filter(curso =>
+      curso.nombreCurso.toLowerCase().includes(filter.toLowerCase())
+    );
+  }, [cursosConAlumnos, filter]);
+
   const columns = [
-    { title: "ID", field: "idCurso", width: 150, responsive: 2 },
     { title: "Nombre", field: "nombreCurso", width: 350, responsive: 0 },
-    { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
+    { title: "Alumnos", field: "cantidadAlumnos", width: 200, responsive: 2 },
+    { title: "Creado", field: "createdAt", width: 200, responsive: 2 },
   ];
+
   const {
     handleClickUpdate,
     handleUpdate,
@@ -36,6 +68,7 @@ const Cursos = () => {
     dataCurso,
     setDataCurso
   } = useEditCurso(setCursos);
+
   const {
     handleClickAdd,
     handleCreate,
@@ -48,15 +81,14 @@ const Cursos = () => {
   const handleNombreFilterChange = (e) => {
     setFilterNombre(e.target.value);
   };
-  
+
   const handleSelectionChange = useCallback((selectedCursos) => {
     setDataCurso(selectedCursos.map(curso => ({
       ...curso,
       idCurso: Number(curso.idCurso), // Convertir idCurso a número
     })));
   }, [setDataCurso]);
-  
-  
+
   return (
     <div className='main-container'>
       <div className='table-container'>
@@ -79,38 +111,34 @@ const Cursos = () => {
               )}
             </button>
             <button onClick={handleClickAdd}>
-            <img src={AddIcon} alt="add" />
+              <img src={AddIcon} alt="add" />
             </button>
-        
             {dataCurso.length > 0 ? (
-  <Link to={`/asignatura/${dataCurso[0]?.idCurso}`}>
-    <img src={personIcon} alt="asignaturas" />
-  </Link>
-) : (
-  <button className="Asignaturas" disabled>
-    <img src={personIcon} alt="asignaturas-disabled" />
-  </button>
-)}
-
-    
-    </div>
-      </div>
-      <Table
-          data={cursos}
+              <Link to={`/asignatura/${dataCurso[0]?.idCurso}`}>
+                <img src={personIcon} alt="asignaturas" />
+              </Link>
+            ) : (
+              <button className="Asignaturas" disabled>
+                <img src={personIcon} alt="asignaturas-disabled" />
+              </button>
+            )}
+          </div>
+        </div>
+        <Table
+          data={cursosFiltrados}
           columns={columns}
           filter={filter}
           dataToFilter={'nombreCurso'}
           initialSortName={'nombreCurso'}
           onSelectionChange={handleSelectionChange}
         />
+      </div>
+      <PopupC show={isPopupOpen} setShow={setIsPopupOpen} data={dataCurso} action={handleUpdate} />
+      <PopupCC show={isPopupCCOpen} setShow={setIsPopupCCOpen} action={(data) => {
+        setIsPopupCCOpen(true);
+        handleCreate(data).finally(() => setIsLoading(false));
+      }} />
     </div>
-    <PopupC show={isPopupOpen} setShow={setIsPopupOpen} data={dataCurso} action={handleUpdate} />
-    <PopupCC show={isPopupCCOpen} setShow={setIsPopupCCOpen} action={(data)=>{
-      setIsPopupCCOpen(true);
-      handleCreate(data).finally(()=> setIsLoading(false))
-    }} />
-  </div>
-
   );
 };
 

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {updateCurso} from '@services/curso.service.js';
 import {showErrorAlert, showSuccessAlert} from '@helpers/sweetAlert.js';
-import {formatPostUpdate} from '@helpers/formatData.js';
+import {formatCursoData} from '@helpers/formatData.js';
 
 const useEditCurso = (setCursos) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -20,18 +20,19 @@ const useEditCurso = (setCursos) => {
                 console.log('Curso actualizado:', updatedCurso);
                 showSuccessAlert('¡Actualizado!','El curso ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
-                const formattedCurso = formatPostUpdate(updatedCurso);
+                const formattedCurso = formatCursoData(updatedCurso);
                 console.log('Curso formateado:', formattedCurso);
 
-                setCursos(prevCursos => prevCursos.map(curso => {
-                    console.log("Curso actual:", curso);
-                    if (curso.idCurso === formattedCurso.idCurso) {
-                        console.log("Reemplazando con:", formattedCurso);
-                    }
-                    return curso.nombreCurso === formattedCurso.nombreCurso ? formattedCurso : curso;
-                }));
+                setCursos(prevCursos =>
+                    prevCursos.map(curso =>
+                        curso.idCurso === formattedCurso.idCurso
+                            ? formattedCurso
+                            : curso
+                    )
+                )
                 
                 setDataCurso([]);
+                console.log("Datos:", dataCurso);
             } catch (error) {
                 console.error('Error al actualizar el curso:', error);
                 showErrorAlert('Cancelado','Ocurrió un error al actualizar el curso.');

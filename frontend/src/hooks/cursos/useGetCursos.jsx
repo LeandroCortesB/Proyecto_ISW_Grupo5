@@ -9,8 +9,13 @@ const useGetCursos = () => {
     const fetchCursos = async () => {
         try {
             setLoading(true);
-            const response = await getCursos(); 
-            setCursos(response); 
+            const response = await getCursos();
+            const formattedCursos = response.map(curso => ({
+                nombreCurso: curso.nombreCurso,
+                createdAt: curso.createdAt,
+                idCurso: curso.idCurso
+            }));
+            setCursos(formattedCursos);   
         } catch (err) {
             console.error("Error fetching cursos: ", err);
             setError(err);
@@ -23,7 +28,7 @@ const useGetCursos = () => {
         fetchCursos(); 
     }, []);
 
-    return { cursos, loading, error, fetchCursos};
+    return { cursos, loading, error, fetchCursos, setCursos };
 }
 
 export default useGetCursos;
