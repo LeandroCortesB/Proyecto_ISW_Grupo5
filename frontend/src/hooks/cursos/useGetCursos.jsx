@@ -23,7 +23,7 @@ const useGetCursos = () => {
         fetchCursos(); 
     }, []);
 
-    return { cursos, loading, error, fetchCursos };
+    return { cursos, loading, error, fetchCursos};
 }
 
 export default useGetCursos;

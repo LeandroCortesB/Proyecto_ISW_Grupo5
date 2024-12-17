@@ -110,6 +110,16 @@ export function formatPostCreate(user) {
     };
 }
 
+export function formatPostCreateNota(nota) {
+    return {
+        calificacion: startCase(nota.calificacion),
+        periodo: startCase(nota.periodo),
+        asignatura: startCase(nota.asignatura),
+        alumno: startCase(nota.alumno),
+        createdAt: formatTempo(nota.createdAt, "DD-MM-YYYY")
+    };
+}
+
 export function formatPostCreateHoja(hoja) {
     return {
         nombreCompleto: startCase(hoja.nombreCompleto),

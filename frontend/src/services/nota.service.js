@@ -28,7 +28,8 @@ export async function createNota(data) {
         const headers = {
             Autorization: `Bearer ${token}`,
         };
-        const response = await axios.post('/nota/create/', data, { headers });
+        console.log("Datos enviados al backend:", data, { headers });
+        const response = await axios.post('/nota/', data, { headers });
         return response.data.data;
     } catch (error) {
         return error.response.data;
@@ -43,7 +44,7 @@ export async function updateNota(data, idNota) {
         };
 
         console.log('Datos enviados al backend:', data.calificacion, { headers });
-        const response = await axios.patch(`/nota/${idNota}`, data);
+        const response = await axios.patch(`/nota/${idNota}`, data, { headers });
         return response.data.data;
     } catch (error) {
         return error.response.data;
@@ -58,24 +59,6 @@ export async function deleteNota(idNota) {
         };
         const response = await axios.delete(`/nota/${idNota}`, { headers });
         return response.data;
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
-export async function getNotasByHoja(rut) {
-    try {
-        const { data } = await axios.get(`/nota/hoja/${rut}`);
-        return data.data;
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
-export async function getNotasByAsignatura(idAsignatura) {
-    try {
-        const { data } = await axios.get(`/nota/asignatura/${idAsignatura}`);
-        return data.data;
     } catch (error) {
         return error.response.data;
     }

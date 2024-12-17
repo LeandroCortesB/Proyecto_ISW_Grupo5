@@ -23,7 +23,7 @@ const useGetNotas = () => {
         fetchNotas(); 
     }, []);
 
-    return { notas, loading, error, fetchNotas };
+    return { notas, loading, error, fetchNotas, setNotas };
 }
 
 export default useGetNotas;

@@ -10,7 +10,8 @@ import Root from "@pages/Root";
 import Cursos from "@pages/Cursos";
 import MisHojas from "@pages/MisHojas";
 import Perfil from "@pages/Perfil";
-import Nota from "@pages/Nota";
+import GestionNotas from "@pages/Nota";
+import Notas from "@pages/VerNotas";
 import Hojas from "@pages/Hoja";
 import ProtectedRoute from "@components/ProtectedRoute";
 import "@styles/styles.css";
@@ -34,7 +35,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/nota",
-        element: <Nota />,
+        element: <GestionNotas />,
+      },
+      {
+        path: "/nota/all",
+        element: <Notas />,
       },
       {
         path: "/asignatura/:idCurso",
