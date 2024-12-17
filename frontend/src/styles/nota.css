@@ -1,35 +1,35 @@
-.main-container {
+.nota-page .main-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.table-container {
+.nota-page .table-container {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-.top-table {
+.nota-page .top-table {
     padding: 20px;
     border-bottom: 1px solid #e0e0e0;
 }
 
-.title {
+.nota-page .title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.search-delete {
+.nota-page .search-delete {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.search-input {
+.nota-page .search-input {
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -39,7 +39,7 @@
 
 
 
-.delete {
+.nota-page .delete {
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
@@ -49,17 +49,17 @@
     font-size: 14px;
 }
 
-.edit-button {
+.nota-page .edit-button {
     background: rgba(255, 255, 255, 0.87);
     margin-left: 8px;
 }
 
-.delete-button {
+.nota-page .delete-button {
     background: rgba(255, 255, 255, 0.87);
     cursor: not-allowed;
 }
 
-.table-scroll {
+.nota-page .table-scroll {
     max-height: 500px; 
     overflow-y: auto; 
     overflow-x: hidden;
@@ -67,7 +67,7 @@
     padding: 0; 
 }
 
-table {
+.nota-page table {
     width: 100%;
     border-collapse: collapse;
 }
@@ -83,13 +83,13 @@ th {
     font-weight: bold;
 }
 
-.notas-container {
+.nota-page .notas-container {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.nota-item {
+.nota-page .nota-item {
     background-color: #e0e0e0;
     padding: 4px 8px;
     border-radius: 4px;
@@ -99,35 +99,15 @@ th {
     gap: 4px;
 }
 
-.asignatura {
+.nota-page .asignatura {
     font-weight: bold;
     margin-right: 4px;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-    gap: 8px;
+.nota-page .mb-5 {
+    margin-bottom: 5px;
+    margin-left: ;
+    background-color: #113d67;
 }
 
-.pagination button {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.pagination button.active {
-    background-color: #2196F3;
-    color: white;
-    border-color: #2196F3;
-}
-
-.pagination button:disabled {
-    background-color: #f5f5f5;
-    color: #ccc;
-    cursor: not-allowed;
-}
 
