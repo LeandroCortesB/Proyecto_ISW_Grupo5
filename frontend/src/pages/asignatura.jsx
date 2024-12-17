@@ -13,12 +13,14 @@ import UpdateIcon from "@assets/updateIcon.svg";
 import PopupCA from "@components/PopupCA";
 import PopupEA from "@components/PopupEA";
 import { useMemo } from "react";
+import useCursos from "@hooks/cursos/useGetCursos";
 
 
 const Asignaturas = () => {
   const { idCurso } = useParams();
   const [filterNombre, setFilterNombre] = useState("");
   const {asignaturas , fetchAsignatura, setAsignaturas} = useAsignaturas();
+  const {cursos} = useCursos();
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -30,11 +32,18 @@ const Asignaturas = () => {
     );
   }, [idCurso, asignaturas, filterNombre ]);
 
+  const getNombreCurso = (idCurso) => {
+    const curso = cursos.find(curso => curso.idCurso === Number(idCurso));
+    return curso ? curso.nombreCurso : "Curso no encontrado";
+  };
+  const nombreCurso = useMemo(() => getNombreCurso(idCurso), [idCurso, cursos]);
+
+
+  
+
   const columns = [
-    { title: "ID", field: "idAsignatura", width: 100, responsive: 3 },
-    { title: "Nombre", field: "nombreAsignatura", width: 350, responsive: 0 },
-    { title: "Curso", field: "curso.nombreCurso", width: 200, responsive: 1 },
-    { title: "Creado", field: "createdAt", width: 200, responsive: 2 },
+    { title: "Nombre", field: "nombreAsignatura", width: 550, responsive: 0 },
+    { title: "Creado", field: "createdAt", width: 400, responsive: 2 },
   ];
   const {
     handleClickUpdate,
@@ -51,7 +60,7 @@ const Asignaturas = () => {
         setIsPopupAsignaturaOpen
   } = useCreateAsignatura(setAsignaturas);
 
-  const { handleDelete } = useDeleteAsignatura(fetchAsignatura, setDataAsignatura);
+  const { handleDelete } = useDeleteAsignatura(fetchAsignatura, setDataAsignatura ,setAsignaturas);
 
   const handleSelectionChange = (selectedAsignaturas) => {
     setDataAsignatura(selectedAsignaturas.map(asignatura => ({
@@ -67,7 +76,7 @@ const Asignaturas = () => {
     <div className="main-container">
       <div className="table-container">
         <div className="top-table">
-          <h1 className="title-table">Asignaturas</h1>
+          <h1 className="title-table">Asignaturas del curso: {nombreCurso}</h1>
           <div className="filter-actions">
             <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder={'Filtrar por nombre'} />
           <button className="add-button" onClick={handleClickAddAsignatura}>

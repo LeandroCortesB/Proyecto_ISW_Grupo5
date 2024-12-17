@@ -7,14 +7,15 @@ const useEditNota = (setNotas) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [dataNota, setDataNota] = useState([]);
 
-    const handleClickUpdate = () => {
-        if (dataNota.length > 0) {
-            setIsPopupOpen(true);
-        }
+    const handleClickUpdate = (nota) => {
+        setDataNota([nota]); 
+        setIsPopupOpen(true); 
     };
+    
 
     const handleUpdate = async (updatedNotaData) => {
         if (updatedNotaData) {
+            console.log("Datos de nota a actualizar:", updatedNotaData);
             try {
                 console.log("Datos de nota actualizados:", updatedNotaData);
                 const updatedNota = await updateNota(updatedNotaData, Number(dataNota[0].idNota));

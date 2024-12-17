@@ -50,14 +50,6 @@ const Hojas = () => {
 
   let nombre = hojasnombre(rut);
 
-  /*filtradas = filtradas
-    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) 
-    .map((hoja, index) => ({
-      ...hoja,
-      numeroOrden: index + 1, 
-      anotacionTexto: hoja.buena ? 'Buena' : 'Mala',
-    }));
-  */
     const filtradasVisual = useMemo(() => {
       return [...filtradas]
         .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
@@ -69,11 +61,10 @@ const Hojas = () => {
     }, [filtradas]);
     
   const columns = [
-    { title: 'IdHoja', field: 'idHoja', width: 100, responsive: 0 },
     { title: 'Pagina', field: 'numeroOrden', width: 100, responsive: 0 },
     { title: 'Anotacion', field: 'anotacionTexto', width: 140, responsive: 2 },
     { title: 'Descripcion', field: 'anotacion', width: 700, responsive: 2 },
-    { title: 'Creado', field: 'createdAt', width: 100, responsive: 2 },
+    { title: 'Creada', field: 'createdAt', width: 100, responsive: 2 },
   ];
 
   const handleSelectionChange = useCallback(

@@ -10,10 +10,17 @@ const useGetAsignaturas = () => {
         try {
             setLoading(true);
             const response = await getAsignaturas();
-            setAsignaturas(response);
+            const formatAsignaturaData = response.map(asignatura => ({
+                nombreAsignatura: asignatura.nombreAsignatura,
+                idAsignatura: asignatura.idAsignatura,
+                idCurso: asignatura.idCurso,
+                createdAt: asignatura.createdAt,
+            })) ;
+            setAsignaturas(formatAsignaturaData);
+            console.log("Asignaturas:", formatAsignaturaData);
         } catch (err) {
             console.error("Error fetching asignaturas: ", err);
-            setError(err);
+            setError(err); 
         } finally {
             setLoading(false);
         }

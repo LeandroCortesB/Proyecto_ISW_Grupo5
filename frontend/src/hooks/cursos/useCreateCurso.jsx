@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createCurso } from '@services/curso.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostCreate } from '@helpers/formatData.js';
+import { formatCursoData } from '@helpers/formatData.js';
 
 const useCreateCurso = (setCursos) => {
     const [isPopupCCOpen, setIsPopupCCOpen] = useState(false);
@@ -13,8 +13,8 @@ const useCreateCurso = (setCursos) => {
         try {
             const createdCurso = await createCurso(newCursoData);
 
-            const formattedCurso = formatPostCreate(createdCurso);
-
+            const formattedCurso = formatCursoData(createdCurso);
+            console.log('formattedCurso:', formattedCurso);
             setCursos(prevCursos => [...prevCursos, formattedCurso]);
 
             showSuccessAlert('¡Creado!', 'El curso ha sido creado exitosamente.');

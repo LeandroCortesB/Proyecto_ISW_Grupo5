@@ -2,6 +2,7 @@ import Table from '@components/Table';
 import useGetHojas from '@hooks/hojas/useGetHojas.jsx';
 import '@styles/Hoja.css';
 import {useAuth} from '@context/AuthContext.jsx';
+import { useMemo } from 'react';
 
 const MisHojas = () => {
   const { user } = useAuth();
@@ -10,19 +11,24 @@ const MisHojas = () => {
   const nombre = user.nombreCompleto;
 
   const { hojas, fetchHojas , setHojas } = useGetHojas(rut);
-
-  console.log("rut yut:",hojas);
   
   let filtradas = hojas;
 
-  filtradas = filtradas.map((hoja) => ({
-    ...hoja,
-    anotacionTexto: hoja.buena ? 'Buena' : 'Mala',
-  }));
+
+    const filtradasVisual = useMemo(() => {
+      return [...filtradas]
+        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        .map((hoja, index) => ({
+          ...hoja,
+          numeroOrden: index + 1,
+          anotacionTexto: hoja.buena ? 'Buena' : 'Mala',
+        }));
+    }, [filtradas]);
+
 
   const columns = [
-    { title: 'Numero', field: 'idHoja', width: 150, responsive: 0 },
-    { title: 'Anotacion', field: 'anotacionTexto', width: 150, responsive: 2,},
+    { title: 'Pagina', field: 'numeroOrden', width: 100, responsive: 0 },
+    { title: 'Anotacion', field: 'anotacionTexto', width: 140, responsive: 2,},
     { title: 'Descripcion', field: 'anotacion', width: 700, responsive: 2 },
     { title: 'Creado', field: 'createdAt', width: 100, responsive: 2 },
   ];
@@ -36,7 +42,7 @@ const MisHojas = () => {
           </div>
         </div>
         <Table
-          data={filtradas} 
+          data={filtradasVisual} 
           columns={columns}
           initialSortName="nombreCompleto"
         />

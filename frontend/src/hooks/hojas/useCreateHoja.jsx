@@ -13,9 +13,9 @@ const useCreateHoja = (setHojas) => {
     const handleCreateHoja = async (newHojaData) => {
             try {
                 const createdHoja = await createHoja(newHojaData);
-
-                const formattedHoja = formatPostCreateHoja(createdHoja); 
                 
+                const formattedHoja = formatPostCreateHoja(createdHoja); 
+
                 setHojas(prevHojas => [...prevHojas, formattedHoja]);
 
                 showSuccessAlert('¡Creada!', 'La hoja ha sido creado exitosamente.');

@@ -91,7 +91,7 @@ export async function getAlumnosService() {
     const userRepository = AppDataSource.getRepository(User);
 
     const alumnos = await userRepository.find({ 
-      where: [{ rol: "alumno" }], 
+      where: [{ rol: "alumno" }], relations: ["curso"]
     });
 
     console.log("Alumnitos: ", alumnos)

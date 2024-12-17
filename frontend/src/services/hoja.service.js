@@ -56,7 +56,8 @@ export async function updateHoja(data, idHoja) {
         };
 
         const response = await axios.patch(`/hoja/update/${idHoja}`, data, { headers });
-        return response.data.data;
+        return response;
+
     } catch (error) {
         console.log(error);
         return error.response.data;
@@ -69,10 +70,8 @@ export async function deleteHoja(idHoja) {
         const headers = {
             Autorization: `Bearer ${token}`,
         };
-        const data = idHoja;
         
-        console.log("id adasd:",data);
-        const response = await axios.delete(`/hoja/del/${idHoja}`, data, { headers });
+        const response = await axios.delete(`/hoja/del/?idHoja=${idHoja}`, { headers });
 
         return response.data;
     } catch (error) {
