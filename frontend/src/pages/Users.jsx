@@ -6,14 +6,27 @@ import DeleteIcon from '@assets/deleteIcon.svg';
 import UpdateIcon from '@assets/updateIcon.svg';
 import UpdateIconDisable from '@assets/updateIconDisabled.svg';
 import DeleteIconDisable from '@assets/deleteIconDisabled.svg';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect} from 'react';
 import '@styles/users.css';
+import Addicon from '@assets/AddIcon.svg';
 import useEditUser from '@hooks/users/useEditUser';
 import useDeleteUser from '@hooks/users/useDeleteUser';
+import useCreateUser from '@hooks/users/useCreateUser';
+import PopupUser from '@components/PopupUser';
 
 const Users = () => {
   const { users, fetchUsers, setUsers } = useUsers();
   const [filterRut, setFilterRut] = useState('');
+  const [filterUser, setFilterUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filterNombre, setFilterNombre] = useState('');
+
+  useEffect(() => {
+    const datosFilter = users.filter((user) => 
+      user.nombreCompleto?.toLowerCase().includes(filterNombre.toLowerCase())
+    );
+    setFilterUsers(datosFilter);
+  }, [users, filterNombre]);
 
   const {
     handleClickUpdate,
@@ -26,8 +39,14 @@ const Users = () => {
 
   const { handleDelete } = useDeleteUser(fetchUsers, setDataUser);
 
+  const { handleClickAdd, handleCreate, isPopup2Open, setIsPopup2Open } = useCreateUser(setUsers);
+
   const handleRutFilterChange = (e) => {
     setFilterRut(e.target.value);
+  };
+
+  const handleNombreFilterChange = (e) => {
+    setFilterNombre(e.target.value);
   };
 
   const handleSelectionChange = useCallback((selectedUsers) => {
@@ -48,6 +67,7 @@ const Users = () => {
         <div className='top-table'>
           <h1 className='title-table'>Usuarios</h1>
           <div className='filter-actions'>
+            <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder='Filtrar por nombre' />
             <Search value={filterRut} onChange={handleRutFilterChange} placeholder={'Filtrar por rut'} />
             <button onClick={handleClickUpdate} disabled={dataUser.length === 0}>
               {dataUser.length === 0 ? (
@@ -63,10 +83,15 @@ const Users = () => {
                 <img src={DeleteIcon} alt="delete" />
               )}
             </button>
+
+            <button onClick={handleClickAdd}>
+              <img src={Addicon} alt="add" />
+            </button>
+
           </div>
         </div>
         <Table
-          data={users}
+          data={filterUser}
           columns={columns}
           filter={filterRut}
           dataToFilter={'rut'}
@@ -75,6 +100,14 @@ const Users = () => {
         />
       </div>
       <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} />
+      <PopupUser
+              show={isPopup2Open}
+              setShow={setIsPopup2Open}
+              action={(data) => {
+                setIsLoading(true);
+                handleCreate(data).finally(() => setIsLoading(false));
+              }}
+            />
     </div>
   );
 };
