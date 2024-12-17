@@ -169,11 +169,19 @@ export async function deleteUser(req, res) {
 export async function getUsersByCurso(req, res) {
   try {
     const { idCurso } = req.params;
-    const users = await getUsersByCursoService(idCurso); // Asegúrate de que este servicio exista
-    if (!users || users.length === 0) {
-      return res.status(404).json({ message: "No se encontraron usuarios para el curso especificado" });
+    const users = await getUsersByCursoService(idCurso);
+
+    // Verifica que 'users' sea un array plano
+    const usersLimpios = Array.isArray(users) ? users.flat() : [];
+
+    if (usersLimpios.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se encontraron usuarios para el curso especificado" });
     }
-    res.status(200).json({ data: users });
+
+    // Envía la respuesta correctamente
+    res.status(200).json({ data: usersLimpios });
   } catch (error) {
     console.error("Error al obtener usuarios por curso:", error);
     res.status(500).json({ message: "Error interno del servidor" });

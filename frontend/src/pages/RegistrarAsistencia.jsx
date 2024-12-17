@@ -22,6 +22,7 @@ const RegistrarAsistencia = () => {
   const [errorGeneral, setErrorGeneral] = useState(""); // Nuevo estado para errores generales
   const navigate = useNavigate();
 
+  // Obtener lista de cursos al cargar el componente
   useEffect(() => {
     const fetchCursos = async () => {
       try {
@@ -34,6 +35,7 @@ const RegistrarAsistencia = () => {
     fetchCursos();
   }, []);
 
+  // Actualizar asignaturas y alumnos cuando cambia el curso seleccionado
   useEffect(() => {
     if (cursoSeleccionado) {
       const fetchAsignaturas = async () => {
@@ -50,15 +52,34 @@ const RegistrarAsistencia = () => {
       const fetchAlumnos = async () => {
         try {
           const alumnosData = await getUsersByCurso(cursoSeleccionado);
-          setAlumnos(alumnosData || []);
+          console.log("Alumnos obtenidos del backend:", alumnosData); // Debug
+          if (!Array.isArray(alumnosData)) {
+            console.error(
+              "La respuesta de alumnos no es un array:",
+              alumnosData
+            );
+            setAlumnos([]); // Limpia el estado si no es un array
+            return;
+          }
+
+          // Filtra los alumnos que pertenecen al curso seleccionado
+          const alumnosFiltrados = alumnosData.filter(
+            (alumno) =>
+              alumno.curso &&
+              alumno.curso.idCurso.toString() === cursoSeleccionado
+          );
+
+          setAlumnos(alumnosFiltrados || []);
           setAsistencias(
-            alumnosData.map((alumno) => ({
+            alumnosFiltrados.map((alumno) => ({
               idAlumno: alumno.id,
               estado: "Presente",
             }))
           );
         } catch (err) {
           console.error("Error al cargar alumnos del curso:", err);
+          setAlumnos([]); // Si hay error, limpia el estado
+          setAsistencias([]);
         }
       };
 
@@ -71,6 +92,7 @@ const RegistrarAsistencia = () => {
     }
   }, [cursoSeleccionado]);
 
+  // Cambiar estado de asistencia para cada alumno
   const handleEstadoChange = (idAlumno, nuevoEstado) => {
     setAsistencias((prevAsistencias) =>
       prevAsistencias.map((asistencia) =>
@@ -81,6 +103,7 @@ const RegistrarAsistencia = () => {
     );
   };
 
+  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorCurso("");
@@ -116,18 +139,16 @@ const RegistrarAsistencia = () => {
       };
 
       await createAsistencia(registro);
-      alert("Asistencia registrada con éxito."); // Popup para éxito
+      alert("Asistencia registrada con éxito.");
       navigate("/asistencias");
     } catch (err) {
       console.error("Error al registrar asistencia:", err);
 
-      // Captura el error y muestra el popup con el mensaje
       const errorMessage =
         err.response && err.response.data && err.response.data.message
           ? err.response.data.message
-          : "Error de duplicado, ya existen asistencias registradas en esta fecha y asignatura.";
-
-      alert(errorMessage); // Popup para error
+          : "Error al registrar asistencia. Inténtalo nuevamente.";
+      alert(errorMessage);
     }
   };
 
