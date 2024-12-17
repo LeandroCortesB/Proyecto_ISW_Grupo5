@@ -1,7 +1,7 @@
 import axios from './root.service.js';
 import cookies from 'js-cookie';
 import { formatUserData } from '@helpers/formatData.js';
-import { formatAlumnoData } from '@helpers/formatData.js';
+//import { formatAlumnoData } from '@helpers/formatData.js';
 
 export async function getUsers() {
     try {
@@ -99,13 +99,13 @@ export async function deleteUser(rut) {
 }
 export async function getUsersByCurso(idCurso) {
     try {
-        const { data } = await axios.get(`/user/curso/${idCurso}`);
-        return data.data; // Ajusta esto si tu backend tiene un formato de respuesta diferente
+      const { data } = await axios.get(`/user/curso/${idCurso}`);
+      return Array.isArray(data.data) ? data.data.flat() : data.data;
     } catch (error) {
-        console.error("Error al obtener usuarios por curso:", error);
-        return error.response?.data || { message: "Error desconocido" };
+      console.error("Error al obtener usuarios por curso:", error);
+      return error.response?.data || { message: "Error desconocido" };
     }
-}
+  }
 export async function getUsersByAsignatura(idAsignatura) {
     try {
         const { data } = await axios.get(`/user/asignatura/${idAsignatura}`);
