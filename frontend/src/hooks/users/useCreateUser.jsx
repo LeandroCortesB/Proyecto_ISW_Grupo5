@@ -15,12 +15,17 @@ const useCreateUser = (setUsers) => {
                 const createdUser = await createUser(newUserData);
 
                 const formattedUser = formatPostCreate(createdUser); 
-                
-                setUsers(prevUsers => [...prevUsers, formattedUser]);
 
-                showSuccessAlert('¡Creado!', 'El usuario ha sido creado exitosamente.');
+                console.log("Usuario nuevo ",formattedUser);
+
+                if(formattedUser.rol===null||formattedUser.rol===undefined||formattedUser.rol===""){
+                    showErrorAlert('Cancelado', 'Ocurrió un error al crear el usuario.');
+                }else{
+                    setUsers(prevUsers => [...prevUsers, formattedUser]);
+                    showSuccessAlert('¡Creado!', 'El usuario ha sido creado exitosamente.');
+                    }
+
                 setIsPopup2Open(false);
-
             } catch (error) {
                 console.error('Error al crear el usuario:', error);
                 showErrorAlert('Cancelado', 'Ocurrió un error al crear el usuario.');

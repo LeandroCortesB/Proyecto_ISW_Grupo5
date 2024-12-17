@@ -20,13 +20,12 @@ const useEditHoja = (setHojas) => {
                 
                 const formattedHoja = formatPostUpdateHoja(updatedHoja);
 
-                setHojas(prevHojas => prevHojas.map(hoja => {
-                    console.log("Hoja actual:", hoja);
-                    if (hoja.idHoja === formattedHoja.idHoja) {
-                        console.log("Reemplazando con:", formattedHoja);
-                    }
-                    return hoja.rut === formattedHoja.rut ? formattedHoja : hoja;
-                }));
+                setHojas(prevHojas => 
+                    prevHojas.map(hoja => 
+                        hoja.idHoja === formattedHoja.idHoja 
+                        ? formattedHoja
+                        : hoja
+                ));
                 
                 showSuccessAlert("¡Actualizado!", "La hoja ha sido actualizada correctamente.");
                 setIsPopupHOpen(false);

@@ -102,10 +102,7 @@ export async function updateHoja(req, res) {
 
 export async function deleteHoja(req, res) {
   try {
-    const { idHoja } = req;
-    console.log("req ",req.body);
-    console.log("res ",res.body);
-    console.log("IdDel ",idHoja);
+    const { idHoja } = req.query;
 
     const { error: queryError } = hojaQueryValidation.validate({
       idHoja,

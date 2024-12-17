@@ -64,7 +64,7 @@ const Hojas = () => {
     { title: 'Pagina', field: 'numeroOrden', width: 100, responsive: 0 },
     { title: 'Anotacion', field: 'anotacionTexto', width: 140, responsive: 2 },
     { title: 'Descripcion', field: 'anotacion', width: 700, responsive: 2 },
-    { title: 'Creado', field: 'createdAt', width: 100, responsive: 2 },
+    { title: 'Creada', field: 'createdAt', width: 100, responsive: 2 },
   ];
 
   const handleSelectionChange = useCallback(

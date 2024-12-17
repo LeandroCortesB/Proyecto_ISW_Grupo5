@@ -97,6 +97,7 @@ export async function deleteUser(rut) {
         return error.response.data;
     }
 }
+
 export async function getUsersByCurso(idCurso) {
     try {
         const { data } = await axios.get(`/user/curso/${idCurso}`);
