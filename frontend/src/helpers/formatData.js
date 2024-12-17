@@ -59,13 +59,13 @@ export function formatPostUpdateHoja(hoja) {
 export function formatAsignaturaData(asignatura) {
     return {
         ...asignatura,
+        idAsignatura: asignatura.idAsignatura,
         nombreAsignatura: startCase(asignatura.nombreAsignatura),
         descripcion: startCase(asignatura.descripcion),
         createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
         
     };
 }
-
 export function formatCursoData(curso) {
     return {
         ...curso,

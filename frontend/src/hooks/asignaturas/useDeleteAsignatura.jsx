@@ -1,7 +1,8 @@
 import {deleteAsignatura} from '@services/asignatura.service.js';
 import {deleteDataAlert , showErrorAlert, showSuccessAlert} from '@helpers/sweetAlert.js';
 
-const useDeleteAsignatura = (fetchAsignaturas, setDataAsignatura) => {
+const useDeleteAsignatura = (fetchAsignaturas, setDataAsignatura, setAsignaturas) => {
+        
     const handleDelete = async (dataAsignatura) => {
         if (dataAsignatura.length > 0) {
             try {
@@ -15,6 +16,9 @@ const useDeleteAsignatura = (fetchAsignaturas, setDataAsignatura) => {
                     }
                     showSuccessAlert('¡Eliminada!','La asignatura ha sido eliminada correctamente.');
                     showSuccessAlert('Actualice la pagina','Actualice la pagina para ver los cambios');
+                    setAsignaturas(prevAsignaturas => 
+                        prevAsignaturas.filter(asignatura => asignatura.idAsignatura !== idAsignatura)
+                    );
                     setDataAsignatura([]);
                 } else {
                     showErrorAlert('Cancelado', 'La operación ha sido cancelada.');

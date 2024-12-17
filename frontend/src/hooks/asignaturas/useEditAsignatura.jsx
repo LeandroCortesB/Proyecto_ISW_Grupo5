@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { updateAsignatura } from '@services/asignatura.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPutEditAsignatura } from '@helpers/formatData.js';
+import { formatAsignaturaData } from '@helpers/formatData.js';
 
 const useEditAsignatura = (setAsignaturas) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -21,18 +21,20 @@ const useEditAsignatura = (setAsignaturas) => {
                 console.log('Asignatura actualizada:', updatedAsignatura);
                 showSuccessAlert('¡Actualizada!','La asignatura ha sido actualizada correctamente.');
                 setIsPopupOpen(false);
-                const formattedAsignatura = formatPutEditAsignatura(updatedAsignatura);
+                const formattedAsignatura = formatAsignaturaData(updatedAsignatura);
                 console.log('Asignatura formateada:', formattedAsignatura);
 
-                setAsignaturas(prevAsignaturas => prevAsignaturas.map(asignatura => {
-                    console.log("Asignatura actual:", asignatura);
-                    if (asignatura.idAsignatura === formattedAsignatura.idAsignatura) {
-                        console.log("Reemplazando con:", formattedAsignatura);
-                    }
-                    return asignatura.nombreAsignatura === formattedAsignatura.nombreAsignatura ? formattedAsignatura : asignatura;
-                }));
+                setAsignaturas(prevAsignaturas => 
+                    prevAsignaturas.map(asignatura => 
+                        asignatura.idAsignatura === formattedAsignatura.idAsignatura 
+                            ? formattedAsignatura 
+                            : asignatura
+                    )
+                );
+                setDataAsignatura([]); // Limpiar dataAsignatura
+
                 
-                setDataAsignatura([]);
+                console.log("Datos:", dataAsignatura);
             } catch (error) {
                 console.error('Error al actualizar la asignatura:', error);
                 showErrorAlert('Cancelado','Ocurrió un error al actualizar la asignatura.');
