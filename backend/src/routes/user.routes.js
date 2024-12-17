@@ -22,7 +22,7 @@ router
   .get("/:id", authorizeRoles(["administrador", "profesor"]),getUser)
   .get("/hoja/:rut", authorizeRoles(["administrador", "profesor","alumno","apoderado"]),getUser)
   .post("/", authorizeRoles(["administrador", "profesor"]),createUser)
-  .get("/curso/:id", authorizeRoles(["administrador", "profesor"]),getUsersByCurso)
+  .get("/curso/:idCurso", authorizeRoles(["administrador", "profesor"]),getUsersByCurso)
   .get("/asignatura/:idAsignatura", authorizeRoles(["administrador", "profesor"]),getUsersByAsignatura)
   .get("/alumnos/all", authorizeRoles(["administrador", "profesor"]),getAlumnos)
   .patch("/:id", authorizeRoles(["administrador", "profesor"]),updateUser)

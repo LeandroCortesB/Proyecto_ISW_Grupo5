@@ -208,16 +208,17 @@ export async function getUsersByCursoService(idCurso) {
     const userRepository = AppDataSource.getRepository(User);
 
     const users = await userRepository.find({
-      where: { curso: { idCurso: idCurso }, rol: "alumno" }, // Filtra por idCurso y rol
+      where: [
+        { curso: { idCurso: idCurso }, rol: "alumno" } // Filtra por curso asignado
+      ],
       relations: ["curso"],
     });
-
+    
     console.log("Usuarios obtenidos:", users); // Log para verificar datos
 
     if (!users || users.length === 0) {
       return []; // Retorna un array vacío si no hay usuarios
     }
-
     return users; // Solo devuelve la lista de usuarios
   } catch (error) {
     console.error("Error en getUsersByCursoService:", error);
