@@ -21,12 +21,14 @@ const useCreateAsignatura = (setAsignaturas) => {
             
             console .log('console 3',formattedAsignatura);
 
-            if(formatAsignaturaData.idAsignatura !== undefined){
-            setAsignaturas(prevAsignaturas => [...prevAsignaturas, formattedAsignatura]);
+            if(formatAsignaturaData.nombreAsignatura == createAsignatura.nombreAsignatura){ 
+                    
+                setAsignaturas(prevAsignaturas => [...prevAsignaturas, formattedAsignatura]);
             
-            showSuccessAlert('¡Creada!', 'La asignatura ha sido creado exitosamente.');
+                showSuccessAlert('¡Creada!', 'La asignatura ha sido creado exitosamente.');
+             
         }else{
-                showErrorAlert('error', 'La asignatura no ha sido creado exitosamente.');
+            showErrorAlert('error', 'La asignatura no ha sido creado exitosamente.');
             }
 
             setIsPopupAsignaturaOpen(false);
