@@ -49,6 +49,7 @@ export async function getAsignaturas(req, res) {
 
 export async function createAsignatura(req, res) {
     try {
+        
         const { error } = asignaturaBodyValidation.validate(req.body);
 
         if (error) return handleErrorClient(res, 400, error.message);

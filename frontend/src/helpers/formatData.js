@@ -62,6 +62,8 @@ export function formatAsignaturaData(asignatura) {
         idAsignatura: asignatura.idAsignatura,
         nombreAsignatura: startCase(asignatura.nombreAsignatura),
         descripcion: startCase(asignatura.descripcion),
+        curso: startCase(asignatura.curso),
+        idCurso: asignatura.idCurso,
         createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
         
     };

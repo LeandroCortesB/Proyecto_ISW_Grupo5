@@ -29,11 +29,11 @@ export async function createAsignatura(data) {
         };
 
         const response = await axios.post(`/asignatura/`, data, { headers });
-        console.log("responde: ",response);
+        console.log("Back0",response.data.data);
         return response.data.data;
     } catch (error) {
-        console.log ("error",error.response.data);
-        return error.response.data;
+        console.log("Back1",error.response.data);
+        throw error.response.data;
     }
 }
 
@@ -59,9 +59,9 @@ export async function deleteAsignatura(idAsignatura) {
         };
 
         const response = await axios.delete(`/asignatura/${idAsignatura}`, { headers });
-        
         return response.data;
     } catch (error) {
+        console.log(error.response.data);
         return error.response.data;
     }
 }

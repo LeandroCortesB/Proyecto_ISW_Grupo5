@@ -42,7 +42,24 @@ export async function getAsignaturasService() {
 export async function createAsignaturaService(body) {
     try{
    const asignaturaRepository = AppDataSource.getRepository(Asignatura);
+   
+   const asignaturaExistente = await asignaturaRepository.findOne({
+    where: {
+        nombreAsignatura: body.nombreAsignatura, 
+    },relations: ["curso"],
+});
 
+if(asignaturaExistente) {
+    const asignatura = await getAsignaturasService();
+    console.log("body: ",body.idCurso);
+    console.log("asignatura: ",asignatura.length);
+    
+        const filtrado = asignatura[0].filter(asignatura => asignatura.idCurso === body.idCurso 
+            && asignatura.nombreAsignatura === body.nombreAsignatura);
+    console.log("filtrado: ",filtrado.length);
+    if(filtrado.length > 0)return [null, "La asignatura ya existe" ];
+}
+ 
    const nuevaAsignatura = asignaturaRepository.create({
          nombreAsignatura: body.nombreAsignatura,
          idCurso: { idCurso: body.idCurso },
