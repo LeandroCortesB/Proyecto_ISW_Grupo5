@@ -123,7 +123,7 @@
   
   /* Detalles de estadísticas */
   .stats-details {
-    text-align: center;
+    text-align: left;
   }
   
   .stats-details h3 {
@@ -134,22 +134,24 @@
   
   .stats-details p {
     margin: 0.5rem 0;
-    color: var(--text-color);
+    color: var(--text-color); /* Usa el color definido en las variables */
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0.25rem 0;
   }
-  
-  /* Media query para dispositivos pequeños */
-  @media (max-width: 640px) {
-    .asistencias-usuario-container {
-      margin: 1rem;
-      padding: 1rem;
-    }
-  
-    .date-picker-container {
-      grid-template-columns: 1fr;
-    }
-  
-    .stats-container {
-      gap: 1.5rem;
-    }
-  }
-  
+  /* Contenedor del gráfico circular */
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 400px; /* Controla el ancho máximo del gráfico */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+canvas {
+  max-height: 300px; /* Altura máxima del gráfico */
+  max-width: 300px; /* Ancho máximo del gráfico */
+}

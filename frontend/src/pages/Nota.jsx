@@ -9,9 +9,7 @@ import useNotas from '@hooks/nota/useGetNotas';
 import useCreateNota from "@hooks/nota/useCreateNota";
 import { getAsignaturasByCurso } from "@services/asignatura.service.js";
 import { getUsersByCurso } from "@services/user.service.js";
-import { Link } from "react-router-dom";
 import '@styles/nota.css';
-import { set } from 'date-fns';
 
 const GestionNotas = () => {
     const { cursos } = useCursos();
@@ -27,6 +25,7 @@ const GestionNotas = () => {
     const [guardando, setGuardando] = useState(false);
     const [periodo, setPeriodo] = useState("");
     const { handleCreate } = useCreateNota(setNotas);
+    const [evaluacionCreada, setEvaluacionCreada] = useState(false);
 
     useEffect(() => {
         if(cursoSeleccionado) {
@@ -64,15 +63,16 @@ const GestionNotas = () => {
             setAsignaturas([]);
         }
     }, [cursoSeleccionado]);
-    console.log("asignatura", asignaturaSeleccionada);
                 
     const crearEvaluacion = () => {
-        const nuevaEvaluacion = `Evaluación ${evaluaciones.length + 1}`;
-        setEvaluaciones([...evaluaciones, nuevaEvaluacion]);
-        setAlumnos(alumnos.map(alumno => ({
-            ...alumno,
-            notas: [...alumno.notas, null]
-        })));
+        if (!evaluacionCreada) {
+            setEvaluaciones(["Evaluación"]);
+            setAlumnos(alumnos.map(alumno => ({
+                ...alumno,
+                notas: [null] // Una sola evaluación inicializada con null
+            })));
+            setEvaluacionCreada(true); // Marcar que ya se creó la evaluación
+        }
     };
 
     const actualizarNota = (alumnoId, evaluacionIndex, nota) => {
@@ -93,17 +93,29 @@ const GestionNotas = () => {
         const newNota = await handleCreate(dataWithNotaId);
         if (newNota) {
             setNotas([...notas, newNota]);
-            toast.success("Nota creada exitosamente");
+            console.success("Nota creada exitosamente");
         } else {
-            toast.error("Error al crear la nota");
+            console.error("Error al crear la nota");
         }
+        console.log("dataWithNotaId", dataWithNotaId);
     }
 
     const guardarCambios = async () => {
     if (!periodo || !asignaturaSeleccionada) {
-        toast.error("Por favor, selecciona un periodo y asignatura antes de guardar.");
+        console.error("Por favor, selecciona un periodo y asignatura antes de guardar.");
         return;
     }
+    // Validar que todas las notas estén dentro del rango 10 a 70
+    const notasInvalidas = alumnos.some(alumno =>
+        alumno.notas.some(nota => nota !== null && (nota < 10 || nota > 70))
+    );
+
+    if (notasInvalidas) {
+        console.error("Todas las notas deben estar entre 10 y 70.");
+        alert("Todas las notas deben estar entre 10 y 70.");
+        return;
+    }
+
     setGuardando(true);
     try {
         for (const alumno of alumnos) {
@@ -119,9 +131,13 @@ const GestionNotas = () => {
                 }
             });
         };
+        setAlumnos(alumnos.map(alumno => ({
+            ...alumno,
+            notas: alumno.notas.map(() => null) 
+        })));
     } catch (error) {
         console.error("Error al guardar notas:", error);
-        toast.error("Hubo un error al guardar las notas.");
+        console.error("Hubo un error al guardar las notas.");
     } finally {
         setGuardando(false);
     }
@@ -162,8 +178,6 @@ const GestionNotas = () => {
                 )
             }))
         ];
-    console.log("curso: ",cursoSeleccionado);
-    console.log("periodo: ",periodo);
     
     return (
         <div className="nota-page">
@@ -201,15 +215,19 @@ const GestionNotas = () => {
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </select>
+                    <Search value={filter} onChange={handleNombreFilterChange} placeholder="Filtrar por nombre" />
             </div>
             </div>
             
             {mostrarTabla && (
                 <>
-                    <Link to= "/nota/all">
-                    <Button className="mb-5">Ver Evaluaciones</Button>
-                    </Link>
-                    <Button onClick={crearEvaluacion} className="mb-5">Crear Evaluación</Button>                   
+                    <Button 
+                        onClick={crearEvaluacion} 
+                        className="mb-5"
+                        disabled={evaluacionCreada} // Desactiva el botón si ya se creó la evaluación
+                    >
+                        Crear Evaluación
+                    </Button>               
                     <Table>
                         <TableHeader>
                             <TableRow>
@@ -229,6 +247,8 @@ const GestionNotas = () => {
                                                 <Input
                                                     type="number"
                                                     value={nota ?? ''}
+                                                    min = "10"
+                                                    max = "70"
                                                     onChange={(e) => actualizarNota(alumno.id, index, e.target.value)}
                                                     className="w-20"
                                                 />

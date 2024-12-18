@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { getAsignaturasByCurso } from "@services/asignatura.service.js";
 import { getUsersByCurso } from "@services/user.service.js";
+import { Link } from "react-router-dom";
+import { Button } from "@components/ui/button"
 import useCursos from '@hooks/cursos/useGetCursos';
 import useNotas from '@hooks/nota/useGetNotas.jsx';
 import useDeleteNota from '@hooks/nota/useDeleteNota';
@@ -11,9 +13,7 @@ import UpdateIcon from '@assets/updateIcon.svg';
 import Search from '@components/Search';
 import '@styles/nota.css';
 
-const ITEMS_PER_PAGE = 10;
-
-const VerNota = () => {
+const VerNotas = () => {
     const { cursos } = useCursos();
     const [cursoSeleccionado, setCursoSeleccionado] = useState("");
     const { notas, fetchNotas, setNotas } = useNotas();
@@ -21,8 +21,6 @@ const VerNota = () => {
     const [asignaturaSeleccionada, setAsignaturaSeleccionada] = useState("");
     const [alumnos, setAlumnos] = useState([]);
     const [mostrarTabla, setMostrarTabla] = useState(false);
-    const [filter, setFilterNombre] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const [error, setError] = useState(null);
     const [periodo, setPeriodo] = useState("");
@@ -94,17 +92,16 @@ const VerNota = () => {
         });
     }, [alumnos, notas, asignaturaSeleccionada]);
 
-    const filteredAndPaginatedData = useMemo(() => {
-        const filtered = notasPorAlumno.filter(alumno => 
+    const filteredData = useMemo(() => {
+        return notasPorAlumno.filter(alumno => 
             alumno.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-        return filtered.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-    }, [notasPorAlumno, currentPage, searchTerm]);
+    }, [notasPorAlumno, searchTerm]);
+    
 
     const handleCursoChange = (e) => setCursoSeleccionado(e.target.value);
     const handleAsignaturaChange = (e) => setAsignaturaSeleccionada(e.target.value);
-    const handleNombreFilterChange = (e) => setFilterNombre(e.target.value);
+    const handleNombreFilterChange = (e) => setSearchTerm(e.target.value);
     const handlePeriodoChange = (e) => {
         const selectedPeriod = e.target.value;
         const currentYear = new Date().getFullYear();
@@ -112,7 +109,6 @@ const VerNota = () => {
     };
 
     useEffect(() => {
-        // Muestra la tabla solo si curso, asignatura y periodo están seleccionados
         if (cursoSeleccionado && asignaturaSeleccionada && periodo) {
             setMostrarTabla(true);
         } else {
@@ -126,6 +122,9 @@ const VerNota = () => {
                 <div className="table-container">     
                     <div className="top-table">
                         <h1 className="title-table">Ver Notas</h1>
+                    <Link to= "/nota">
+                    <Button className="mb-5">Crear Evaluación</Button>
+                    </Link>
                         <select value={cursoSeleccionado} onChange={handleCursoChange} className="p-2 border rounded">
                             <option value="">Selecciona un curso</option>
                             {cursos.map((curso) => (
@@ -156,7 +155,7 @@ const VerNota = () => {
                             <option value="1">1</option>
                             <option value="2">2</option>
                         </select>
-                        <Search value={filter} onChange={handleNombreFilterChange} placeholder="Filtrar por nombre" />
+                        <Search value={searchTerm} onChange={handleNombreFilterChange} placeholder="Filtrar por nombre" />
                     </div>
                 </div>
                 {mostrarTabla && (
@@ -169,7 +168,7 @@ const VerNota = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredAndPaginatedData.map((alumno) => (
+                                {filteredData.map((alumno) => (
                                     <tr key={alumno.id}>
                                         <td>{alumno.nombreCompleto}</td>
                                         <td>
@@ -209,5 +208,5 @@ const VerNota = () => {
     );
 }
 
-export default VerNota;
+export default VerNotas;
 

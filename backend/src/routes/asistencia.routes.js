@@ -5,6 +5,7 @@ import {
     createAsistencia,
     deleteAsistencia,
     getAsistencia,
+    getAsistenciaByAlumno,
     getAsistencias,
     updateAsistencia,
 } from "../controllers/asistencia.controller.js";
@@ -20,6 +21,7 @@ router
         ,"apoderado"]),getAsistencias) 
     .get("/:idAsistencia",authorizeRoles(["administrador", "profesor","alumno","usuario"
         ,"apoderado"]), getAsistencia) 
+    .get("/users/:rut",authorizeRoles(["administrador","alumno"]),getAsistenciaByAlumno)
     .post("/",authorizeRoles(["administrador", "profesor","alumno","usuario"
         ,"apoderado"]), createAsistencia) 
     .patch("/:idAsistencia",authorizeRoles(["administrador", "profesor","alumno","usuario"

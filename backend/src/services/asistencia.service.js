@@ -89,3 +89,36 @@ export async function deleteAsistenciaService(idAsistencia){
         return [null, "Error interno del servidor"];
     } 
 }
+
+export async function getAsistenciaByAlumnoService(rut, fechaInicio, fechaFin, idAsignatura) {
+  try {
+    if (!rut || !fechaInicio || !fechaFin) {
+      throw new Error("El ID del alumno, las fechas y asignatura son obligatorias.");
+    }
+
+    const asistenciaRepository = AppDataSource.getRepository(Asistencia);
+
+    const query = asistenciaRepository
+      .createQueryBuilder("asistencia")
+      .leftJoinAndSelect("asistencia.alumno", "alumno")
+      .leftJoinAndSelect("asistencia.asignatura", "asignatura")
+      .where("alumno.rut = :rut", { rut })
+      .andWhere("asistencia.fecha BETWEEN :fechaInicio AND :fechaFin", { fechaInicio, fechaFin });
+
+    // Agregar filtro de asignatura si se proporciona
+    if (idAsignatura) {
+      query.andWhere("asistencia.asignatura.idAsignatura = :idAsignatura", { idAsignatura });
+    }
+
+    const asistencias = await query.orderBy("asistencia.fecha", "ASC").getMany();
+
+    if (!asistencias || asistencias.length === 0) {
+      return [null, "No se encontraron asistencias para el alumno en este período."];
+    }
+
+    return [asistencias, null];
+  } catch (error) {
+    console.error("Error en getAsistenciaByAlumnoService:", error.message);
+    return [null, "Error interno del servidor"];
+  }
+}

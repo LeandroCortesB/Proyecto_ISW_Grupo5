@@ -13,13 +13,14 @@ import MisAlumnos from "@pages/MisAlumnos";
 import HojasAlum from "@pages/HojasAlum";
 import Perfil from "@pages/Perfil";
 import GestionNotas from "@pages/Nota";
-import Notas from "@pages/VerNotas";
+import VerNotas from "@pages/VerNotas";
 import Hojas from "@pages/Hoja";
 import ProtectedRoute from "@components/ProtectedRoute";
 import "@styles/styles.css";
 import Asignaturas from "@pages/asignatura";
 import Asistencias from "./pages/Asistencia";
 import RegistrarAsistencia from "./pages/RegistrarAsistencia";
+import AsistenciaAlumno from "./pages/AsistenciaAlumno";
 
 const router = createBrowserRouter([
   {
@@ -36,12 +37,12 @@ const router = createBrowserRouter([
         element: <Perfil />,
       },
       {
-        path: "/nota",
-        element: <GestionNotas />,
+        path: "/nota/all",
+        element: <VerNotas />,
       },
       {
-        path: "/nota/all",
-        element: <Notas />,
+        path: "/nota",
+        element: <GestionNotas />,
       },
       {
         path: "/asignatura/:idCurso",
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
         path: "/MisHojas",
         element: (
           <ProtectedRoute allowedRoles={["alumno"]}>
-            <MisHojas /> 
+            <MisHojas />
           </ProtectedRoute>
         ),
       },
@@ -68,6 +69,15 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
             <RegistrarAsistencia />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/asistencias/mis-asistencias",
+        element: (
+          <ProtectedRoute allowedRoles={["alumno"]}>
+            <AsistenciaAlumno />{" "}
+            {/* Nueva ruta para que el alumno vea sus asistencias */}
           </ProtectedRoute>
         ),
       },
