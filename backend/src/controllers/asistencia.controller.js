@@ -2,6 +2,7 @@
 import {
     createAsistenciaService,
     deleteAsistenciaService,
+    getAsistenciaByAlumnoService,
     getAsistenciaService,
     getAsistenciasService,
     updateAsistenciaService,
@@ -76,4 +77,42 @@ export async function deleteAsistencia(req, res) {
     } catch (error) {
         handleErrorServer(res, 500, error.message);
     }
+}
+
+export async function getAsistenciaByAlumno(req, res) {
+  try {
+    const { rut } = req.params; // ID del alumno
+    const { fechaInicio, fechaFin, idAsignatura } = req.query;
+
+    if (!rut || !fechaInicio || !fechaFin) {
+      return handleErrorClient(res, 400, "ID del alumno, fecha inicio y fecha fin son obligatorios.");
+    }
+
+    const [asistencias, error] = await getAsistenciaByAlumnoService(
+      rut,
+      fechaInicio,
+      fechaFin,
+      idAsignatura
+    );
+
+    if (error) return handleErrorClient(res, 404, error);
+
+    // Procesar los datos
+    const totalAsistencias = asistencias.length;
+    const totalPresente = asistencias.filter((a) => a.asistio).length;
+    const totalAusente = totalAsistencias - totalPresente;
+
+    const response = {
+      totalAsistencias,
+      totalPresente,
+      totalAusente,
+      porcentajePresente: ((totalPresente / totalAsistencias) * 100).toFixed(2),
+      porcentajeAusente: ((totalAusente / totalAsistencias) * 100).toFixed(2),
+    };
+
+    handleSuccess(res, 200, "Asistencias obtenidas correctamente.", response);
+  } catch (error) {
+    console.error("Error en getAsistenciaByAlumno:", error.message);
+    handleErrorServer(res, 500, "Error interno del servidor.");
+  }
 }

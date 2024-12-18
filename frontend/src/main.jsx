@@ -18,6 +18,7 @@ import "@styles/styles.css";
 import Asignaturas from "@pages/asignatura";
 import Asistencias from "./pages/Asistencia";
 import RegistrarAsistencia from "./pages/RegistrarAsistencia";
+import AsistenciaAlumno from "./pages/AsistenciaAlumno";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
         path: "/MisHojas",
         element: (
           <ProtectedRoute allowedRoles={["alumno"]}>
-            <MisHojas /> 
+            <MisHojas />
           </ProtectedRoute>
         ),
       },
@@ -66,6 +67,15 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
             <RegistrarAsistencia />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/asistencias/mis-asistencias",
+        element: (
+          <ProtectedRoute allowedRoles={["alumno"]}>
+            <AsistenciaAlumno />{" "}
+            {/* Nueva ruta para que el alumno vea sus asistencias */}
           </ProtectedRoute>
         ),
       },
