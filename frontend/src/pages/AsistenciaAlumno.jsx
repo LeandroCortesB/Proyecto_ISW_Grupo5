@@ -99,7 +99,7 @@ const AsistenciaAlumno = () => {
           <DatePicker
             selected={fechaInicio}
             onChange={(date) => setFechaInicio(date)}
-            dateFormat="dd-MM-yyyy" // Fecha visible en formato DD-MM-YYYY
+            dateFormat="dd-MM-yyyy"
           />
         </div>
         <div>

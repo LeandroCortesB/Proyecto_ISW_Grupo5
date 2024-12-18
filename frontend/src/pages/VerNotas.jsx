@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { getAsignaturasByCurso } from "@services/asignatura.service.js";
 import { getUsersByCurso } from "@services/user.service.js";
 import { Link } from "react-router-dom";
-import { Button } from "@components/ui/button"
+import { Button } from "@components/ui/button";
 import useCursos from '@hooks/cursos/useGetCursos';
 import useNotas from '@hooks/nota/useGetNotas.jsx';
 import useDeleteNota from '@hooks/nota/useDeleteNota';
@@ -34,7 +34,7 @@ const VerNotas = () => {
     } = useEditNota(setNotas);
 
     useEffect(() => {
-        if(cursoSeleccionado) {
+        if (cursoSeleccionado) {
             const fetchAlumnos = async () => {
                 try {
                     const alumnosData = await getUsersByCurso(cursoSeleccionado);
@@ -69,7 +69,6 @@ const VerNotas = () => {
             setAsignaturas([]);
         }
     }, [cursoSeleccionado]);
-    console.log("asignatura", asignaturaSeleccionada);
 
     const { handleDelete } = useDeleteNota(fetchNotas, setDataNota);
 
@@ -80,10 +79,10 @@ const VerNotas = () => {
                     nota.alumno.id === alumno.id && 
                     nota.asignatura.idAsignatura === parseInt(asignaturaSeleccionada)
                 )
-                .sort((a, b) => new Date(a.fechaCreacion) - new Date(b.fechaCreacion))
+                .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) 
                 .map((nota, index) => ({
                     ...nota,
-                    evaluacionNumero: index + 1
+                    evaluacionNumero: index + 1 
                 }));
             return {
                 ...alumno,
@@ -91,13 +90,13 @@ const VerNotas = () => {
             };
         });
     }, [alumnos, notas, asignaturaSeleccionada]);
+    
 
     const filteredData = useMemo(() => {
         return notasPorAlumno.filter(alumno => 
             alumno.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase())
         );
     }, [notasPorAlumno, searchTerm]);
-    
 
     const handleCursoChange = (e) => setCursoSeleccionado(e.target.value);
     const handleAsignaturaChange = (e) => setAsignaturaSeleccionada(e.target.value);
@@ -209,4 +208,3 @@ const VerNotas = () => {
 }
 
 export default VerNotas;
-

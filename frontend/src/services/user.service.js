@@ -1,7 +1,6 @@
 import axios from './root.service.js';
 import cookies from 'js-cookie';
 import { formatUserData } from '@helpers/formatData.js';
-//import { formatAlumnoData } from '@helpers/formatData.js';
 
 export async function getUsers() {
     try {
@@ -113,7 +112,7 @@ export async function getUsersByCurso(idCurso) {
 export async function getUsersByAsignatura(idAsignatura) {
     try {
         const { data } = await axios.get(`/user/asignatura/${idAsignatura}`);
-        return data.data; // Ajusta esto si tu backend tiene un formato de respuesta diferente
+        return data.data; 
     } catch (error) {
         console.error("Error al obtener usuarios por asignatura:", error);
         return error.response?.data || { message: "Error desconocido" };

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@components/ui/button"
 import { Input } from "@components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@components/ui/table"
-import { toast } from "@components/ui/toast"
 import Search from '@components/Search';
 import useCursos from '@hooks/cursos/useGetCursos';
 import useNotas from '@hooks/nota/useGetNotas';
@@ -69,9 +68,9 @@ const GestionNotas = () => {
             setEvaluaciones(["Evaluación"]);
             setAlumnos(alumnos.map(alumno => ({
                 ...alumno,
-                notas: [null] // Una sola evaluación inicializada con null
+                notas: [null] 
             })));
-            setEvaluacionCreada(true); // Marcar que ya se creó la evaluación
+            setEvaluacionCreada(true); 
         }
     };
 
@@ -105,7 +104,6 @@ const GestionNotas = () => {
         console.error("Por favor, selecciona un periodo y asignatura antes de guardar.");
         return;
     }
-    // Validar que todas las notas estén dentro del rango 10 a 70
     const notasInvalidas = alumnos.some(alumno =>
         alumno.notas.some(nota => nota !== null && (nota < 10 || nota > 70))
     );
@@ -153,7 +151,6 @@ const GestionNotas = () => {
     };
 
     useEffect(() => {
-        // Muestra la tabla solo si curso, asignatura y periodo están seleccionados
         if (cursoSeleccionado && asignaturaSeleccionada && periodo) {
             setMostrarTabla(true);
         } else {
@@ -224,7 +221,7 @@ const GestionNotas = () => {
                     <Button 
                         onClick={crearEvaluacion} 
                         className="mb-5"
-                        disabled={evaluacionCreada} // Desactiva el botón si ya se creó la evaluación
+                        disabled={evaluacionCreada} 
                     >
                         Crear Evaluación
                     </Button>               

@@ -10,14 +10,14 @@ const useGetAsistencias = () => {
     try {
       setLoading(true);
       const response = await getAsistencias();
-      setAsistencias(response); // Asegúrate de que `response` sea un array
+      setAsistencias(response); 
     } catch (err) {
       console.error("Error fetching asistencias: ", err);
       setError(err);
     } finally {
       setLoading(false);
     }
-  }, []); // El array vacío asegura que no se redefina constantemente
+  }, []); 
 
   useEffect(() => {
     fetchAsistencias();
