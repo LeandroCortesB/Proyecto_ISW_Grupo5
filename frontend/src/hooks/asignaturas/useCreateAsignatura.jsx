@@ -20,10 +20,15 @@ const useCreateAsignatura = (setAsignaturas) => {
             formattedAsignatura.idCurso = newAsignaturaData.idCurso;
             
             console .log('console 3',formattedAsignatura);
-            
+
+            if(formatAsignaturaData.idAsignatura !== undefined){
             setAsignaturas(prevAsignaturas => [...prevAsignaturas, formattedAsignatura]);
             
             showSuccessAlert('¡Creada!', 'La asignatura ha sido creado exitosamente.');
+        }else{
+                showErrorAlert('error', 'La asignatura no ha sido creado exitosamente.');
+            }
+
             setIsPopupAsignaturaOpen(false);
 
         } catch (error) {
