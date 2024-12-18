@@ -24,7 +24,21 @@ const useAsistenciasAlumno = () => {
       setError(null);
     } catch (err) {
       console.error("Error al cargar asistencias:", err);
-      setError("Error al cargar asistencias.");
+
+      // Manejo específico de errores HTTP
+      if (err.response) {
+        if (err.response.status === 404) {
+          setError("No se encontraron asistencias para esta búsqueda.");
+        } else if (err.response.status === 400) {
+          setError(
+            "La solicitud tiene errores. Verifica los datos ingresados."
+          );
+        } else {
+          setError("Ocurrió un error en el servidor. Inténtalo más tarde.");
+        }
+      } else {
+        setError("Error de conexión. Verifica tu red.");
+      }
     } finally {
       setLoading(false);
     }
