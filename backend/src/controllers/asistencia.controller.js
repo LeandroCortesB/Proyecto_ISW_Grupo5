@@ -81,7 +81,7 @@ export async function deleteAsistencia(req, res) {
 
 export async function getAsistenciaByAlumno(req, res) {
   try {
-    const { rut } = req.params; // ID del alumno
+    const { rut } = req.params; 
     const { fechaInicio, fechaFin, idAsignatura } = req.query;
 
     if (!rut || !fechaInicio || !fechaFin) {
@@ -97,7 +97,7 @@ export async function getAsistenciaByAlumno(req, res) {
 
     if (error) return handleErrorClient(res, 404, error);
 
-    // Procesar los datos
+
     const totalAsistencias = asistencias.length;
     const totalPresente = asistencias.filter((a) => a.asistio).length;
     const totalAusente = totalAsistencias - totalPresente;
