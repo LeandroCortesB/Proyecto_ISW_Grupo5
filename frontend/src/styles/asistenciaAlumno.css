@@ -32,6 +32,7 @@
     color: var(--text-color);
     font-size: 2rem;
     margin-bottom: 1.5rem;
+    margin-top: 0;
   }
   
   /* Contenedor de DatePicker */
@@ -134,7 +135,7 @@
   
   .stats-details p {
     margin: 0.5rem 0;
-    color: var(--text-color); /* Usa el color definido en las variables */
+    color: var(--text-color); 
     font-size: 1rem;
     line-height: 1.5;
     margin: 0.25rem 0;
