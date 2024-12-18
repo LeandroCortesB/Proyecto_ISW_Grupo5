@@ -11,7 +11,7 @@ import Cursos from "@pages/Cursos";
 import MisHojas from "@pages/MisHojas";
 import Perfil from "@pages/Perfil";
 import GestionNotas from "@pages/Nota";
-import Notas from "@pages/VerNotas";
+import VerNotas from "@pages/VerNotas";
 import Hojas from "@pages/Hoja";
 import ProtectedRoute from "@components/ProtectedRoute";
 import "@styles/styles.css";
@@ -34,12 +34,12 @@ const router = createBrowserRouter([
         element: <Perfil />,
       },
       {
-        path: "/nota",
-        element: <GestionNotas />,
+        path: "/nota/all",
+        element: <VerNotas />,
       },
       {
-        path: "/nota/all",
-        element: <Notas />,
+        path: "/nota",
+        element: <GestionNotas />,
       },
       {
         path: "/asignatura/:idCurso",
