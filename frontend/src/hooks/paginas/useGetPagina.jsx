@@ -17,17 +17,17 @@ const useGetUser = (rut) => {
                 rol: response.rol,
                 createdAt: response.createdAt,
             };
-            setUser(formattedUser); // Guarda el usuario formateado en el estado
+            setUser(formattedUser); 
         } catch (err) {
             console.error("Error fetching user: ", err);
-            setError(err); // Guarda el error si ocurre
+            setError(err); 
         } finally {
-            setLoading(false); // Finaliza el estado de carga
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (rut) fetchUser(); // Llama a fetchUser solo si hay un rut definido
+        if (rut) fetchUser(); 
     }, [rut]);
 
     return { user, loading, error, fetchUser };

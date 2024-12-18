@@ -6,7 +6,7 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import useGetAsignaturas from "@hooks/asignaturas/useGetAsignaturas";
 import useGetAsistenciasAlumno from "@hooks/asistencias/useGetAsistenciasAlumno";
-import "@styles/asistenciaAlumno.css"; // Importa los estilos CSS
+import "@styles/asistenciaAlumno.css"; 
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -14,14 +14,12 @@ const AsistenciaAlumno = () => {
   const { user } = useAuth();
   console.log("Usuario:", user);
 
-  // Obtener todas las asignaturas
   const {
     asignaturas,
     loading: loadingAsignaturas,
     error: errorAsignaturas,
   } = useGetAsignaturas();
 
-  // Filtrar asignaturas solo para el curso del alumno
   const asignaturasDelCurso = user.curso?.idCurso
     ? asignaturas.filter(
         (asignatura) => asignatura.idCurso === user.curso.idCurso

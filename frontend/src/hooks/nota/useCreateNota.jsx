@@ -25,7 +25,6 @@ const useCreateNota = (setNotas) => {
             const createdNota = await createNota(newNotaData);
             console.log('console 2', createdNota);
 
-            // Validar que no haya strings vacíos en createdNota
             if (!validarNota(createdNota)) {
                 throw new Error('La nota contiene campos vacíos.');
                 

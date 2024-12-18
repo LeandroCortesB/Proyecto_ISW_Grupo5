@@ -25,19 +25,17 @@ const Cursos = () => {
   const [setIsLoading] = useState(false);
 
   const cursosConAlumnos = useMemo(() => {
-    // Filtrar solo los usuarios con rol de "alumno
-    // Crear un nuevo array combinando los cursos con la cantidad de alumnos
     console.log("users",users);
     const resultado = cursos.map(curso => {
       const cantidadAlumnos = users.filter(alumno => {
-        if(alumno.curso === null) return false; // Verificar si el alumno tiene curso asignado
+        if(alumno.curso === null) return false; 
         console.log(`Comparando: alumno.idCurso (${alumno.curso.idCurso}) === curso.idCurso (${curso.idCurso})`);
-        return alumno.curso.idCurso === curso.idCurso// Verificar coincidencias exactas
+        return alumno.curso.idCurso === curso.idCurso
       }).length;
       console.log("cant:",cantidadAlumnos);
       return {
         ...curso,
-        cantidadAlumnos, // Agregar la cantidad de alumnos al curso
+        cantidadAlumnos, 
       };
     });
   
@@ -45,9 +43,6 @@ const Cursos = () => {
   }, [cursos, users]);
   
   
-  
-
-  // Filtrar cursos por nombre
   const cursosFiltrados = useMemo(() => {
     return cursosConAlumnos.filter(curso =>
       curso.nombreCurso.toLowerCase().includes(filter.toLowerCase())
@@ -85,7 +80,7 @@ const Cursos = () => {
   const handleSelectionChange = useCallback((selectedCursos) => {
     setDataCurso(selectedCursos.map(curso => ({
       ...curso,
-      idCurso: Number(curso.idCurso), // Convertir idCurso a número
+      idCurso: Number(curso.idCurso), 
     })));
   }, [setDataCurso]);
 

@@ -45,13 +45,12 @@ export async function createAsistencia(asistenciaData) {
     try {
         const token = cookies.get('jwt-auth');
         const headers = {
-            Authorization: `Bearer ${token}`, // Corregí 'Autorization' a 'Authorization'
+            Authorization: `Bearer ${token}`, 
         };
         const response = await axios.post('/asistencia', asistenciaData, { headers });
-        return response.data.data; // Asumiendo que la respuesta está en data.data
+        return response.data.data; 
     } catch (error) {
         console.error("Error al crear la asistencia:", error);
-        // Lanza el error para que sea manejado en handleSubmit
         throw error.response ? error.response.data : new Error("Error desconocido al crear la asistencia.");
     }
 }
@@ -79,7 +78,7 @@ export async function deleteAsistencia(idAsistencia) {
             Autorization: `Bearer ${token}`,
         };
         const response = await axios.delete(`/asistencia/${idAsistencia}`, { headers });
-        return response.data; // Asumiendo que la respuesta está en data
+        return response.data; 
     } catch (error) {
         console.error("Error al eliminar la asistencia:", error);
         return error.response.data;
