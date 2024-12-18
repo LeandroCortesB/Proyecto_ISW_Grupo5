@@ -213,18 +213,19 @@ const GestionNotas = () => {
                         <option value="2">2</option>
                     </select>
                     <Search value={filter} onChange={handleNombreFilterChange} placeholder="Filtrar por nombre" />
-            </div>
+            
             </div>
             
             {mostrarTabla && (
-                <>
+                <div>
                     <Button 
                         onClick={crearEvaluacion} 
                         className="mb-5"
                         disabled={evaluacionCreada} 
                     >
                         Crear Evaluación
-                    </Button>               
+                    </Button> 
+                <div className="table-scroll">              
                     <Table>
                         <TableHeader>
                             <TableRow>
@@ -255,12 +256,15 @@ const GestionNotas = () => {
                                 ))}
                         </TableBody>
                     </Table>
+                    </div>
                     <Button onClick={guardarCambios} className="mt-5" disabled={guardando}>
                         {guardando ? 'Guardando...' : 'Guardar Cambios'}
-                    </Button>
-                </>
-            )}
+                    </Button> 
+                    </div>
+            )}    
+       
         </div>            
+        </div>
         </div>
     );
 }

@@ -156,7 +156,7 @@ const VerNotas = () => {
                         </select>
                         <Search value={searchTerm} onChange={handleNombreFilterChange} placeholder="Filtrar por nombre" />
                     </div>
-                </div>
+                
                 {mostrarTabla && (
                     <div className="table-scroll">
                         <table>
@@ -203,6 +203,7 @@ const VerNotas = () => {
                 data={dataNota} 
                 action={handleUpdate}
             />
+        </div>
         </div>
     );
 }
