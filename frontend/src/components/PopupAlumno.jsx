@@ -5,7 +5,7 @@ import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 import { getCursos } from '@services/curso.service.js';
 import { useEffect , useState } from 'react';
 
-export default function Popup({ show, setShow, data, action }) {
+export default function Popup({ show, setShow, data, action, rutcito }) {
     const userData = data && data.length > 0 ? data[0] : {};
 
     const [cursos, setCursos] = useState([]);
@@ -19,9 +19,11 @@ export default function Popup({ show, setShow, data, action }) {
         }
     };
     fetchCursos();
-},[]);
+    },[]);
+
     const handleSubmit = (formData) => {
-        action(formData);
+        const dataToUpdate = { ...formData, rut: rutcito };
+        action(dataToUpdate);
     };
 
     return (
@@ -84,12 +86,12 @@ export default function Popup({ show, setShow, data, action }) {
                                 name: "curso",
                                 fieldType: 'select',
                                 options: cursos.map((curso) => ({ value: curso.idCurso, label: curso.nombreCurso })),
-                                required: false,
-                                defaultValue: userData.curso || "",
+                                required: true,
+                                defaultValue: userData.curso,
                             },
                         ]}
                         onSubmit={handleSubmit}
-                        buttonText="Editar usuario"
+                        buttonText="Editar alumno"
                         backgroundColor={'#fff'}
                     />
                 </div>

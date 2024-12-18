@@ -16,6 +16,7 @@ const useEditUser = (setUsers) => {
     const handleUpdate = async (updatedUserData) => {
         if (updatedUserData) {
             try {
+                updatedUserData.rut = dataUser[0].rut;
                 const updatedUser = await updateUser(updatedUserData, dataUser[0].rut);
                 
                 const formattedUser = formatPostUpdate(updatedUser);

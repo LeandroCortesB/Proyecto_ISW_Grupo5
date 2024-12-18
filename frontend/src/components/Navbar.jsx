@@ -128,6 +128,20 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
+          {(userRole === "apoderado") && (
+            <li>
+              <NavLink
+                to="/misAlumnos"
+                onClick={() => {
+                  setMenuOpen(false);
+                  addActiveClass();
+                }}
+                activeClassName="active"
+              >
+                MisAlumnos
+              </NavLink>
+            </li>
+          )}
           {
             <li>
               <NavLink

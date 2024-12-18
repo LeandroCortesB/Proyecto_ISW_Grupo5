@@ -123,6 +123,7 @@ const Alumnos = () => {
         show={isPopupOpen}
         setShow={setIsPopupOpen}
         data={dataUser}
+        rutcito={dataUser.rut}
         action={(data) => {
           setIsLoading(true);
           handleUpdate(data).finally(() => setIsLoading(false));

@@ -3,6 +3,7 @@ import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 import { getCursos } from '@services/curso.service.js';
+import { getAlumnos } from '@services/user.service.js';
 import { useEffect , useState } from 'react';
 
 export default function Popup({ show, setShow, data, action }) {
@@ -19,7 +20,21 @@ export default function Popup({ show, setShow, data, action }) {
         }
     };
     fetchCursos();
-},[]);
+    },[]);
+
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+    const fetchUsers = async () => {
+        try {
+            const response = await getAlumnos(); 
+            setUsers(response);
+        } catch (err) {
+            console.error("Error fetching alumnos: ", err);
+        }
+    };
+    fetchUsers();
+    },[]);
+
     const handleSubmit = (formData) => {
         action(formData);
     };
@@ -84,7 +99,7 @@ export default function Popup({ show, setShow, data, action }) {
                                     { value: 'alumno', label: 'Alumno' },
                                     { value: 'apoderado', label: 'Apoderado' },
                                 ],
-                                required: true,
+                                required: false,
                                 defaultValue: userData.rol || "",
                             },
                             {
@@ -112,8 +127,16 @@ export default function Popup({ show, setShow, data, action }) {
                                 name: "curso",
                                 fieldType: 'select',
                                 options: cursos.map((curso) => ({ value: curso.idCurso, label: curso.nombreCurso })),
-                                required: true,
+                                required: false,
                                 defaultValue: userData.curso || "",
+                            },
+                            {
+                                label: "Alumnos (solo para apoderados)",
+                                name: "alumnos",
+                                fieldType: 'select',
+                                options: users.map((user) => ({ value: user.apoderadoEncargado, label: user.nombreCompleto })),
+                                required: false,
+                                defaultValue: userData.apoderadoEncargado || "",
                             },
                         ]}
                         onSubmit={handleSubmit}
