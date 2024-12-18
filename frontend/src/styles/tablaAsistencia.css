@@ -48,24 +48,40 @@
 /* Filtros alineados a la izquierda */
 .asistencia-page .filters {
     display: flex;
-    gap: 15px; /* Espaciado entre filtros */
+    gap: 40px; /* Espaciado entre filtros */
     align-items: center;
 }
 
 /* Botones alineados a la derecha */
 .asistencia-page .buttons {
     display: flex;
-    gap: 15px; /* Espaciado entre botones */
+    gap: 10px; /* Espaciado entre botones */
     align-items: center;
 }
 
 .asistencia-page .filter-select,
 .asistencia-page .filter-date-picker {
     border: 1px solid #ddd;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
     border-radius: 4px;
     padding: 8px;
     min-width: 150px; /* Ancho mínimo */
     font-size: 14px;
+    position: relative;
+}
+.react-datepicker__input-container input {
+    padding-right: 30px; /* Da espacio para el botón X */
+    box-sizing: border-box; /* Incluye padding en el tamaño total */
+}
+
+.react-datepicker__close-icon {
+    position: absolute;
+    right: 10px; /* Alinea el botón X a la derecha */
+    top: 50%;
+    transform: translateY(-50%); /* Centra verticalmente */
+    cursor: pointer;
 }
 
 /* Botones con estilos uniformes */
@@ -77,7 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px; /* Tamaño uniforme */
+    width: 60px; /* Tamaño uniforme */
     height: 40px; /* Tamaño uniforme */
     border-radius: 4px; /* Bordes redondeados */
     transition: background-color 0.2s ease-in-out; /* Efecto de hover */
@@ -95,14 +111,15 @@
 }
 
 .asistencia-page .register-button {
-    display: flex;
+    display:inline-flex; /* Alinea el icono y el texto en línea */
     align-items: center; /* Centra el icono y el texto verticalmente */
     justify-content: center; /* Centra horizontalmente */
-    gap: 8px; /* Espaciado entre el icono y el texto */
+    gap:15px; /* Espaciado entre el icono y el texto */
     background-color: white; /* Fondo blanco */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
     color: black; /* Texto negro */
     border-radius: 8px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espaciado interno */
+    padding: 15px 30px; /* Espaciado interno */
     font-size: 16px; /* Tamaño de la fuente */
     font-weight: normal; /* Texto en negrita */
     cursor: pointer; /* Cambia el cursor al pasar el ratón */

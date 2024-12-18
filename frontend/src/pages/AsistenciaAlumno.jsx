@@ -6,7 +6,7 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import useGetAsignaturas from "@hooks/asignaturas/useGetAsignaturas";
 import useGetAsistenciasAlumno from "@hooks/asistencias/useGetAsistenciasAlumno";
-import "@styles/AsistenciaAlumno.css"; // Importa los estilos CSS
+import "@styles/AsistenciaAlumno.css";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -14,11 +14,20 @@ const AsistenciaAlumno = () => {
   const { user } = useAuth();
   console.log("Usuario:", user);
 
+  // Obtener todas las asignaturas
   const {
     asignaturas,
     loading: loadingAsignaturas,
     error: errorAsignaturas,
   } = useGetAsignaturas();
+
+  // Filtrar asignaturas solo para el curso del alumno
+  const asignaturasDelCurso = user.curso?.idCurso
+    ? asignaturas.filter(
+        (asignatura) => asignatura.idCurso === user.curso.idCurso
+      )
+    : [];
+
   const { dataAsistencias, loading, error, fetchAsistencias } =
     useGetAsistenciasAlumno();
 
@@ -66,7 +75,7 @@ const AsistenciaAlumno = () => {
             onChange={(e) => setIdAsignatura(e.target.value)}
           >
             <option value="">-- Seleccione una asignatura --</option>
-            {asignaturas.map((asignatura) => (
+            {asignaturasDelCurso.map((asignatura) => (
               <option
                 key={asignatura.idAsignatura}
                 value={asignatura.idAsignatura}
