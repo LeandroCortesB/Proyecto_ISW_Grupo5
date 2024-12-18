@@ -7,7 +7,7 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import useGetAsignaturas from "@hooks/asignaturas/useGetAsignaturas";
 import useGetAsistenciasAlumno from "@hooks/asistencias/useGetAsistenciasAlumno";
-import "@styles/AsistenciaAlumno.css";
+import "@styles/asistenciaAlumno.css"; // Importa los estilos CSS
 
 Chart.register(ArcElement, Tooltip, Legend);
 

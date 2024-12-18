@@ -122,6 +122,7 @@ export function formatPostCreateNota(nota) {
 
 export function formatPostCreateHoja(hoja) {
     return {
+        idHoja: Number(hoja.idHoja),
         nombreCompleto: startCase(hoja.nombreCompleto),
         rut: formatRut(hoja.rut),
         buena: booleanizacion(hoja.buena),

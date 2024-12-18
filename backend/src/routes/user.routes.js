@@ -6,6 +6,7 @@ import {
   createUser,
   deleteUser,
   getAlumnos,
+  getAlumnosByApoderado,
   getUser,
   getUsers,
   getUsersByAsignatura,
@@ -25,6 +26,7 @@ router
   .get("/curso/:idCurso", authorizeRoles(["administrador", "profesor"]),getUsersByCurso)
   .get("/asignatura/:idAsignatura", authorizeRoles(["administrador", "profesor"]),getUsersByAsignatura)
   .get("/alumnos/all", authorizeRoles(["administrador", "profesor"]),getAlumnos)
+  .get("/alumnos/:id", authorizeRoles(["administrador", "apoderado"]),getAlumnosByApoderado)
   .patch("/:id", authorizeRoles(["administrador", "profesor"]),updateUser)
   .delete("/:id", authorizeRoles(["administrador", "profesor"]),deleteUser);
 

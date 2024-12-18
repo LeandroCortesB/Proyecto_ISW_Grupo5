@@ -72,6 +72,8 @@ export async function createHojaService(body){
         where: [{ rut: body.rut }],
       });
 
+      console.log("usuario 1", userFound);
+
       if (!userFound) return [null, "Usuario para hoja no encontrado"];
 
       const email = String(userFound.email); //"andrea.tapia2101@alumnos.ubiobio.cl"; 
@@ -84,7 +86,6 @@ export async function createHojaService(body){
         message,
         `<p>${message}</p>`
       );
-      console.log("email ",info.email);
     }
 
     return [nuevoHoja, null];

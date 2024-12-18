@@ -7,8 +7,8 @@ import DeleteIcon from '@assets/deleteIcon.svg';
 import UpdateIcon from '@assets/updateIcon.svg';
 import paperIcon from '@assets/paperIcon.svg';
 import { Link} from 'react-router-dom';
-import '@styles/Hoja.css';
 import Addicon from '@assets/AddIcon.svg';
+import '@styles/Hoja.css';
 import UpdateIconDisable from '@assets/updateIconDisabled.svg';
 import DeleteIconDisable from '@assets/deleteIconDisabled.svg';
 import { useCallback, useState, useEffect } from 'react';
@@ -95,7 +95,8 @@ const Alumnos = () => {
             </button>
 
             {dataUser.length > 0 ? (
-            <Link to={`/Hoja/all/${dataUser[0]?.rut}`}>
+
+            <Link className="Hojas" to={`/Hoja/all/${dataUser[0]?.rut}`} >
                 <img src={paperIcon} alt="hojas" />
             </Link>
               ) : (
@@ -123,6 +124,7 @@ const Alumnos = () => {
         show={isPopupOpen}
         setShow={setIsPopupOpen}
         data={dataUser}
+        rutcito={dataUser.rut}
         action={(data) => {
           setIsLoading(true);
           handleUpdate(data).finally(() => setIsLoading(false));

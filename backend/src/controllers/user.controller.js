@@ -2,6 +2,7 @@
 import {
   createUserService,
   deleteUserService,
+  getAlumnosByApoderadoService,
   getAlumnosService,
   getUsersByAsignaturaService,
   getUsersByCursoService,
@@ -203,4 +204,24 @@ export async function getUsersByAsignatura(req, res) {
         console.error("Error al obtener usuarios por asignatura:", error);
         return res.status(500).json({ message: "Error interno del servidor" });
     }
+}
+
+export async function getAlumnosByApoderado(req, res) {
+  try {
+    const { Id } = req.params;
+    const users = await getAlumnosByApoderadoService(Id);
+
+    const usersLimpios = Array.isArray(users) ? users.flat() : [];
+
+    if (usersLimpios.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se encontraron alumnos para el apoderado indicado" });
+    }
+
+    res.status(200).json({ data: usersLimpios });
+  } catch (error) {
+    console.error("Error al obtener alumnos por apoderado:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
 }

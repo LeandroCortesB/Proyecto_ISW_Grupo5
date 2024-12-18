@@ -7,7 +7,6 @@ const useAlumnos = () => {
     const fetchUsers = async () => {
         try {
             const response = await getAlumnos();
-            console.log("response: ", response[1]);    
             const formattedData = response.map(user => ({
                 nombreCompleto: user.nombreCompleto,
                 rut: user.rut,
@@ -16,7 +15,6 @@ const useAlumnos = () => {
                 curso: user.curso,
                 createdAt: user.createdAt
             }));
-            console.log("formattedData: ", formattedData);
             dataLogged(formattedData);
             setUsers(formattedData);
         } catch (error) {

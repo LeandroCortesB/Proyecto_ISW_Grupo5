@@ -226,7 +226,7 @@ export async function getUsersByCursoService(idCurso) {
 
 export async function getUsersByAsignaturaService(idAsignatura) {
   try {
-      const repository = AppDataSource.getRepository("User");
+      const repository = AppDataSource.getRepository(User);
       const alumnos = await repository.find({
           relations: ["asignaturasComoAlumno"], // Relación correcta
           where: {
@@ -237,6 +237,24 @@ export async function getUsersByAsignaturaService(idAsignatura) {
       return [alumnos, null];
   } catch (error) {
       console.error("Error en getUsersByAsignaturaService:", error);
+      return [null, error.message];
+  }
+}
+
+
+export async function getAlumnosByApoderadoService(Id) {
+  try {
+      const repository = AppDataSource.getRepository(User);
+      const alumnos = await repository.find({
+          relations: ["apoderadoEncargado"],
+          where: {
+              apoderadoEncargado: { Id }, 
+              rol: "alumno", 
+          },
+      });
+      return [alumnos, null];
+  } catch (error) {
+      console.error("Error en getAlumnosByApoderadoService:", error);
       return [null, error.message];
   }
 }
