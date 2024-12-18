@@ -18,7 +18,7 @@ export default function Popup2({ show, setShow, action }) {
                             <img src={CloseIcon} />
                         </button>
                         <Form
-                            title="Crear Alumno"
+                            title="Crear Usuario"
                             fields={[
                                 {
                                     label: "Nombre completo",
@@ -59,7 +59,11 @@ export default function Popup2({ show, setShow, action }) {
                                     name: "rol",
                                     fieldType: 'select',
                                     options: [
+                                        { value: 'usuario', label: 'Usuario' },
                                         { value: 'alumno', label: 'Alumno' },
+                                        { value: 'apoderado', label: 'Apoderado' },
+                                        { value: 'profesor', label: 'Profesor' },
+
                                     ],
                                     required: true,
                                 },

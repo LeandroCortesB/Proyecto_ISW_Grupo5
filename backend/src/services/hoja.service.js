@@ -1,6 +1,9 @@
 "use strict";
 import Hoja from "../entity/hoja.entity.js";
+import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { sendEmail } from "../services/email.service.js";
+import { DataTypeNotSupportedError } from "typeorm";
 
 export async function getHojaService(query) {
   try {
@@ -48,7 +51,9 @@ export async function getHojasService(rut) {
 export async function createHojaService(body){
   try{
     const hojaRepository = AppDataSource.getRepository(Hoja);
-  
+
+    console.log("aca bue", body.buena);
+
     const nuevoHoja = hojaRepository.create({
       nombreCompleto: body.nombreCompleto,
       rut: body.rut,
@@ -60,6 +65,28 @@ export async function createHojaService(body){
   
     await hojaRepository.save(nuevoHoja);
   
+    if(body.buena===false||body.buena==="false"){
+      const userRepository = AppDataSource.getRepository(User);
+
+      const userFound = await userRepository.findOne({
+        where: [{ rut: body.rut }],
+      });
+
+      if (!userFound) return [null, "Usuario para hoja no encontrado"];
+
+      const email = String(userFound.email); //"andrea.tapia2101@alumnos.ubiobio.cl"; 
+      const subject = "OJO! Anotacion negativa";
+      const message = String("Usted ha recibido una nueva anotacion negativa al libro que dice: \n" + body.anotacion);
+
+      const info = await sendEmail(
+        email,
+        subject,
+        message,
+        `<p>${message}</p>`
+      );
+      console.log("email ",info.email);
+    }
+
     return [nuevoHoja, null];
   } catch (error) {
     console.error("Error al crear la hoja:", error);

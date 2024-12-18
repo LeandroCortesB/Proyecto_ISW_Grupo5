@@ -23,7 +23,33 @@ async function createUsers() {
 
     if (count > 0) return;
 
+    const apoderado1 = userRepository.create({
+      nombreCompleto: "Ana María Carrasco Rivera",
+      rut: "14.325.678-3",
+      email: "apoderado1.2024@gmail.cl",
+      password: await encryptPassword("apoderado1234"),
+      rol: "apoderado",
+    });
+    const apoderado2 = userRepository.create({
+      nombreCompleto: "Luis Alberto Fernández González",
+      rut: "13.567.890-9",
+      email: "apoderado2.2024@gmail.cl",
+      password: await encryptPassword("apoderado1234"),
+      rol: "apoderado",
+    });
+    const apoderado3 = userRepository.create({
+      nombreCompleto: "Juan Alberto Torres Demacia",
+      rut: "12.577.890-9",
+      email: "apoderado3.2024@gmail.cl",
+      password: await encryptPassword("apoderado1234"),
+      rol: "apoderado",
+    });
+    const savedApoderado1 = await userRepository.save(apoderado1);
+    const savedApoderado2 = await userRepository.save(apoderado2);
+    const savedApoderado3 = await userRepository.save(apoderado3);
+
     await Promise.all([
+      
       userRepository.save(
         userRepository.create({
           nombreCompleto: "Diego Alexis Salazar Jara",
@@ -42,13 +68,6 @@ async function createUsers() {
           rol: "profesor",
         })
       ),
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: "Diego Sebastián Ampuero Belmar",
-          rut: "21.151.897-9",
-          buena:true,
-        }),
-      ),
         userRepository.save(
           userRepository.create({
             nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
@@ -56,14 +75,8 @@ async function createUsers() {
             email: "usuario2.2024@gmail.cl",
             password: await encryptPassword("user1234"),
             rol: "alumno",
+            apoderado: savedApoderado1
           }),
-      ),
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
-          rut: "20.630.735-8",
-          buena:true,
-        }),
       ),
       userRepository.save(
         userRepository.create({
@@ -72,13 +85,7 @@ async function createUsers() {
           email: "usuario3.2024@gmail.cl",
           password: await encryptPassword("user1234"),
           rol: "alumno",
-        }),
-      ),
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: "Pablo Andrés Castillo Fernández",
-          rut: "20.738.450-K",
-          buena:true,
+          apoderado: savedApoderado2
         }),
       ),
       userRepository.save(
@@ -90,13 +97,6 @@ async function createUsers() {
           rol: "profesor",
         }),
       ),
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: "Felipe Andrés Henríquez Zapata",
-          rut: "20.976.635-3",
-          buena:true,
-        }),
-      ),
       userRepository.save(
         userRepository.create({
           nombreCompleto: "Diego Alexis Meza Ortega",
@@ -106,13 +106,6 @@ async function createUsers() {
           rol: "profesor",
         }),
       ),
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: "Diego Alexis Meza Ortega",
-          rut: "21.172.447-1",
-          buena:true,
-        }),
-      ),
       userRepository.save(
         userRepository.create({
           nombreCompleto: "Juan Pablo Rosas Martin",
@@ -120,15 +113,10 @@ async function createUsers() {
           email: "usuario6.2024@gmail.cl",
           password: await encryptPassword("user1234"),
           rol: "alumno",
+          apoderado: savedApoderado3
         }),
       ),
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: "Juan Pablo Rosas Martin",
-          rut: "20.738.415-1",
-          buena:true,
-        }),
-      ),
+
       cursoRepository.save(
         cursoRepository.create({
           nombreCurso: "1C",

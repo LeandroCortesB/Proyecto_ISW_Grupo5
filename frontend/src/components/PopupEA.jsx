@@ -32,7 +32,7 @@ export default function Popup({ show, setShow, data, action }){
                                 required: true,
                                 minLength: 3,
                                 maxLength: 50,
-                                pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                                pattern: (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/),
                                 patternMessage: "Debe contener solo letras y espacios",
                             },
                         ]}

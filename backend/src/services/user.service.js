@@ -94,8 +94,6 @@ export async function getAlumnosService() {
       where: [{ rol: "alumno" }], relations: ["curso"]
     });
 
-    console.log("Alumnitos: ", alumnos)
-
     if (!alumnos || alumnos.length === 0) return [null, "No hay alumnos"];
 
     const alumnosData = alumnos.map(({ password, ...alumno }) => alumno);
