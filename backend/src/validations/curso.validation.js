@@ -13,7 +13,7 @@ export const cursoQueryValidation = Joi.object({
     }),
   nombreCurso: Joi.string()
     .trim()
-    .pattern(/^\d[A-Z]$/) // Validar que solo sea un número seguido de una letra mayúscula
+    .pattern(/^[1-4][A-Z]$/) // Validar que solo sea un número seguido de una letra mayúscula
     .messages({
       "string.empty": "El nombre del curso no puede estar vacío.",
       "string.base": "El nombre del curso debe ser de tipo string.",
@@ -31,7 +31,7 @@ export const cursoQueryValidation = Joi.object({
 export const cursoBodyValidation = Joi.object({
   nombreCurso: Joi.string()
     .trim()
-    .pattern(/^\d[A-Z]$/) // Validar que solo sea un número seguido de una letra mayúscula
+    .pattern(/^[1-4][A-Z]$/) // Validar que solo sea un número seguido de una letra mayúscula
     .required() // Requerir siempre el nombre del curso
     .messages({
       "string.empty": "El nombre del curso no puede estar vacío.",
