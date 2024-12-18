@@ -99,7 +99,7 @@ export default function Popup({ show, setShow, data, action }) {
                                     { value: 'alumno', label: 'Alumno' },
                                     { value: 'apoderado', label: 'Apoderado' },
                                 ],
-                                required: false,
+                                required: true,
                                 defaultValue: userData.rol || "",
                             },
                             {
@@ -127,16 +127,8 @@ export default function Popup({ show, setShow, data, action }) {
                                 name: "curso",
                                 fieldType: 'select',
                                 options: cursos.map((curso) => ({ value: curso.idCurso, label: curso.nombreCurso })),
-                                required: false,
+                                required: true,
                                 defaultValue: userData.curso || "",
-                            },
-                            {
-                                label: "Alumnos (solo para apoderados)",
-                                name: "alumnos",
-                                fieldType: 'select',
-                                options: users.map((user) => ({ value: user.apoderadoEncargado, label: user.nombreCompleto })),
-                                required: false,
-                                defaultValue: userData.apoderadoEncargado || "",
                             },
                         ]}
                         onSubmit={handleSubmit}

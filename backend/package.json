@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chart.js": "^4.4.7",
     "cookie-parser": "^1.0.0",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
@@ -27,6 +28,7 @@
     "passport-jwt": "^4.0.1",
     "pg": "^8.12.0",
     "plantillaisw2024": "file:",
+    "react-chartjs-2": "^5.2.0",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20"
   },

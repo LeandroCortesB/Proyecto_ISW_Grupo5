@@ -2,7 +2,7 @@ import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
-export default function Popup2({ show, setShow, action }) {
+export default function PopupUser({ show, setShow, action }) {
     const handleSubmit = (formData) => {
         action(formData); 
     };

@@ -48,8 +48,56 @@ async function createUsers() {
     const savedApoderado2 = await userRepository.save(apoderado2);
     const savedApoderado3 = await userRepository.save(apoderado3);
 
+    const curso1 = cursoRepository.create({
+      nombreCurso: "1A",
+    });
+
+    const curso2 = cursoRepository.create({
+      nombreCurso: "1B",
+    });
+
+    const curso3 =cursoRepository.create({
+      nombreCurso: "2A",
+    });
+
+
+    const curso4 =cursoRepository.create({
+      nombreCurso: "2B",
+    });
+
+
+    const curso5 = cursoRepository.create({
+      nombreCurso: "3A",
+    });
+
+    const curso6 =cursoRepository.create({
+      nombreCurso: "3B",
+    });
+
+
+    const asignatura1 =AsignaturaRepository.create({
+      nombreAsignatura: "Matemáticas",
+      descripcion: "Curso de la profesora maria",
+      idCurso: 1,
+    });
+
+
+    const asignatura2 =AsignaturaRepository.create({
+      nombreAsignatura: "Lenguaje",
+      descripcion: "Curso de la profesora maria",
+      idCurso: 1,
+    });
+
+    const savedCurso1 = await cursoRepository.save(curso1);
+    const savedCurso2 = await cursoRepository.save(curso2);
+    const savedCurso3 = await cursoRepository.save(curso3);
+    const savedCurso4 = await cursoRepository.save(curso4);
+    const savedCurso5 = await cursoRepository.save(curso5);
+    const savedCurso6 = await cursoRepository.save(curso6);
+    const savedAsignatura1 = await AsignaturaRepository.save(asignatura1);
+    const savedAsignatura2 = await AsignaturaRepository.save(asignatura2);
+
     await Promise.all([
-      
       userRepository.save(
         userRepository.create({
           nombreCompleto: "Diego Alexis Salazar Jara",
@@ -116,60 +164,21 @@ async function createUsers() {
           apoderado: savedApoderado3
         }),
       ),
-
-      cursoRepository.save(
-        cursoRepository.create({
-          nombreCurso: "1C",
-        }),
-      ),
-      cursoRepository.save(
-        cursoRepository.create({
-          nombreCurso: "3C",
-        }),
-      ),
-      cursoRepository.save(
-        cursoRepository.create({
-          nombreCurso: "2B",
-        }),
-      ),
-      cursoRepository.save(
-        cursoRepository.create({
-          nombreCurso: "2C",
-        }),
-      ),
-      cursoRepository.save(
-        cursoRepository.create({
-          nombreCurso: "1B",
-        }),
-      ),
-      AsignaturaRepository.save(
-        AsignaturaRepository.create({
-          nombreAsignatura: "Matemáticas",
-          descripcion: "Curso de la profesora maria",
-          idCurso: 1,
-        }),
-      ),
-      AsignaturaRepository.save(
-        AsignaturaRepository.create({
-          nombreAsignatura: "Lenguaje",
-          descripcion: "Curso de la profesora maria",
-          idCurso: 1,
-        }),
-      ),
+      
       AsistenciaRepository.save(
         AsistenciaRepository.create({
           fecha: "2024-11-26",
           asistio: true,
           alumno: 2,
-          asignatura: 1,
-        }),
+          asignatura: asignatura1,
+        }), 
       ),
       NotaRepository.save(
         NotaRepository.create({
           calificacion: 10,
           periodo: "2023-2",
           alumno: 2,
-          asignatura: 1,
+          asignatura: asignatura1,
         }),
       ),
 

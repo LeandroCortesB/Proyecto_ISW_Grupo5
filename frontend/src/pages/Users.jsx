@@ -12,7 +12,7 @@ import Addicon from '@assets/AddIcon.svg';
 import useEditUser from '@hooks/users/useEditUser';
 import useDeleteUser from '@hooks/users/useDeleteUser';
 import useCreateUser from '@hooks/users/useCreateUser';
-import PopupUser from '@components/PopupUser';
+import PopupUser from '@components/PopupUser.jsx';
 
 const Users = () => {
   const { users, fetchUsers, setUsers } = useUsers();

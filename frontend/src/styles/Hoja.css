@@ -79,6 +79,18 @@
     transition: background-color 0.3s ease;
   }
   
+  
+  Link {
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
   button:hover {
     background-color: #357abd;
   }
