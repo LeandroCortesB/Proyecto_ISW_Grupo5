@@ -1,0 +1,141 @@
+.attendance-card {
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+  .card-header {
+    background-color: #4a90e2;
+    color: black;
+    padding: 0.75rem 1rem;
+  }
+  
+  .card-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: normal;
+  }
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .select-input,
+  .date-input,
+  .search-input {
+    padding: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 0.875rem;
+    min-width: 200px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .icon-button {
+    background-color: #e9ecef;
+    border: none;
+    border-radius: 2px;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .icon-button:hover {
+    background-color: #dee2e6;
+  }
+  
+  .table-container {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th {
+    background-color: #002b5c;
+    color: white;
+    text-align: left;
+    padding: 0.75rem;
+    font-weight: normal;
+  }
+  
+  td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  .status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+  
+  .status-badge.presente {
+    background-color: #e9ecef;
+    color: #000;
+  }
+  
+  .status-badge.ausente {
+    background-color: #e9ecef;
+    color: #000;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .pagination-button {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 2px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+  
+  .pagination-button.active {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #000;
+  }
+  
+  /* Checkbox styling */
+  input[type="checkbox"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Container styles */
+  .app {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  

@@ -14,9 +14,9 @@ const router = Router();
 router.use(authenticateJwt);
 
 router
-    .get("/:idPagina",authorizeRoles(["administrador", "profesor"]),getPagina)
+    .get("/:rut",authorizeRoles(["administrador", "profesor"]),getPagina)
     .post("/",authorizeRoles(["administrador", "profesor"]), createPagina)
-    .patch("/:idPagina",authorizeRoles(["administrador", "profesor"]),updatePagina)
-    .delete("/:idPagina", authorizeRoles(["administrador", "profesor"]),deletePagina);
+    .patch("/update/:rut",authorizeRoles(["administrador", "profesor"]),updatePagina)
+    .delete("/del/:rut", authorizeRoles(["administrador", "profesor"]),deletePagina);
 
 export default router;

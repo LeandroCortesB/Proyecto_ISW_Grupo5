@@ -101,3 +101,32 @@
       font-size: 14px;
   }
 }
+
+/* Estilo para los botones cuadrados "Registrar Asistencia" */
+.register-assistance-btn {
+  background-color: #003366; /* Color de fondo azul */
+  color: white; /* Texto blanco */
+  padding: 12px; /* Espaciado adecuado */
+  border: none;
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer;
+  font-size: 14px;
+  width: 50px; /* Ancho fijo para que el botón sea cuadrado */
+  height: 50px; /* Alto fijo para que el botón sea cuadrado */
+  display: flex; /* Usa flexbox para centrar el texto */
+  align-items: center; /* Centra el texto verticalmente */
+  justify-content: center; /* Centra el texto horizontalmente */
+  text-align: center; /* Asegura que el texto esté centrado */
+}
+
+.register-assistance-btn:hover {
+  background-color: #0055aa; /* Fondo más oscuro al pasar el mouse */
+}
+
+/* Asegurarse de que la tabla tenga suficiente espacio para los botones */
+.table td {
+  width: 200px; /* Ajustar el tamaño de las celdas según sea necesario */
+  height: 80px; /* Aumentar la altura para que el botón no esté comprimido */
+  text-align: center; /* Centrar contenido */
+  vertical-align: middle; /* Asegura que el contenido esté centrado verticalmente */
+}

@@ -2,7 +2,10 @@
 import { Router } from "express";
 import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import {
+  createHoja,
+  deleteHoja,
   getHoja,
+  getHojas,
   updateHoja,
 } from "../controllers/hoja.controller.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
@@ -12,7 +15,10 @@ const router = Router();
 router.use(authenticateJwt);
 
 router
-    .get("/:idHoja",authorizeRoles(["administrador", "profesor"]), getHoja)
-    .patch("/:idHoja",authorizeRoles(["administrador", "profesor"]), updateHoja);
+    .get("/:idHoja",authorizeRoles(["administrador", "profesor","alumno","apoderado"]), getHoja)
+    .get("/all/:rut",authorizeRoles(["administrador", "profesor","alumno","apoderado"]), getHojas)
+    .post("/", authorizeRoles(["administrador", "profesor"]),createHoja)
+    .patch("/update/:idHoja",authorizeRoles(["administrador", "profesor"]), updateHoja)
+    .delete("/:idHoja", authorizeRoles(["administrador", "profesor"]),deleteHoja);
 
 export default router;

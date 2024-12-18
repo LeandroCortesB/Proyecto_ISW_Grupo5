@@ -1,42 +1,34 @@
 import { useState, useEffect } from 'react';
 import { getCursos } from '@services/curso.service.js';
 
-const useCursos = () => {
-    const [cursos, setCursos] = useState([]);
+const useGetCursos = () => {
+    const [cursos, setCursos] = useState([]); 
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
     const fetchCursos = async () => {
         try {
+            setLoading(true);
             const response = await getCursos();
-            const formattedData = response.map(curso => ({
+            const formattedCursos = response.map(curso => ({
                 nombreCurso: curso.nombreCurso,
-                createdAt: curso.createdAt
+                createdAt: curso.createdAt,
+                idCurso: curso.idCurso
             }));
-            dataLogged(formattedData);
-            setCursos(formattedData);
-        } catch (error) {
-            console.error("Error: ", error);
+            setCursos(formattedCursos);   
+        } catch (err) {
+            console.error("Error fetching cursos: ", err);
+            setError(err);
+        } finally {
+            setLoading(false); 
         }
     };
 
     useEffect(() => {
-        fetchCursos();
+        fetchCursos(); 
     }, []);
 
-    const dataLogged = (formattedData) => {
-        try {
-            const { id } = JSON.parse(sessionStorage.getItem('curso'));
-            for(let i = 0; i < formattedData.length ; i++) {
-                if(formattedData[i].idCurso === id) {
-                    formattedData.splice(i, 1);
-                    break;
-                }
-            }
-        } catch (error) {
-            console.error("Error: ", error)
-        }
-    };
+    return { cursos, loading, error, fetchCursos, setCursos };
+}
 
-    return { cursos, fetchCursos, setCursos };
-};
-
-export default useCursos;
+export default useGetCursos;

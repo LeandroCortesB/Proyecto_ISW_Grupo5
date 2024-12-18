@@ -1,4 +1,5 @@
 import axios from './root.service.js';
+import cookies from 'js-cookie';
 import { formatAsignaturaData } from '@helpers/formatData.js';
 
 export async function getAsignaturas() {
@@ -22,7 +23,12 @@ export async function getAsignatura(idAsignatura) {
 
 export async function createAsignatura(data) {
     try {
-        const response = await axios.post('/asignatura/create/', data);
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.post(`/asignatura/`, data, { headers });
         return response.data.data;
     } catch (error) {
         return error.response.data;
@@ -31,7 +37,12 @@ export async function createAsignatura(data) {
 
 export async function updateAsignatura(data, idAsignatura) {
     try {
-        const response = await axios.patch(`/asignatura/update/?idAsignatura=${idAsignatura}`, data);
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.patch(`/asignatura/${idAsignatura}`, data, { headers });
         return response.data.data;
     } catch (error) {
         return error.response.data;
@@ -40,7 +51,12 @@ export async function updateAsignatura(data, idAsignatura) {
 
 export async function deleteAsignatura(idAsignatura) {
     try {
-        const response = await axios.delete(`/asignatura/del/?idAsignatura=${idAsignatura}`);
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.delete(`/asignatura/${idAsignatura}`, { headers });
         return response.data;
     } catch (error) {
         return error.response.data;

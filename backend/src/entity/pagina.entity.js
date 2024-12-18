@@ -10,14 +10,22 @@ const PaginaSchema = new EntitySchema({
       type: "int",
       primary: true,
       generated: true,
+      unique: true,
     },
-    contenido: {
-      type: "varchar",
-      length: 400,
-      nullable: true,
-    },
-    numero: {
+    idHoja: {
       type: "int",
+      primary: true,
+      generated: false,
+      unique: true,
+    },
+    rut: {
+      type: "varchar",
+      length: 12,
+      nullable: false,
+      unique: true,
+    },
+    buenaAlarma: {
+      type: "boolean",
       nullable: false,
     },
     createdAt: {

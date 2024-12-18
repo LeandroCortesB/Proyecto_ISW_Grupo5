@@ -36,8 +36,8 @@ export const userQueryValidation = Joi.object({
     rut: Joi.string()
     .min(9)
     .max(12)
-    .pattern(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/)
-    .messages({
+    .pattern(/^\d{1,2}(\.\d{3}){2}-[\dkK]$/)
+        .messages({
       "string.empty": "El rut no puede estar vacío.",
       "string.base": "El rut debe ser de tipo string.",
       "string.min": "El rut debe tener como mínimo 9 caracteres.",
@@ -108,7 +108,7 @@ export const userBodyValidation = Joi.object({
   rut: Joi.string()
     .min(9)
     .max(12)
-    .pattern(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/)
+    .pattern(/^\d{1,2}(\.\d{3}){2}-[\dkK]$/)
     .messages({
       "string.empty": "El rut no puede estar vacío.",
       "string.base": "El rut debe ser de tipo string.",
@@ -124,18 +124,13 @@ export const userBodyValidation = Joi.object({
       "string.min": "El rol debe tener como mínimo 4 caracteres.",
       "string.max": "El rol debe tener como máximo 15 caracteres.",
     }),
+    curso: Joi.number()
+    .integer()
+    .positive()
+    .messages({
+      "number.base": "El curso debe ser un número.",
+      "number.integer": "El curso debe ser un número entero.",
+      "number.positive": "El curso debe ser un número positivo.",
+    }),
 })
-  .or(
-    "nombreCompleto",
-    "email",
-    "password",
-    "newPassword",
-    "rut",
-    "rol"
-  )
-  .unknown(false)
-  .messages({
-    "object.unknown": "No se permiten propiedades adicionales.",
-    "object.missing":
-      "Debes proporcionar al menos un campo: nombreCompleto, email, password, newPassword, rut o rol.",
-  });
+  

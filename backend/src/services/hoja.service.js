@@ -1,51 +1,59 @@
 "use strict";
 import Hoja from "../entity/hoja.entity.js";
+import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { sendEmail } from "../services/email.service.js";
+import { DataTypeNotSupportedError } from "typeorm";
 
 export async function getHojaService(query) {
   try {
     const { rut, idHoja } = query;
 
-    const hojaRepository = AppDataSource.getRepository(Hoja);
+    const HojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ id: idHoja }, { rut: rut }],
+      where: [{ idHoja }, { rut }],
     });
 
     if (!hojaFound) return [null, "Hoja de vida no encontrada"];
 
-    return [hojaFound, null];
+    const { ...hojaData } = hojaFound;
+
+    return [hojaData, null];
   } catch (error) {
     console.error("Error obtener la hoja de vida:", error);
     return [null, "Error interno del servidor"];
   }
 }
 
-export async function getHojasService() {
+
+export async function getHojasService(rut) {
   try {
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
-    const hojas = await hojaRepository.find();
+    const hojas = await hojaRepository.find({
+      where: { rut: rut },
+    });
 
-    if (!hojas || hojas.length === 0) return [null, "No hay hojas de vida"];
+    if (!hojas || hojas.length === 0) {
+      return [null, "No se encontraron hojas de vida para el rut proporcionado"];
+    }
 
-    return [hojas, null];
+    const hojasData = hojas.map(({ ...hoja }) => hoja);
+
+    return [hojasData, null];
   } catch (error) {
-    console.error("Error al obtener todas las hojas:", error);
+    console.error("Error al obtener las hojas:", error);
     return [null, "Error interno del servidor"];
   }
 }
 
 export async function createHojaService(body){
   try{
-    const hojaRepository = AppDataSource.getRepository(hoja);
-  
-    const hojaFound = await hojaRepository.findOne({
-      where: [{ id: id }, { rut: rut }],
-    });
+    const hojaRepository = AppDataSource.getRepository(Hoja);
 
-    if (hojaFound) return [null, "Ya existe una hoja con ese rut"];
-  
+    console.log("aca bue", body.buena);
+
     const nuevoHoja = hojaRepository.create({
       nombreCompleto: body.nombreCompleto,
       rut: body.rut,
@@ -57,6 +65,29 @@ export async function createHojaService(body){
   
     await hojaRepository.save(nuevoHoja);
   
+    if(body.buena===false||body.buena==="false"){
+      const userRepository = AppDataSource.getRepository(User);
+
+      const userFound = await userRepository.findOne({
+        where: [{ rut: body.rut }],
+      });
+
+      console.log("usuario 1", userFound);
+
+      if (!userFound) return [null, "Usuario para hoja no encontrado"];
+
+      const email = String(userFound.email); //"andrea.tapia2101@alumnos.ubiobio.cl"; 
+      const subject = "OJO! Anotacion negativa";
+      const message = String("Usted ha recibido una nueva anotacion negativa al libro que dice: \n" + body.anotacion);
+
+      const info = await sendEmail(
+        email,
+        subject,
+        message,
+        `<p>${message}</p>`
+      );
+    }
+
     return [nuevoHoja, null];
   } catch (error) {
     console.error("Error al crear la hoja:", error);
@@ -64,33 +95,25 @@ export async function createHojaService(body){
   }
 }
 
+
 export async function updateHojaService(query, body) {
   try {
-    const { idHoja, rut } = query;
+    const { idHoja } = query;
 
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ id: idHoja }, { rut: rut }],
+      where: [{ idHoja: idHoja }],
     });
 
     if (!hojaFound) return [null, "Hoja de vida no encontrada"];
 
-    const existingHoja = await hojaRepository.findOne({
-      where: [{ rut: body.rut }],
-    });
-
-    if (existingHoja && existingHoja.idHoja !== hojaFound.idHoja) {
-      return [null, "Ya existe una hoja con el mismo rut"];
-    }
-
     const dataHojaUpdate = {
-      buena: body.buena,
       anotacion: body.anotacion,
       updatedAt: new Date(),
     };
 
-    await hojaRepository.update({ id: hojaFound.idHoja }, dataHojaUpdate);
+    await hojaRepository.update({ idHoja: hojaFound.idHoja }, dataHojaUpdate);
 
     const hojaData = await hojaRepository.findOne({
       where: { idHoja: hojaFound.idHoja },
@@ -100,7 +123,9 @@ export async function updateHojaService(query, body) {
       return [null, "Hoja de vida no encontrada después de actualizar"];
     }
 
-    return [hojaData, null];
+    const { ...hojaUpdated } = hojaData;
+
+    return [hojaUpdated, null];
   } catch (error) {
     console.error("Error al modificar la hoja de vida:", error);
     return [null, "Error interno del servidor"];
@@ -109,19 +134,21 @@ export async function updateHojaService(query, body) {
 
 export async function deleteHojaService(query) {
   try {
-    const { idHoja, rut } = query;
+    const { idHoja } = query;
 
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ id: idHoja }, { rut: rut }],
+      where: [{ idHoja: idHoja }],
     });
 
     if (!hojaFound) return [null, "Hoja de vida no encontrada"];
 
     const hojaDeleted = await hojaRepository.remove(hojaFound);
 
-    return [hojaDeleted, null];
+    const { ...dataHoja } = hojaDeleted;
+
+    return [dataHoja, null];
   } catch (error) {
     console.error("Error al eliminar una hoja de vida:", error);
     return [null, "Error interno del servidor"];

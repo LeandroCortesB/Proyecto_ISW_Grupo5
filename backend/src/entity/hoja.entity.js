@@ -9,6 +9,7 @@ const HojaSchema = new EntitySchema({
       type: "int",
       primary: true,
       generated: true,
+      unique: true,
     },
     nombreCompleto: {
       type: "varchar",
@@ -19,7 +20,7 @@ const HojaSchema = new EntitySchema({
       type: "varchar",
       length: 12,
       nullable: false,
-      unique: true,
+      unique: false,
     },
     buena: {
       type: "boolean",
@@ -45,16 +46,10 @@ const HojaSchema = new EntitySchema({
   relations: {
     alumno: {
       type: "many-to-one",
-      target: "User", // En este caso, debe apuntar a la entidad de alumnos dentro de User
+      target: "User", 
       joinColumn: true,
       nullable: true,
-      onDelete: "CASCADE", // Si el alumno se elimina, también se eliminan sus hojas
-    },
-    paginas: {
-      type: "one-to-many",
-      target: "Pagina",
-      inverseSide: "hoja",
-      cascade: true,
+      onDelete: "CASCADE",
     },
   },
   indices: [
@@ -66,7 +61,7 @@ const HojaSchema = new EntitySchema({
     {
       name: "IDX_HOJA_RUT",
       columns: ["rut"],
-      unique: true,
+      unique: false,
     },
   ],
 });

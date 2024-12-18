@@ -1,31 +1,31 @@
 import { useState, useEffect } from 'react';
-import { getCurso } from '@services/curso.service.js'; // Importa el servicio para obtener un curso
+import { getCurso } from '@services/curso.service.js';
 
-const useGetCurso = (id) => {
-    const [curso, setCurso] = useState(null); // Estado para almacenar el curso
-    const [loading, setLoading] = useState(true); // Estado para manejar el loading
-    const [error, setError] = useState(null); // Estado para manejar errores
-
+const useGetCurso = (idCurso) => {
+    const [curso, setCurso] = useState(null); 
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null);
     const fetchCurso = async () => {
         try {
             setLoading(true);
-            const response = await getCurso(id); // Llama al servicio con el id del curso
+            const response = await getCurso(idCurso); 
             const formattedCurso = {
+                idCurso: response.idCurso,
                 nombreCurso: response.nombreCurso,
                 createdAt: response.createdAt,
             };
-            setCurso(formattedCurso); // Guarda el curso formateado en el estado
+            setCurso(formattedCurso); 
         } catch (err) {
             console.error("Error fetching curso: ", err);
-            setError(err); // Guarda el error si ocurre
+            setError(err); 
         } finally {
-            setLoading(false); // Finaliza el estado de carga
+            setLoading(false); 
         }
     };
 
     useEffect(() => {
-        if (id) fetchCurso(); // Llama a fetchCurso solo si hay un id definido
-    }, [id]);
+        if (idCurso) fetchCurso();  
+    }, [idCurso]);
 
     return { curso, loading, error, fetchCurso };
 }

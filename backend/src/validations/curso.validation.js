@@ -13,11 +13,11 @@ export const cursoQueryValidation = Joi.object({
     }),
   nombreCurso: Joi.string()
     .trim()
-    .pattern(/^\d+-[A-Z]$/) // Validar formato exacto
+    .pattern(/^[1-4][A-Z]$/) // Validar que solo sea un número seguido de una letra mayúscula
     .messages({
       "string.empty": "El nombre del curso no puede estar vacío.",
       "string.base": "El nombre del curso debe ser de tipo string.",
-      "string.pattern.base": "El nombre del curso debe tener el formato 'número-guion-letra mayúscula' (ej: 1-A).",
+      "string.pattern.base": "El nombre del curso debe tener el formato 'número-letra mayúscula' (ej: 1A).",
     }),
 })
   .or("idCurso", "nombreCurso") // Permitir que al menos uno sea proporcionado
@@ -31,12 +31,12 @@ export const cursoQueryValidation = Joi.object({
 export const cursoBodyValidation = Joi.object({
   nombreCurso: Joi.string()
     .trim()
-    .pattern(/^\d+-[A-Z]$/) // Validar formato exacto
+    .pattern(/^[1-4][A-Z]$/) // Validar que solo sea un número seguido de una letra mayúscula
     .required() // Requerir siempre el nombre del curso
     .messages({
       "string.empty": "El nombre del curso no puede estar vacío.",
       "string.base": "El nombre del curso debe ser de tipo string.",
-      "string.pattern.base": "El nombre del curso debe tener el formato 'número-guion-letra mayúscula' (ej: 1-A).",
+      "string.pattern.base": "El nombre del curso debe tener el formato 'número-letra mayúscula' (ej: 1A).",
       "any.required": "El nombre del curso es obligatorio.",
     }),
   descripcion: Joi.string()

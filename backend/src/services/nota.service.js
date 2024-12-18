@@ -6,11 +6,11 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getNotaService(query) {
   try {
-    const { idNota } = query;
+    const { rut } = query;
     const notaRepository = AppDataSource.getRepository(Nota);
 
     const notaFound = await notaRepository.findOne({
-      where: { idNota },
+      where: { rut },
       relations: ["alumno", "asignatura"],
     });
 
