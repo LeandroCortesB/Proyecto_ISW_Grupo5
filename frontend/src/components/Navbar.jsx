@@ -133,7 +133,7 @@ const Navbar = () => {
           {(userRole === "administrador" || userRole === "profesor") && (
             <li>
               <NavLink
-                to="/nota"
+                to="/nota/all"
                 onClick={() => {
                   setMenuOpen(false);
                   addActiveClass();
