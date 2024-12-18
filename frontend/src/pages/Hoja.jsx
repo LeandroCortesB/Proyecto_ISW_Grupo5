@@ -50,15 +50,16 @@ const Hojas = () => {
 
   let nombre = hojasnombre(rut);
 
-    const filtradasVisual = useMemo(() => {
-      return [...filtradas]
+  const filtradasVisual = useMemo(() => {
+    return [...filtradas]
         .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
         .map((hoja, index) => ({
-          ...hoja,
-          numeroOrden: index + 1,
-          anotacionTexto: hoja.buena ? 'Buena' : 'Mala',
+            ...hoja,
+            numeroOrden: index + 1,
+            anotacionTexto: hoja.buena === true ? 'Buena' : 'Mala',
         }));
-    }, [filtradas]);
+}, [filtradas]);
+
     
   const columns = [
     { title: 'Pagina', field: 'numeroOrden', width: 100, responsive: 0 },

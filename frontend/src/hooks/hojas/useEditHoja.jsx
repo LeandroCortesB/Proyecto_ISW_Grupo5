@@ -20,16 +20,20 @@ const useEditHoja = (setHojas) => {
                 
                 const formattedHoja = formatPostUpdateHoja(updatedHoja);
 
-                setHojas(prevHojas => 
-                    prevHojas.map(hoja => 
-                        hoja.idHoja === formattedHoja.idHoja 
-                        ? formattedHoja
-                        : hoja
-                ));
-                
-                showSuccessAlert("¡Actualizado!", "La hoja ha sido actualizada correctamente.");
-                setIsPopupHOpen(false);
 
+                if(formattedHoja.buena===null||formattedHoja.buena===undefined||formattedHoja.buena===""){
+                    showErrorAlert("Cancelado", "Ocurrió un error al actualizar la hoja.");
+                }else{
+                    setHojas(prevHojas => 
+                        prevHojas.map(hoja => 
+                            hoja.idHoja === formattedHoja.idHoja 
+                            ? formattedHoja
+                            : hoja
+                    ));
+                    showSuccessAlert("¡Actualizado!", "La hoja ha sido actualizada correctamente.");
+                }
+                
+                setIsPopupHOpen(false);
                 setDataHoja([]);
             } catch (error) {
                 console.error("Error al actualizar la hoja:", error);

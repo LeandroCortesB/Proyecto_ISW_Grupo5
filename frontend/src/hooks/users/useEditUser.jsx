@@ -17,19 +17,24 @@ const useEditUser = (setUsers) => {
         if (updatedUserData) {
             try {
                 updatedUserData.rut = dataUser[0].rut;
-                console.log("aca la dataupdateada",updatedUserData);
+
                 const updatedUser = await updateUser(updatedUserData, dataUser[0].rut);
                 
                 const formattedUser = formatPostUpdate(updatedUser);
 
-                setUsers(prevUsers => 
-                    prevUsers.map(user => 
-                        user.rut === formattedUser.rut 
-                        ? formattedUser
-                        : user
-                ));
-            
-                showSuccessAlert('¡Actualizado!','El usuario ha sido actualizado correctamente.');
+                if(formattedUser.rol===null||formattedUser.rol===undefined||formattedUser.rol===""){
+                    showErrorAlert('Cancelado', 'Ocurrió un error al modificar el usuario.');
+                }else{
+                    setUsers(prevUsers => 
+                        prevUsers.map(user => 
+                            user.rut === formattedUser.rut 
+                            ? formattedUser
+                            : user
+                    ));
+                    showSuccessAlert('¡Actualizado!','El usuario ha sido actualizado correctamente.');
+                }
+
+
                 setIsPopupOpen(false);
                 setDataUser([]);
             } catch (error) {
