@@ -9,10 +9,6 @@ export default function PopupA({ show, setShow, action , idCurso }) {
 
 
     const patterName = new RegExp(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/);
-
-    // Obtener la lista de cursos
-  
-    // Asignar el nombre del curso basado en el idCurso
   
     const handleSubmit = (formData) => {
         // Agregar idCurso a los datos del formulario

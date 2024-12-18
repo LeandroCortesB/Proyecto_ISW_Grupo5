@@ -7,7 +7,7 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import useGetAsignaturas from "@hooks/asignaturas/useGetAsignaturas";
 import useGetAsistenciasAlumno from "@hooks/asistencias/useGetAsistenciasAlumno";
-import "@styles/asistenciaAlumno.css"; // Importa los estilos CSS
+import "@styles/asistenciaAlumno.css"; 
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -92,7 +92,7 @@ const AsistenciaAlumno = () => {
           <DatePicker
             selected={fechaInicio}
             onChange={(date) => setFechaInicio(date)}
-            dateFormat="dd-MM-yyyy" // Fecha visible en formato DD-MM-YYYY
+            dateFormat="dd-MM-yyyy" 
           />
         </div>
         <div>

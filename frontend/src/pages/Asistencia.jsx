@@ -24,11 +24,11 @@ setDefaultLocale("es");
 
 const Asistencias = () => {
   const { asistencias, fetchAsistencias, setAsistencias } = useAsistencias();
-  const [filterAlumno, setFilterAlumno] = useState(""); // Filtro por alumno
-  const [filterDate, setFilterDate] = useState(null); // Filtro por fecha
-  const [filterAsignatura, setFilterAsignatura] = useState(""); // Filtro por asignatura
-  const [filteredAsistencias, setFilteredAsistencias] = useState([]); // Datos filtrados
-  const [selectedRows, setSelectedRows] = useState([]); // Filas seleccionadas
+  const [filterAlumno, setFilterAlumno] = useState("");
+  const [filterDate, setFilterDate] = useState(null); 
+  const [filterAsignatura, setFilterAsignatura] = useState("");
+  const [filteredAsistencias, setFilteredAsistencias] = useState([]); 
+  const [selectedRows, setSelectedRows] = useState([]); 
 
   const columns = [
     { title: "N° Asistencia", field: "idAsistencia", width: 150 },
@@ -67,12 +67,11 @@ const Asistencias = () => {
     setDataAsistencia
   );
 
-  // Filtros combinados
   useEffect(() => {
     const normalizeDate = (date) => {
       if (!date) return null;
       const normalized = new Date(date);
-      // Elimina el desfase local al UTC
+
       normalized.setMinutes(
         normalized.getMinutes() - normalized.getTimezoneOffset()
       );

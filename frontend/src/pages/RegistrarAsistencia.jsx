@@ -19,10 +19,9 @@ const RegistrarAsistencia = () => {
   const [errorCurso, setErrorCurso] = useState("");
   const [errorAsignatura, setErrorAsignatura] = useState("");
   const [errorFecha, setErrorFecha] = useState("");
-  const [errorGeneral, setErrorGeneral] = useState(""); // Nuevo estado para errores generales
+  const [errorGeneral, setErrorGeneral] = useState(""); 
   const navigate = useNavigate();
 
-  // Obtener lista de cursos al cargar el componente
   useEffect(() => {
     const fetchCursos = async () => {
       try {
@@ -35,7 +34,6 @@ const RegistrarAsistencia = () => {
     fetchCursos();
   }, []);
 
-  // Actualizar asignaturas y alumnos cuando cambia el curso seleccionado
   useEffect(() => {
     if (cursoSeleccionado) {
       const fetchAsignaturas = async () => {
@@ -52,17 +50,15 @@ const RegistrarAsistencia = () => {
       const fetchAlumnos = async () => {
         try {
           const alumnosData = await getUsersByCurso(cursoSeleccionado);
-          console.log("Alumnos obtenidos del backend:", alumnosData); // Debug
+          console.log("Alumnos obtenidos del backend:", alumnosData); 
           if (!Array.isArray(alumnosData)) {
             console.error(
               "La respuesta de alumnos no es un array:",
               alumnosData
             );
-            setAlumnos([]); // Limpia el estado si no es un array
+            setAlumnos([]); 
             return;
           }
-
-          // Filtra los alumnos que pertenecen al curso seleccionado
           const alumnosFiltrados = alumnosData.filter(
             (alumno) =>
               alumno.curso &&
@@ -78,7 +74,7 @@ const RegistrarAsistencia = () => {
           );
         } catch (err) {
           console.error("Error al cargar alumnos del curso:", err);
-          setAlumnos([]); // Si hay error, limpia el estado
+          setAlumnos([]); 
           setAsistencias([]);
         }
       };
@@ -92,7 +88,6 @@ const RegistrarAsistencia = () => {
     }
   }, [cursoSeleccionado]);
 
-  // Cambiar estado de asistencia para cada alumno
   const handleEstadoChange = (idAlumno, nuevoEstado) => {
     setAsistencias((prevAsistencias) =>
       prevAsistencias.map((asistencia) =>
@@ -103,7 +98,6 @@ const RegistrarAsistencia = () => {
     );
   };
 
-  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorCurso("");
@@ -111,7 +105,7 @@ const RegistrarAsistencia = () => {
     setErrorFecha("");
     setErrorGeneral("");
 
-    // Validaciones
+
     if (!fecha) {
       setErrorFecha("Por favor, selecciona una fecha.");
       return;

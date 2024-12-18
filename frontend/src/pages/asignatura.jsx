@@ -65,7 +65,7 @@ const Asignaturas = () => {
   const handleSelectionChange = (selectedAsignaturas) => {
     setDataAsignatura(selectedAsignaturas.map(asignatura => ({
       ...asignatura,
-      idAsignatura: Number(asignatura.idAsignatura), // Convertir idAsignatura a número
+      idAsignatura: Number(asignatura.idAsignatura), 
     })));
   };
   const handleNombreFilterChange = (e) => {

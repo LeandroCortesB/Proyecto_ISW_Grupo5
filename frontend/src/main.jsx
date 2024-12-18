@@ -14,6 +14,7 @@ import HojasAlum from "@pages/HojasAlum";
 import Perfil from "@pages/Perfil";
 import GestionNotas from "@pages/Nota";
 import VerNotas from "@pages/VerNotas";
+import MisNotas from "@pages/MisNotas";
 import Hojas from "@pages/Hoja";
 import ProtectedRoute from "@components/ProtectedRoute";
 import "@styles/styles.css";
@@ -43,6 +44,14 @@ const router = createBrowserRouter([
       {
         path: "/nota",
         element: <GestionNotas />,
+      },
+      {
+        path: "/misNotas",
+        element: (
+          <ProtectedRoute allowedRoles={["alumno"]}>
+            <MisNotas />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/asignatura/:idCurso",
