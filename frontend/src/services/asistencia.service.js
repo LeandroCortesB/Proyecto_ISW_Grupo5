@@ -85,3 +85,24 @@ export async function deleteAsistencia(idAsistencia) {
         return error.response.data;
     }
 }
+
+export const getAsistenciasByAlumno = async (rut, fechaInicio, fechaFin, idAsignatura) => {
+    try {
+      const response = await axios.get(`/asistencia/users/${rut}`,
+        {
+          params: {
+            fechaInicio,
+            fechaFin,
+            idAsignatura,
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Token JWT
+          },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      console.error("Error al obtener asistencias:", error);
+      throw error.response?.data?.message || "Error al cargar asistencias.";
+    }
+  };
