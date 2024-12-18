@@ -9,6 +9,8 @@ import Error404 from "@pages/Error404";
 import Root from "@pages/Root";
 import Cursos from "@pages/Cursos";
 import MisHojas from "@pages/MisHojas";
+import MisAlumnos from "@pages/MisAlumnos";
+import HojasAlum from "@pages/HojasAlum";
 import Perfil from "@pages/Perfil";
 import GestionNotas from "@pages/Nota";
 import VerNotas from "@pages/VerNotas";
@@ -50,7 +52,7 @@ const router = createBrowserRouter([
         path: "/asistencias",
         element: (
           <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
-            <Asistencias /> {/* Nueva ruta para Asistencias */}
+            <Asistencias />
           </ProtectedRoute>
         ),
       },
@@ -104,6 +106,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["administrador", "profesor"]}>
             <Cursos />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/misAlumnos",
+        element: (
+          <ProtectedRoute allowedRoles={["apoderado"]}>
+            <MisAlumnos />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/Hoja/apo/all/:rut",
+        element: (
+          <ProtectedRoute allowedRoles={["apoderado"]}>
+            <HojasAlum />
           </ProtectedRoute>
         ),
       },

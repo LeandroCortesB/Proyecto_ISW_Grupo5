@@ -16,6 +16,8 @@ const useCreateHoja = (setHojas) => {
                 
                 const formattedHoja = formatPostCreateHoja(createdHoja); 
 
+                console.log("nuea oja",formattedHoja);
+
                 setHojas(prevHojas => [...prevHojas, formattedHoja]);
 
                 showSuccessAlert('¡Creada!', 'La hoja ha sido creado exitosamente.');

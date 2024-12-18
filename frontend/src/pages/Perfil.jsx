@@ -12,10 +12,10 @@ const Perfil = () => {
     ? asignaturas.filter(asignatura => asignatura.idCurso === user.curso.idCurso) 
     : [];
     const columns = [
-        { title: "Nombre", field: "nombreAsignatura", width: 350, responsive: 0 },
+        { title: "Nombre", field: "nombreAsignatura", width: 700, responsive: 0 },
         { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
     ];
-    
+
     return (
         <div className='main-container'>
         <div className='table-container'>

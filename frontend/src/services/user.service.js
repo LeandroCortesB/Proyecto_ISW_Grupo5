@@ -75,6 +75,9 @@ export async function updateUser(data, rut) {
             Autorization: `Bearer ${token}`,
         };
 
+        console.log("upd data",data);
+        console.log("upd rut", rut);
+
         const response = await axios.patch(`/user/update/?rut=${rut}`, data, { headers });
         console.log(response);
         return response.data.data;
@@ -126,6 +129,23 @@ export async function getUserByRut(rut) {
 
         const { data } = await axios.get(`/user/hoja/${rut}`,{ headers });
         return data.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export async function getAlumnosByApoderado(id) {
+    try {
+        const token = cookies.get('jwt-auth');
+        const headers = {
+            Autorization: `Bearer ${token}`,
+        };
+
+        const { data } = await axios.get(`/user/alumnos/${id}`,{ headers });
+        
+        const formattedData = data.data.map(formatUserData);
+        
+        return formattedData;
     } catch (error) {
         return error.response.data;
     }
