@@ -53,10 +53,10 @@ export async function createAsistencia(req, res) {
 
 export async function updateAsistencia(req, res) {
     try {
-        const { fecha, asistio } = req.body; // Asegúrate de usar las propiedades correctas
+        const { fecha, asistio } = req.body; 
         const asistenciaActualizada = {
-            fecha,      // Mapea correctamente los datos
-            asistio,    // Presente o Ausente
+            fecha,     
+            asistio,    
         };
 
         const [asistencia, errorAsistencia] = 

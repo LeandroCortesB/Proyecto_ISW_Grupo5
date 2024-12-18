@@ -7,7 +7,7 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import useGetAsignaturas from "@hooks/asignaturas/useGetAsignaturas";
 import useGetAsistenciasAlumno from "@hooks/asistencias/useGetAsistenciasAlumno";
-import "@styles/asistenciaAlumno.css"; // Importa los estilos CSS
+import "@styles/asistenciaAlumno.css";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -20,32 +20,39 @@ const AsistenciaAlumno = () => {
   const [idAsignatura, setIdAsignatura] = useState("");
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
+  const [errorFecha, setErrorFecha] = useState("");
 
   const handleBuscar = () => {
-    if (idAsignatura && fechaInicio && fechaFin) {
-      // Formatea las fechas para enviarlas al backend
-      const formattedFechaInicio = format(fechaInicio, "yyyy-MM-dd");
-      const formattedFechaFin = format(fechaFin, "yyyy-MM-dd");
+    setErrorFecha("");
 
-      console.log("Enviando datos al backend:", {
-        rut: user.rut,
-        fechaInicio: formattedFechaInicio,
-        fechaFin: formattedFechaFin,
-        idAsignatura,
-      });
-
-      fetchAsistencias(
-        user.rut,
-        formattedFechaInicio,
-        formattedFechaFin,
-        idAsignatura
-      );
-    } else {
+    if (!idAsignatura || !fechaInicio || !fechaFin) {
       alert("Por favor, selecciona todas las opciones.");
+      return;
     }
+
+    if (fechaFin <= fechaInicio) {
+      setErrorFecha("La fecha de término debe ser mayor que la de inicio.");
+      return;
+    }
+
+    const formattedFechaInicio = format(fechaInicio, "yyyy-MM-dd");
+    const formattedFechaFin = format(fechaFin, "yyyy-MM-dd");
+
+    console.log("Enviando datos al backend:", {
+      rut: user.rut,
+      fechaInicio: formattedFechaInicio,
+      fechaFin: formattedFechaFin,
+      idAsignatura,
+    });
+
+    fetchAsistencias(
+      user.rut,
+      formattedFechaInicio,
+      formattedFechaFin,
+      idAsignatura
+    );
   };
 
-  // Filtra las asignaturas según el curso del usuario
   const asignaturasFiltradas = asignaturas.filter(
     (a) => a.idCurso === user.curso?.idCurso
   );
@@ -104,6 +111,9 @@ const AsistenciaAlumno = () => {
           />
         </div>
       </div>
+
+      {/* Mostrar error de fechas */}
+      {errorFecha && <p className="error">{errorFecha}</p>}
 
       {/* Botón Buscar */}
       <button onClick={handleBuscar} disabled={loading}>
