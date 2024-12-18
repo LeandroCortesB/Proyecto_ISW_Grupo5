@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/asistencias/mis-asistencias",
+        path: "/mis-asistencias",
         element: (
           <ProtectedRoute allowedRoles={["alumno"]}>
             <AsistenciaAlumno />{" "}

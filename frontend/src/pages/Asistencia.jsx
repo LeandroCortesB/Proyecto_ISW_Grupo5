@@ -118,7 +118,7 @@ const Asistencias = () => {
 
   return (
     <div className="asistencia-page">
-      <div className=".asistencia-page .main-containe">
+      <div className="main-container">
         <div className="table-container">
           {/* Título de la tabla */}
           <h1 className="title-table">Tabla de Registro de Asistencias</h1>

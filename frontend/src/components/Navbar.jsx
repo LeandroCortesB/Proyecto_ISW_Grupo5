@@ -90,7 +90,7 @@ const Navbar = () => {
           {userRole === "alumno" && (
             <li>
               <NavLink
-                to="/asistencias/mis-asistencias"
+                to="/mis-asistencias"
                 onClick={() => {
                   setMenuOpen(false);
                   addActiveClass();
@@ -143,6 +143,20 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
+          {(userRole === "administrador" || userRole === "profesor") && (
+          <li>
+              <NavLink
+                to="/asistencias"
+                onClick={() => {
+                  setMenuOpen(false);
+                  addActiveClass();
+                }}
+                activeClassName="active"
+              >
+                Asistencias
+              </NavLink>
+            </li>
+          )}
           {(userRole === "apoderado") && (
             <li>
               <NavLink
@@ -157,20 +171,6 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
-          {
-            <li>
-              <NavLink
-                to="/asistencias"
-                onClick={() => {
-                  setMenuOpen(false);
-                  addActiveClass();
-                }}
-                activeClassName="active"
-              >
-                Asistencias
-              </NavLink>
-            </li>
-          }
           <li>
             <NavLink
               to="/perfil"
