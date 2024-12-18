@@ -15,7 +15,7 @@ const router = Router();
 router.use(authenticateJwt);
 
 router
-  .get("/all", authorizeRoles(["administrador", "profesor"]),getNotas)          
+  .get("/all", authorizeRoles(["administrador", "profesor", "alumno"]),getNotas)          
   .get("/:idNota", authorizeRoles(["administrador", "profesor"]),getNota)      
   .post("/",authorizeRoles(["administrador", "profesor"]), createNota)       
   .patch("/:idNota",authorizeRoles(["administrador", "profesor"]), updateNota) 
