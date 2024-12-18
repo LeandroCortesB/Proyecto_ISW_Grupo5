@@ -8,6 +8,8 @@ const Perfil = () => {
     const { asignaturas } = useAsignaturas();
     console.log(asignaturas);
     
+    const asignaturasdelalumno = asignaturas.filter(
+        asignatura => asignatura.idCurso === user.curso.idCurso);
     const columns = [
         { title: "Nombre", field: "nombreAsignatura", width: 350, responsive: 0 },
         { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
@@ -27,7 +29,7 @@ const Perfil = () => {
             </div>
             <h1 className='title-table'>Asignaturas a las que perteneces</h1>
             <Table            
-                data={asignaturas}
+                data={asignaturasdelalumno}
                 columns={columns}
                 initialSortName={'nombreAsignatura'}
             />

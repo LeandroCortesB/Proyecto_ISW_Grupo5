@@ -8,7 +8,7 @@ export default function PopupC({ show, setShow, data, action }) {
     const handleSubmit = (formData) => {
         action(formData);
     };
-    const patternNombreCurso = new RegExp(/^\d+[A-Z]$/);
+    const patternNombreCurso = new RegExp(/^[1-4][A-Z]$/);
     return (
         <di>
             {show &&(
@@ -25,7 +25,7 @@ export default function PopupC({ show, setShow, data, action }) {
                                     name: 'nombreCurso',
                                     defaultValue: userData.nombreCurso || "",
                                     placeholder: '1A',
-                                    patternNombreCurso,
+                                    pattern:patternNombreCurso,
                                     fieldType: 'input',
                                     type: "text",
                                     required: true,

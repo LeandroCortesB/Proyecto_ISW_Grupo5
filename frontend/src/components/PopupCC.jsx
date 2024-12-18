@@ -7,7 +7,7 @@ export default function PopupC({ show, setShow, action }) {
         action(formData);
     };
 
-    const patternName = new RegExp(/^\d+[A-Z]$/);
+    const patternName = new RegExp(/^[1-4][A-Z]$/);
 
     return(
         <div>
