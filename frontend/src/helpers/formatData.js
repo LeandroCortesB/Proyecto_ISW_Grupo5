@@ -13,6 +13,28 @@ export function formatUserData(user) {
     };
 }
 
+export function formatPostUpdate(user) {
+    return {
+        nombreCompleto: startCase(user.nombreCompleto),
+        rol: startCase(user.rol),
+        rut: formatRut(user.rut),
+        email: user.email,
+        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatAlumnoData(user) {
+    return {
+        ...user,
+        id: user.id,
+        nombreCompleto: startCase(user.nombreCompleto),
+        email: startCase(user.email),
+        rol: startCase(user.rol),
+        rut: formatRut(user.rut),
+        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
 export function formatHojaData(hoja) {
     return {
         ...hoja,
@@ -24,21 +46,48 @@ export function formatHojaData(hoja) {
     };
 }
 
-export function formatAsignaturaData(asignatura) {
+export function formatPostUpdateHoja(hoja) {
     return {
-        ...asignatura,
-        nombreAsignatura: startCase(asignatura.nombreAsignatura),
-        descripcion: startCase(asignatura.descripcion),
-        createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
-        cursoIdCurso: startCase(asignatura.cursoIdCurso)
+        nombreCompleto: startCase(hoja.nombreCompleto),
+        rut: formatRut(hoja.rut),
+        anotacion: startCase(hoja.anotacion),
+        buena: !!(hoja.buena),
+        createdAt: formatTempo(hoja.createdAt, "DD-MM-YYYY")
     };
 }
 
+export function formatAsignaturaData(asignatura) {
+    return {
+        ...asignatura,
+        idAsignatura: asignatura.idAsignatura,
+        nombreAsignatura: startCase(asignatura.nombreAsignatura),
+        descripcion: startCase(asignatura.descripcion),
+        curso: startCase(asignatura.curso),
+        idCurso: asignatura.idCurso,
+        createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
+        
+    };
+}
 export function formatCursoData(curso) {
     return {
         ...curso,
         nombreCurso: startCase(curso.nombreCurso),
         createdAt: formatTempo(curso.createdAt, "DD-MM-YYYY")
+    };
+}
+export function formatAsistenciaData(asistencia) {
+    return {
+        ...asistencia,
+        fechaAsistencia: formatTempo(asistencia.fechaAsistencia, "DD-MM-YYYY"),
+        presente: asistencia.presente ? 'Presente' : 'Ausente',
+    };
+}
+
+export function formatNotaData(nota) {
+    return {
+        ...nota,
+        calificacion: startCase(nota.calificacion),
+        createdAt: formatTempo(nota.createdAt, "DD-MM-YYYY"),
     };
 }
 
@@ -51,7 +100,7 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
-export function formatPostUpdate(user) {
+export function formatPostCreate(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
         rol: startCase(user.rol),
@@ -60,4 +109,53 @@ export function formatPostUpdate(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
+
+export function formatPostCreateNota(nota) {
+    return {
+        calificacion: startCase(nota.calificacion),
+        periodo: startCase(nota.periodo),
+        asignatura: startCase(nota.asignatura),
+        alumno: startCase(nota.alumno),
+        createdAt: formatTempo(nota.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatPostCreateHoja(hoja) {
+    return {
+        idHoja: Number(hoja.idHoja),
+        nombreCompleto: startCase(hoja.nombreCompleto),
+        rut: formatRut(hoja.rut),
+        buena: booleanizacion(hoja.buena),
+        anotacion: startCase(hoja.anotacion),
+        createdAt: formatTempo(hoja.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function booleanizacion(buena) {
+    let x = Boolean
+    if(buena==='true'||buena==="true"||buena===true){
+        x=true;
+    }else{x=false;}
+    return x
+}
+
+export function formatPostCreateAsignatura(asignatura) {
+    return {
+        nombreAsignatura: startCase(asignatura.nombreAsignatura),
+        descripcion: startCase(asignatura.descripcion),
+        createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
+
+    };
+}
+
+export function formatPutEditAsignatura(asignatura) {
+    return {
+        nombreAsignatura: startCase(asignatura.nombreAsignatura),
+        descripcion: startCase(asignatura.descripcion),
+        createdAt: formatTempo(asignatura.createdAt, "DD-MM-YYYY"),
+    };
+}
+
+
+
 

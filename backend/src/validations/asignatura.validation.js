@@ -14,6 +14,7 @@ export const asignaturaQueryValidation = Joi.object({
   nombreAsignatura: Joi.string()
     .min(5)
     .max(100)
+    .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]/)
     .messages({
       "string.empty": "El nombre de la asignatura no puede estar vacío.",
       "string.base": "El nombre de la asignatura debe ser de tipo string.",
@@ -33,7 +34,7 @@ export const asignaturaBodyValidation = Joi.object({
   nombreAsignatura: Joi.string()
     .min(5)
     .max(100)
-    .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+    .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]/)
     .messages({
       "string.empty": "El nombre de la asignatura no puede estar vacío.",
       "string.base": "El nombre de la asignatura debe ser de tipo string.",

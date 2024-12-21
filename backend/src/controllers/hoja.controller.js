@@ -36,11 +36,13 @@ export async function getHoja(req, res) {
 
 export async function getHojas(req, res) {
   try {
-    const [hojas, errorHojas] = await getHojasService();
+    const { rut } = req.body;
+
+    const [hojas, errorHojas] = await getHojasService(rut);
 
     if (errorHojas) return handleErrorClient(res, 404, errorHojas);
 
-    users.length === 0
+    hojas.length === 0
       ? handleSuccess(res, 204)
       : handleSuccess(res, 200, "Hojas de vida encontradas", hojas);
   } catch (error) {
@@ -55,7 +57,7 @@ export async function getHojas(req, res) {
 export async function createHoja(req, res) {
   try {
 
-    const { error } = hojaQueryValidation.validate(req.body);
+    const { error } = hojaBodyValidation.validate(req.body);
 
     if (error) return handleErrorClient(res, 400, "Error de validacion", error.message);
 
@@ -71,12 +73,12 @@ export async function createHoja(req, res) {
 
 export async function updateHoja(req, res) {
   try {
-    const { rut, idHoja } = req.query;
+    
     const { body } = req;
+    const idHoja = body.idHoja
 
     const { error: queryError } = hojaQueryValidation.validate({
-      rut,
-      id,
+      idHoja,
     });
 
     if (queryError) {
@@ -88,17 +90,7 @@ export async function updateHoja(req, res) {
       );
     }
 
-    const { error: bodyError } = hojaBodyValidation.validate(body);
-
-    if (bodyError)
-      return handleErrorClient(
-        res,
-        400,
-        "Error de validación en los datos enviados",
-        bodyError.message,
-      );
-
-    const [hoja, hojaError] = await updateHojaService({ rut, idHoja }, body);
+    const [hoja, hojaError] = await updateHojaService({ idHoja }, body);
 
     if (hojaError) return handleErrorClient(res, 400, "Error modificando la hoja de vida", hojaError);
 
@@ -110,10 +102,9 @@ export async function updateHoja(req, res) {
 
 export async function deleteHoja(req, res) {
   try {
-    const { rut, idHoja } = req.query;
+    const { idHoja } = req.query;
 
     const { error: queryError } = hojaQueryValidation.validate({
-      rut,
       idHoja,
     });
 
@@ -127,7 +118,6 @@ export async function deleteHoja(req, res) {
     }
 
     const [hojaDelete, errorHojaDelete] = await deleteHojaService({
-      rut,
       idHoja,
     });
 

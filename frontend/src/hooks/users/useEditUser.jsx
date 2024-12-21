@@ -16,21 +16,27 @@ const useEditUser = (setUsers) => {
     const handleUpdate = async (updatedUserData) => {
         if (updatedUserData) {
             try {
-            const updatedUser = await updateUser(updatedUserData, dataUser[0].rut);
-            showSuccessAlert('¡Actualizado!','El usuario ha sido actualizado correctamente.');
-            setIsPopupOpen(false);
-            const formattedUser = formatPostUpdate(updatedUser);
+                updatedUserData.rut = dataUser[0].rut;
 
-            setUsers(prevUsers => prevUsers.map(user => {
-                console.log("Usuario actual:", user);
-                if (user.id === formattedUser.id) {
-                    console.log("Reemplazando con:", formattedUser);
+                const updatedUser = await updateUser(updatedUserData, dataUser[0].rut);
+                
+                const formattedUser = formatPostUpdate(updatedUser);
+
+                if(formattedUser.rol===null||formattedUser.rol===undefined||formattedUser.rol===""){
+                    showErrorAlert('Cancelado', 'Ocurrió un error al modificar el usuario.');
+                }else{
+                    setUsers(prevUsers => 
+                        prevUsers.map(user => 
+                            user.rut === formattedUser.rut 
+                            ? formattedUser
+                            : user
+                    ));
+                    showSuccessAlert('¡Actualizado!','El usuario ha sido actualizado correctamente.');
                 }
-                return user.email === formattedUser.email ? formattedUser : user;
-            }));
-            
 
-            setDataUser([]);
+
+                setIsPopupOpen(false);
+                setDataUser([]);
             } catch (error) {
                 console.error('Error al actualizar el usuario:', error);
                 showErrorAlert('Cancelado','Ocurrió un error al actualizar el usuario.');

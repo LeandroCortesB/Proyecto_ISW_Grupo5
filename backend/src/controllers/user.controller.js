@@ -2,6 +2,10 @@
 import {
   createUserService,
   deleteUserService,
+  getAlumnosByApoderadoService,
+  getAlumnosService,
+  getUsersByAsignaturaService,
+  getUsersByCursoService,
   getUserService,
   getUsersService,
   updateUserService,
@@ -15,16 +19,19 @@ import {
   handleErrorServer,
   handleSuccess,
 } from "../handlers/responseHandlers.js";
+import User from "../entity/user.entity.js";
+import { AppDataSource } from "../config/configDb.js"; // Ajusta el path según la estructura de tu proyecto
+
 
 export async function getUser(req, res) {
   try {
-    const { rut, id, email } = req.query;
+    const { rut } = req.params;
 
-    const { error } = userQueryValidation.validate({ rut, id, email });
+    const { error } = userQueryValidation.validate({ rut });
 
     if (error) return handleErrorClient(res, 400, error.message);
 
-    const [user, errorUser] = await getUserService({ rut, id, email });
+    const [user, errorUser] = await getUserService({ rut });
 
     if (errorUser) return handleErrorClient(res, 404, errorUser);
 
@@ -54,7 +61,7 @@ export async function getUsers(req, res) {
 
 export async function createUser(req, res) {
   try {
-    const { rut, id, email, contraseña, rol } = req.query;
+    const { rut, id, email, contraseña, rol } = req.body;
 
     const { error } = userQueryValidation.validate({ rut , id });
 
@@ -70,6 +77,22 @@ export async function createUser(req, res) {
   }
 }
 
+export async function getAlumnos(req, res) {
+  try {
+    const [alumnos, errorUsers] = await getAlumnosService();
+    if (errorUsers) return handleErrorClient(res, 404, errorUsers);
+
+    alumnos.length === 0
+      ? handleSuccess(res, 204)
+      : handleSuccess(res, 200, "Alumnos encontrados", alumnos);
+  } catch (error) {
+    handleErrorServer(
+      res,
+      500,
+      error.message,
+    );
+  }
+}
 
 export async function updateUser(req, res) {
   try {
@@ -141,5 +164,64 @@ export async function deleteUser(req, res) {
     handleSuccess(res, 200, "Usuario eliminado correctamente", userDelete);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
+  }
+}
+
+export async function getUsersByCurso(req, res) {
+  try {
+    const { idCurso } = req.params;
+    const users = await getUsersByCursoService(idCurso);
+
+    // Verifica que 'users' sea un array plano
+    const usersLimpios = Array.isArray(users) ? users.flat() : [];
+
+    if (usersLimpios.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se encontraron usuarios para el curso especificado" });
+    }
+
+    // Envía la respuesta correctamente
+    res.status(200).json({ data: usersLimpios });
+  } catch (error) {
+    console.error("Error al obtener usuarios por curso:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+}
+
+export async function getUsersByAsignatura(req, res) {
+    const { idAsignatura } = req.params;
+
+    try {
+        const [alumnos, error] = await getUsersByAsignaturaService(idAsignatura);
+
+        if (error) {
+            return res.status(400).json({ message: error });
+        }
+
+        return res.status(200).json({ data: alumnos });
+    } catch (error) {
+        console.error("Error al obtener usuarios por asignatura:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
+export async function getAlumnosByApoderado(req, res) {
+  try {
+    const { Id } = req.params;
+    const users = await getAlumnosByApoderadoService(Id);
+
+    const usersLimpios = Array.isArray(users) ? users.flat() : [];
+
+    if (usersLimpios.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se encontraron alumnos para el apoderado indicado" });
+    }
+
+    res.status(200).json({ data: usersLimpios });
+  } catch (error) {
+    console.error("Error al obtener alumnos por apoderado:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
   }
 }

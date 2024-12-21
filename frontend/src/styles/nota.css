@@ -1,0 +1,138 @@
+.nota-page .main-container {
+    max-width: 1300px;
+    margin: auto;
+    padding: 20px;
+}
+
+.nota-page .table-container {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: auto;
+}
+
+.nota-page .top-table {
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    position: sticky; /* Hace que se quede "pegada" */
+    top: auto; /* Fija la posición en la parte superior */
+    margin-top: 10px;
+    background-color: #fff; /* Asegúrate de que el fondo sea visible */
+    z-index: 10; /* Asegura que esté por encima de otros elementos */
+}
+
+.nota-page .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.nota-page .search-delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nota-page .search-input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 250px;
+}
+
+.nota-page .delete {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.87);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.nota-page .edit-button {
+    background: rgba(255, 255, 255, 0.87);
+    margin-left: 8px;
+}
+
+.nota-page .delete-button {
+    background: rgba(255, 255, 255, 0.87);
+}
+
+.nota-page .table-scroll {
+    max-height: 300px; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    border-top: 1px solid #ddd; 
+    padding: 0; 
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.nota-page table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.nota-page .notas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: auto;
+}
+
+.nota-page .nota-item {
+    background-color: #e0e0e0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nota-page .asignatura {
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.nota-page .mb-5 {
+    margin-bottom: 2px;
+    background-color: #113d67;
+}
+
+.nota-page .mt-5 {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background: #113d67;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+    margin-top: 10px;
+    z-index: 1000;
+}
+
+.nota-page .w-20 {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100px;
+}

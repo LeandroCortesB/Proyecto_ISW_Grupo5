@@ -42,12 +42,12 @@ export const notaQueryValidation = Joi.object({
 export const notaBodyValidation = Joi.object({
   calificacion: Joi.number()
     .positive()
-    .min(1)
-    .max(7)
+    .min(10)
+    .max(70)
     .messages({
       "number.base": "La calificacion debe ser un número.",
-      "number.min": "La calificacion debe ser un número mayor o igual a 1.",
-      "number.max": "La calificacion debe ser un número menor o igual a 7.",
+      "number.min": "La calificacion debe ser un número mayor o igual a 10.",
+      "number.max": "La calificacion debe ser un número menor o igual a 70.",
       "number.positive": "La calificacion debe ser un número positivo."
     }), 
 

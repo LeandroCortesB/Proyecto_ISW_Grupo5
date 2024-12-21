@@ -4,12 +4,12 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getPaginaService(query) {
   try {
-    const { numero } = query;
+    const { rut, idHoja } = query;
 
     const PaginaRepository = AppDataSource.getRepository(Pagina);
 
     const paginaFound = await paginaRepository.findOne({
-      where: [{ numero : numero }],
+      where: [{ idHoja }, { rut }],
     });
 
     if (!paginaFound) return [null, "pagina no encontrada"];
@@ -23,35 +23,49 @@ export async function getPaginaService(query) {
   }
 }
 
+export async function createPaginaService(body) {
+  try {
+    const paginaRepository = AppDataSource.getRepository(Pagina);
+    const nuevaPagina = paginaRepository.create({
+      idHoja: body.idHoja,
+      rut: body.rut,
+      buenaAlarma: body.buenaAlarma,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    await paginaRepository.save(nuevaPagina);
+
+    return [nuevaPagina, null];
+  } catch (error) {
+    console.error("Error al crear la pagina:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
 export async function updatePaginaService(query, body) {
   try {
-    const { numero } = query;
+    const { idPagina, rut } = query;
 
     const paginaRepository = AppDataSource.getRepository(Pagina);
 
     const paginaFound = await paginaRepository.findOne({
-      where: [{ numero : numero }],
+      where: [{ idPagina }],
     });
 
     if (!paginaFound) return [null, "Pagina no encontrada"];
 
-    const existingPagina = await paginaRepository.findOne({
-      where: [{ numero: body.numero }],
-    });
-
-    if (existingPagina && existingPagina.id !== hojaFound.id) {
-      return [null, "Ya existe una pagina con el mismo numero"];
-    }
+    await paginaRepository.update(idPagina, body);
 
     const dataPaginaUpdate = {
-      contenido: body.contenido,
+      buenaAlarma: body.buenaAlarma,
       updatedAt: new Date(),
     };
 
-    await PaginaRepository.update({ id: paginaFound.id }, dataPaginaUpdate);
+    await paginaRepository.update( idPagina , dataPaginaUpdate);
 
-    const hojaData = await hojaRepository.findOne({
-      where: { id: paginaFound.id },
+    const paginaData = await paginaRepository.findOne({
+      where: { idPagina: paginaFound.idPagina },
     });
 
     if (!paginaData) {
@@ -67,26 +81,16 @@ export async function updatePaginaService(query, body) {
   }
 }
 
-export async function createPaginaService(data) {
-    try {
-      const paginaRepository = AppDataSource.getRepository(Pagina);
-      const nuevaPagina = paginaRepository.create(data);
-      await paginaRepository.save(nuevaPagina);
-      return [nuevaPagina, null];
-    } catch (error) {
-      console.error("Error al crear la pagina:", error);
-      return [null, "Error interno del servidor"];
-    }
-  }
+
 
 export async function deletePaginaService(query) {
   try {
-    const { id } = query;
+    const { idPagina } = query;
 
     const paginaRepository = AppDataSource.getRepository(Pagina);
 
     const paginaFound = await paginaRepository.findOne({
-      where: [{ id: id }],
+      where: [{ idPagina: idPagina }],
     });
 
     if (!paginaFound) return [null, "Pagina no encontrada"];

@@ -4,7 +4,6 @@ import Hoja from "../entity/hoja.entity.js";
 import { createHojaService, deleteHojaService }  from "../services/hoja.service.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
-import { hojaQueryValidation } from "../validations/hoja.validation.js";
 
 export async function getUserService(query) {
   try {
@@ -27,6 +26,8 @@ export async function getUserService(query) {
   }
 }
 
+
+
 export async function getUsersService() {
   try {
     const userRepository = AppDataSource.getRepository(User);
@@ -47,7 +48,6 @@ export async function getUsersService() {
 export async function createUserService(body){
   try{
     const userRepository = AppDataSource.getRepository(User);
-  
     const userFound = await userRepository.findOne({
       where: [{ id: body.id }, { rut: body.rut }],
     });
@@ -65,12 +65,42 @@ export async function createUserService(body){
     });
   
     await userRepository.save(nuevoUsuario);
-  
-    await createHojaService(nuevoUsuario.nombreCompleto,nuevoUsuario.rut,true,"");
+
+    if((body.rol = "alumno")||(body.rol = "Alumno")){
+      const hojaRepository = AppDataSource.getRepository(Hoja);
+      hojaRepository.save(
+        hojaRepository.create({
+          nombreCompleto: body.nombreCompleto,
+          rut: body.rut,
+          buena:true,
+          anotacion: "Portada (Hoja en blanco)",
+          updatedAt: new Date(),
+        })
+      )
+    }
 
     return [nuevoUsuario, null];
   } catch (error) {
     console.error("Error al crear el usuario:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
+export async function getAlumnosService() {
+  try {
+    const userRepository = AppDataSource.getRepository(User);
+
+    const alumnos = await userRepository.find({ 
+      where: [{ rol: "alumno" }], relations: ["curso"]
+    });
+
+    if (!alumnos || alumnos.length === 0) return [null, "No hay alumnos"];
+
+    const alumnosData = alumnos.map(({ password, ...alumno }) => alumno);
+
+    return [alumnosData, null];
+  } catch (error) {
+    console.error("Error al obtener a los alumnos:", error);
     return [null, "Error interno del servidor"];
   }
 }
@@ -110,6 +140,7 @@ export async function updateUserService(query, body) {
       rut: body.rut,
       email: body.email,
       rol: body.rol,
+      curso: body.curso,
       updatedAt: new Date(),
     };
 
@@ -129,17 +160,6 @@ export async function updateUserService(query, body) {
 
     const { password, ...userUpdated } = userData;
 
-    if(body.rol="alumno"){
-      hojaRepository.save(
-        hojaRepository.create({
-          nombreCompleto: body.nombreCompleto,
-          rut: body.rut,
-          buena:true,
-          updatedAt: new Date(),
-        })
-      )
-    }
-
     return [userUpdated, null];
   } catch (error) {
     console.error("Error al modificar un usuario:", error);
@@ -149,12 +169,12 @@ export async function updateUserService(query, body) {
 
 export async function deleteUserService(query) {
   try {
-    const { id, rut, email } = query;
+    const { id, rut } = query;
 
     const userRepository = AppDataSource.getRepository(User);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: [{ id: id }, { rut: rut }],
     });
 
     if (!userFound) return [null, "Usuario no encontrado"];
@@ -166,7 +186,7 @@ export async function deleteUserService(query) {
     const hojaRepository = AppDataSource.getRepository(Hoja);
 
     const hojaFound = await hojaRepository.findOne({
-      where: [{ id: id }, { rut: rut }],
+      where: [{ rut: rut }],
     });
 
     deleteHojaService(hojaFound);
@@ -178,5 +198,63 @@ export async function deleteUserService(query) {
   } catch (error) {
     console.error("Error al eliminar un usuario:", error);
     return [null, "Error interno del servidor"];
+  }
+}
+
+export async function getUsersByCursoService(idCurso) {
+  try {
+    const userRepository = AppDataSource.getRepository(User);
+
+    const users = await userRepository.find({
+      where: [
+        { curso: { idCurso: idCurso }, rol: "alumno" } // Filtra por curso asignado
+      ],
+      relations: ["curso"],
+    });
+    
+    console.log("Usuarios obtenidos:", users); // Log para verificar datos
+
+    if (!users || users.length === 0) {
+      return []; // Retorna un array vacío si no hay usuarios
+    }
+    return users; // Solo devuelve la lista de usuarios
+  } catch (error) {
+    console.error("Error en getUsersByCursoService:", error);
+    throw new Error("Error interno del servidor");
+  }
+}
+
+export async function getUsersByAsignaturaService(idAsignatura) {
+  try {
+      const repository = AppDataSource.getRepository(User);
+      const alumnos = await repository.find({
+          relations: ["asignaturasComoAlumno"], // Relación correcta
+          where: {
+              asignaturasComoAlumno: { idAsignatura }, // Filtro por asignatura
+              rol: "alumno", // Filtra solo alumnos
+          },
+      });
+      return [alumnos, null];
+  } catch (error) {
+      console.error("Error en getUsersByAsignaturaService:", error);
+      return [null, error.message];
+  }
+}
+
+
+export async function getAlumnosByApoderadoService(Id) {
+  try {
+      const repository = AppDataSource.getRepository(User);
+      const alumnos = await repository.find({
+          relations: ["apoderadoEncargado"],
+          where: {
+              apoderadoEncargado: { Id }, 
+              rol: "alumno", 
+          },
+      });
+      return [alumnos, null];
+  } catch (error) {
+      console.error("Error en getAlumnosByApoderadoService:", error);
+      return [null, error.message];
   }
 }

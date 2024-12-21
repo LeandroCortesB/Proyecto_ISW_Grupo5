@@ -1,0 +1,149 @@
+.asistencia-page .main-container {
+    margin-top: 0;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    padding: 20px;
+    width: 100%;
+}
+
+.asistencia-page .table-container {
+    max-width: 90%; /* Ajusta según sea necesario */
+    margin: 0 auto; /* Centra horizontalmente */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para diseño */
+    background-color: white; /* Fondo blanco */
+    border-radius: 8px;
+    padding: 20px; /* Espaciado interno */
+}
+
+.asistencia-page .top-table {
+    display: flex;
+    flex-direction: column; /* Cambiado a columna para que el título quede encima */
+    align-items: stretch; /* Estira los elementos a lo ancho */
+    margin-bottom: 20px;
+}
+
+.asistencia-page .title-table {
+    font-size: 20px;
+    font-weight: bold;
+    color: white; /* Texto blanco */
+    background-color: #113d67; /* Fondo azul del título */
+    padding: 10px 20px;
+    border-radius: 8px 8px 0 0; /* Bordes redondeados superiores */
+    margin-bottom: 0; /* Espaciado con los filtros */
+    text-align: center; /* Centra el texto */
+}
+
+/* Contenedor principal de los filtros y botones */
+.asistencia-page .filter-and-buttons {
+    display: flex;
+    justify-content: space-between; /* Espacia los filtros y los botones */
+    align-items: center; /* Centra verticalmente los elementos */
+    background-color: #113d67; /* Fondo azul */
+    padding: 15px 20px; /* Espaciado interno */ /* Bordes redondeados superiores */
+    color: white; /* Texto blanco */
+}
+
+/* Filtros alineados a la izquierda */
+.asistencia-page .filters {
+    display: flex;
+    gap: 40px; /* Espaciado entre filtros */
+    align-items: center;
+}
+
+/* Botones alineados a la derecha */
+.asistencia-page .buttons {
+    display: flex;
+    gap: 10px; /* Espaciado entre botones */
+    align-items: center;
+}
+
+.asistencia-page .filter-select,
+.asistencia-page .filter-date-picker {
+    border: 1px solid #ddd;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    border-radius: 4px;
+    padding: 8px;
+    min-width: 150px; /* Ancho mínimo */
+    font-size: 14px;
+    position: relative;
+}
+.react-datepicker__input-container input {
+    padding-right: 30px; /* Da espacio para el botón X */
+    box-sizing: border-box; /* Incluye padding en el tamaño total */
+}
+
+.react-datepicker__close-icon {
+    position: absolute;
+    right: 10px; /* Alinea el botón X a la derecha */
+    top: 50%;
+    transform: translateY(-50%); /* Centra verticalmente */
+    cursor: pointer;
+}
+
+/* Botones con estilos uniformes */
+.asistencia-page .icon-button,
+.asistencia-page .delete-user-button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px; /* Tamaño uniforme */
+    height: 40px; /* Tamaño uniforme */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.2s ease-in-out; /* Efecto de hover */
+}
+
+.asistencia-page .icon-button:hover,
+.asistencia-page .delete-user-button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo al pasar el ratón */
+}
+
+.asistencia-page .icon-button img,
+.asistencia-page .delete-user-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.asistencia-page .register-button {
+    display:inline-flex; /* Alinea el icono y el texto en línea */
+    align-items: center; /* Centra el icono y el texto verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    gap:15px; /* Espaciado entre el icono y el texto */
+    background-color: white; /* Fondo blanco */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    color: black; /* Texto negro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 15px 30px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    font-weight: normal; /* Texto en negrita */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    transition: all 0.3s ease-in-out; /* Transición para hover */
+    text-decoration: none; /* Sin subrayado (si es un enlace) */
+}
+
+.asistencia-page .register-button img {
+    width: 20px; /* Ajusta el tamaño del icono */
+    height: 20px;
+}
+
+.asistencia-page .register-button:hover {
+    background-color: gray; /* Cambia el fondo a negro al pasar el ratón */
+    color: black; /* Cambia el texto a blanco */
+}
+
+.asistencia-page .register-button:active {
+    transform: scale(0.95); /* Pequeño efecto de clic */
+}
+
+.asistencia-page .table-container .table {
+    width: 100%; /* Asegura que la tabla use todo el ancho disponible */
+    border-collapse: collapse;
+    margin-top: 20px; /* Espaciado con los filtros */
+    overflow-x: auto; /* Permite scroll horizontal en caso de tablas largas */
+}
